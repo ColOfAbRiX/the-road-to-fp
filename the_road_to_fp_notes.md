@@ -1,24 +1,5 @@
 # The road to FP
 
-I never studied functional programming at university and until few years ago it was just a fancy
-word that I read on some nice blogs online. But then I  discovered Scala and I was captured by it
-and I started to look around and study. But I quickly found out that information is very spread
-around, blogs, videos, papers, books, librarie and so on and I never found a place that told me what
-I was supposed to learn and what steps would come next.
-
-This project is born from a personal struggle where I had to find my way to learn functional
-programming. I thought it would be very useful to share the knowledge I built about *learning*
-functional programming.
-
-What I want to achieve with this project is to put together *in a structured way* the information
-that is already publicly available and to top it up with my personal comments, notes and ideas and
-with examples and exercises to make the life of people that want to get into FP easier.
-
-I want to use a step-by-step approach where I guide the reader from no prior knowledge of FP to
-get the grasp of the most advanced topics. I will introduce concepts little by little, providing
-understanding and intuition behind each of them and also what real world problem they solve. I will
-only assume that the reader is already well grounded in other programming paradigms.
-
 At the moment this page is just a dump of raw ideas of what to put in the various chapters and to
 have a rough organization of the content. The topics below will have to be properly expanded, with
 references, comments, examples and exercises.
@@ -57,6 +38,7 @@ references, comments, examples and exercises.
 
 * Simple examples of both concepts and counter examples
 * Show that loops are not good, they require mutability
+* Immutability as values that cannot cahnge
 * Local mutabilty can be used
 * Importance of pure function signatures
 * Working with expressions

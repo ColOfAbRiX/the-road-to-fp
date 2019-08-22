@@ -4,6 +4,12 @@ Educational material to learn functional programming starting from OOP
 
 Currently available only as [notes file](the_road_to_fp_notes.md)
 
+## Stubs
+
+[Chapter 0 - Introduction](00_introduction.md)
+
+[Chapter 1 - A different way of thinking](01_different_way_of_thinking.md)
+
 ## License
 
 Creative Commons Attribution 4.0 International
