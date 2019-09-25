@@ -86,8 +86,7 @@ do the job (I'm using Scala to write classic imperative style code. It's verbose
 
 ```Scala
 var inputList = List("apple", "orange", "fig")
-var outputList = collection.mutable.ListBuffer[String]()
-
+var outputList = collection.mutable.ListBuffer[String][)]
 for { i <- 0 until inputList.length } {
   outputList += inputList(i).toUpperCase()
 }
@@ -124,7 +123,7 @@ how to solve the problem locally on one item only (what I do inside `.map()`).
 
 If you ask me, that's conceptually pretty neat and powerful.
 
-Bartoz Milewski has a [great post about declarative programming](1) and goes much more philosophical
+Bartoz Milewski has a [great post about declarative programming][1] and goes much more philosophical
 than I do and I strongly recommend you to read it because it's really deep and interesting.
 
 We will see many more examples of this in these pages!
@@ -145,15 +144,15 @@ more in your toolbox to use for you own advantage!
 
 It's a very interesting topic that will open your mind to a even higher degree.
 
-Quoting again [Bartosz in this video](2), category theory is the abstraction, it is the next level
+Quoting again [Bartosz in this video][2], category theory is the abstraction, it is the next level
 up that functional languages tend to reach. It's the level above and as such it will give you a
 bigger world to explore that you can then render with Scala (or the functional language of your
 choice)
 
 ## References
 
-* [Category Theory and Declarative Programming](1)
-* [Category Theory 1.1: Motivation and Philosophy](2)
+* [Category Theory and Declarative Programming][1]
+* [Category Theory 1.1: Motivation and Philosophy][2]
 
 [1]: https://bartoszmilewski.com/2015/04/15/category-theory-and-declarative-programming/
 [2]: https://www.youtube.com/watch?v=I8LbkfSSR58

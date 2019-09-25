@@ -18,10 +18,10 @@
 
 ## References
 
-* [Functional programming in Scala](1) Chapter 1
-* [Referential transparency](2)
-* [The Benefits of Pure Functions](3)
-* [Understanding Immutability and Pure Functions (for OOP)](4)
+* [Functional programming in Scala][1] Chapter 1
+* [Referential transparency][2]
+* [The Benefits of Pure Functions][3]
+* [Understanding Immutability and Pure Functions (for OOP)][4]
 
 [1]: https://www.manning.com/books/functional-programming-in-scala
 [2]: https://www.wikiwand.com/en/Referential_transparency

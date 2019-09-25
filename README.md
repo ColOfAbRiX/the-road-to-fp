@@ -4,7 +4,7 @@ Educational material to learn functional programming starting from OOP
 
 Currently available only as [notes file](the_road_to_fp_notes.md)
 
-## Stubs
+## Chapters
 
 [Chapter 0 - Introduction](00_introduction.md)
 
@@ -16,9 +16,51 @@ Currently available only as [notes file](the_road_to_fp_notes.md)
 
 [Chapter 4 - Recursion](04_recursion.md)
 
+[Chapter 5 - Scala language feature: Lazyness](05_lazyness.md)
+
+[Chapter 6 - Purely functional data structures](06_data_structures.md)
+
+[Chapter 7 - Scala language feature: Type classes](07_type_classes.md)
+
+[Chapter 8 - Scala language feature: Higher order functions](08_higher_order.md)
+
+[Chapter 9 - Functors and the world of containers](09_functors.md)
+
+[Chapter 10 - Monoids](10_monoids.md)
+
+[Chapter 11 - Applicative functors](11_applicatives.md)
+
+[Chapter 12 - Optics](12_optics.md)
+
+[Chapter 13 - Introducing monads](13_introducing_monads.md)
+
+[Chapter 14 - Most common monads](14_common_monads.md)
+
+[Chapter 15 - Monad transformers](15_monad_transformers.md)
+
+[Chapter 16 - Free applicatives and free monads](16_free_applicatives_monads.md)
+
+[Chapter 17 - Comonads](17_comonads.md)
+
+[Chapter 18 - Introduction to Category Theory](18__intro_category_theory.md)
+
+[Chapter 19 - Basic concepts of Category Theory](19_basics_category_theory.md)
+
+[Chapter 20 - Revisiting structures and tools using Category Theory](20_revisiting_with_cats.md)
+
+[Chapter 21 - Few concepts in Type theory](21_type_theory_concepts.md)
+
+[Chapter 22 - Type Level Programming](22_type_level_programming.md)
+
 ## Author Information
 
+Scala developer and passionate about functional programming, former dev-ops and sysadmin, brewing beer with passion and 4-way formation skydiving competitor
+
 [Fabrizio Colonna](mailto:colofabrix@tin.it)
+
+[LinkedIn](https://www.linkedin.com/in/fabrizio-colonna-9a70406a/)
+
+[@ColOfAbRiX](https://github.com/ColOfAbRiX)
 
 ## License
 
