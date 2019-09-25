@@ -12,12 +12,12 @@
 
 ## References
 
-* [What is the difference between Scala's case class and class?](1)
-* [Pattern Matching](2)
-* [How to use pattern matching in Scala match/case expressions](3)
-* [Mark case classes as final](4)
-* [Demystifying Scala — Case Classes](5)
-* [Scala case classes in depth](6)
+* [What is the difference between Scala's case class and class?][1]
+* [Pattern Matching][2]
+* [How to use pattern matching in Scala match/case expressions][3]
+* [Mark case classes as final][4]
+* [Demystifying Scala — Case Classes][5]
+* [Scala case classes in depth][6]
 
 [1]: https://stackoverflow.com/questions/2312881/what-is-the-difference-between-scalas-case-class-and-class
 [2]: https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html

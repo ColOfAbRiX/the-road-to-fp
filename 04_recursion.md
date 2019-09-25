@@ -12,12 +12,12 @@
 
 ## References
 
-* [From mutable loops to immutable folds](1)
-* [Trampolining and stack safety in Scala](2)
-* [Recursion](3)
-* [S-99: Ninety-Nine Scala Problems](4)
-* [Getting Started With Functional Programming](5)
-* [Scala Recursion Lessons (Section)](6)
+* [From mutable loops to immutable folds][1]
+* [Trampolining and stack safety in Scala][2]
+* [Recursion][3]
+* [S-99: Ninety-Nine Scala Problems][4]
+* [Getting Started With Functional Programming][5]
+* [Scala Recursion Lessons (Section)][6]
 
 [1]: https://sidburn.github.io/blog/2016/04/05/mutable-loops-to-immutability
 [2]: https://medium.com/@olxc/trampolining-and-stack-safety-in-scala-d8e86474ddfa
