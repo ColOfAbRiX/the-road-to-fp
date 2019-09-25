@@ -26,7 +26,10 @@ references, comments, examples and exercises.
 ## Scala language feature: Case classes
 
 * What they add to normal classes
+  * https://stackoverflow.com/questions/2312881/what-is-the-difference-between-scalas-case-class-and-class
 * Pattern matching with case classes
+  * https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html
+  * https://alvinalexander.com/scala/how-to-use-pattern-matching-scala-match-case-expressions
 * How to define values with types
 * Build data types with case classes
 * Best practices (like sealed traits, ...)
@@ -250,11 +253,11 @@ references, comments, examples and exercises.
 * Definition of a category
 * Mapping to types and other "things"
 * What "structure" means in mathematics
+* Product and Coproduct (union and sum types)
+* Algebraic Data Types
 
 ## Basic concepts of Category Theory
 
-* Product and Coproduct (union and sum types)
-* Algebraic Data Types
 * Functors in categories and relation to Scala objects. Examples of Functors
 * Natural transformations and relation to Scala objects.
   * https://milessabin.com/blog/2012/05/10/shapeless-polymorphic-function-values-2/
@@ -271,8 +274,14 @@ references, comments, examples and exercises.
 ## Revisiting structures and tools using Category Theory
 
 * How to understand Scala type system using category theory
-* Representable functors
-* Monads, Comonads and Adjuctions
+* Representable functors, optimization
+* Monoids, definition, generalization, examples
+  * https://apocalisp.wordpress.com/2010/06/14/on-monoids/
+  * https://apocalisp.wordpress.com/2010/07/21/more-on-monoids-and-monads/
+* Adjuctions and definition of Monads and Comonads
+* Free monoids and free monads
+  * http://blog.higher-order.com/blog/2013/08/20/free-monads-and-free-monoids/
+  * https://bartoszmilewski.com/2015/07/21/free-monoids/
 * Lenses ad Comonad Coalgebras
   * https://r6research.livejournal.com/23705.html
 
