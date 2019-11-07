@@ -4,7 +4,7 @@
 
 ## Show that loops are not good, they require mutability
 
-## Immutability as values that cannot cahnge
+## Immutability as values that cannot change
 
 ## Local mutabilty can be used
 
