@@ -7,7 +7,11 @@ answer][1] that I report here:
 > on their constructor arguments.
 >
 > In combination with inheritance, case classes are used to mimic algebraic datatypes (we will see
+<<<<<<< HEAD
 > Algebraic Datatypes soon).
+=======
+> Algebraic Data Types soon).
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 
 The importance of case classes is that they are a tool to simplify and clean the way we think and
 work with data in FP. Contrary to OOP where we have objects that update their own (or other
@@ -18,7 +22,11 @@ data.
 With this in mind, case classes allow us to create these data structures and to avoid code that is
 not strictly related to this way of working that can pollute cleanliness.
 
+<<<<<<< HEAD
 To begin working with case classes, great introductory and comprehensive examples are [Demystifying
+=======
+To begin working with case classes great introductory and comprehensive examples are [Demystifying
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 Scala - Case Classes][2] and [Scala case classes in depth][3]. Have a good read and then come back
 here for more details and thoughts on case classes.
 
@@ -28,18 +36,30 @@ Technically, there is no difference between a class and a case class: they're bo
 under the hood. A case class is a normal class where the compiler adds several predefined
 functionalities:
 
+<<<<<<< HEAD
 * a companion object containing predefined `apply()` and `unapply()` methods;
 * getter (but no setter) methods for the constructor arguments so that they become public fields;
 * a `copy()` method is generated to be able to clone an object;
 * tThey provide a visually nice `toString()` returning all the fields of the class;
 * `hashCode()` and `equals()` methods to compare case classes "the right way";
+=======
+* a companion object which contains a predefined `apply()` and `unapply()` methods;
+* getter (but no setter) methods for the constructor arguments so that they become public fields;
+* a `copy()` method is generated to be able to clone an object;
+* they provide a visually nice `toString()` returning all the fields of the class;
+* `hashCode()` and `equals()` method to compare case classes "the right way";
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 * they are also instances of `Product` and thus inherit these methods `productElement()`,
   `productArity()` and `productIterator()`.
 
 At the bottom of this page there's a section that summarizes companion objects, `apply()` and
 `unapply()` methods.
 
+<<<<<<< HEAD
 Defining getters for constructor arguments means that we can define public fields without using the
+=======
+Defining getters for constructor argument means that we can define public fields without using the
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 `val` keywork in the constructor:
 
 ```Scala
@@ -61,16 +81,24 @@ We'll see immutable data structures in the future.
 
 ## Pattern matching with case classes
 
+<<<<<<< HEAD
 Pattern matching is a really powerfool tool, so much so that you will ask yourself how you did when
 you didn't use it!
 
 In its essence, it matches a variable with a given pattern and executes some code for that case. This
+=======
+Pattern matching is a really powerfool tool, so much that you will ask yourself how did you do when
+you didn't use it!
+
+In its essence it matches a variable with a given pattern and execute some code for that case. This
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 definition is simple and yet it has many implication. For instance, we can match a variable against:
 
 * a generic catch all pattern;
 * a literal value like `true` or `"this is a string"`;
 * a simple type;
 * a type that has specific values in its fields;
+<<<<<<< HEAD
 * a type that has values in its fields but without specifying which
  value;
 * a type as above but with its fields composed of other types, recursively;
@@ -88,6 +116,24 @@ and at the bottom of this page there is a summary about objects.
 
 Again, this is only a brief summary because other articles cover this topic in very good details.
 See the references below for more links.
+=======
+* a type that has values in its fields but without specified what value;
+* a type as above but with its fields composed of other types, recursively;
+
+In particular the last two points adds a lot of power. And, more than this, we ask the compiler to:
+
+* match a patter but only if a specific condition is satisfied (guard);
+* assign the matched value to a variable of that type so to **safely** enforce the type;
+* assign the values of the fields of the variable to an inner variable that we can use later.
+
+Part of the magic of patter magic comes from the `unapply()` method that is used by the compile to
+extract the fields values from the variable. The article [Scala pattern matching: apply the
+unapply][6] has a good description of `unapply()` and how it works together with pattern matching
+and at the bottom of this page there is a summary about objects.
+
+Again, this is only a brief summary because other articles cover this topic with very good details.
+See the references below for more links
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 
 More reading on [this page][5].
 
@@ -120,6 +166,7 @@ final case class Success[+T](value: T) extends Try[T]
 Case classes, together with pattern matching, become a really powerful tool because we can use them
 to shift the focus from the values to the types and thus strengthening type safety.
 
+<<<<<<< HEAD
 Why is this important? It's because the compiler can't know what value a variable will contain but
 it can know what type a variable is and we can ask it to fail when it sees something that is not
 supposed to happen. The compiler will do more work for us even before we start our application!
@@ -129,11 +176,26 @@ insight is also what will enable much more power and expressiveness in the futur
 functors and monads.
 
 The class `Try` above is a great example of this. We have defined two type, both rooted in `Try`: one is
+=======
+Why this is important? It's because the compiler can't know what value a variable will contain but
+it can know what type a variable is and we can ask it to fail when it sees something that is not
+supposed to happen. The compiler will do more work for us even before we start our application!
+
+The key for this is to start using types themselves as carrier of semantic information. This key
+insight is also what will enable much more power and expressiveness in the future when we will see
+functors and monads.
+
+The `Try` above is a great example of this. We have defined two type, both rooted in `Try`: one is
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 used to carry the message "I am the result of a successful computation and I contain the result of
 that computation of type `T`" (and of course the actual result) while an instance of the other one
 carries the message "I am the result of a failed computation and I contain that failure".
 
+<<<<<<< HEAD
 Once we have this we can use pattern matching to see what happened to the computation and take
+=======
+Once we have this we can use pattern matchin to see what happened to the computation and take
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 different actions:
 
 ```Scala
@@ -153,6 +215,7 @@ tryConversion match {
 //   ERROR! java.lang.NumberFormatException: For input string: "abc"
 ```
 
+<<<<<<< HEAD
 But... we'll see ways to avoid this tedious way of writing and we'll let the libraries that manage this.
 
 ## Case classes best practices
@@ -161,12 +224,26 @@ For this, I refer you straight to [Mark case classes as final][8]
 
 When case classes are used to create algebraic data types you should follow the best practices for [Algebraic Data
 Types][9].
+=======
+But... we'll see ways to avoid this tedious way of writing and we'll let the libraries manage this.
+
+## Case classes best practices
+
+For this, i refer you straight to [Mark case classes as final][8]
+
+When case classes are used to create algebraic data types you should follow the [Algebraic Data
+Types][9] best practices.
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 
 ## A quick tour of objects, singleton objects and companion objects
 
 A little refresher on what Scala companion objects are. [A full article here][10].
 
+<<<<<<< HEAD
 Scala classes cannot have static variables or methods. Instead, a Scala class can have what is called
+=======
+Scala classes cannot have static variables or methods. Instead a Scala class can have what is called
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 a singleton object which is a special instance of a class that the compiler guarantees to be unique
 and that makes available without an explicit instantiation.
 
@@ -207,7 +284,11 @@ When you define a special method named `apply()` in an object the compiler can c
 explicitly naming this method which means that instead of writing `MyObject.apply(...)` you simply
 write `MyObject(...)`. This is useful in few cases:
 
+<<<<<<< HEAD
 * to call methods with a shorter syntax;
+=======
+* to call methods with a shorter sintax;
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 * to shorten the instantiation of new classes (omitting `new`);
 * to provide several simplified constructors.
 
@@ -220,7 +301,11 @@ object Loader {
   def normal(): Int = 123
   def apply(): Int = 5
   def apply(name: String):Loader = new Loader(name)
+<<<<<<< HEAD
   def apply(first: String, second: String): Loader = new Loader(s"$first $second")
+=======
+  def apply(first: String, second: String):Loader = new Loader(s"$first $second")
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 }
 
 println(Loader.normal())             // As usual
@@ -256,7 +341,11 @@ println(Person.unapply(matt))
 //   (Matt Smith,30)
 ```
 
+<<<<<<< HEAD
 If we want to use extractors into pattern matching the unapply method must return a type that
+=======
+If we want to use extractors into pattern matching the unapply method must return a types that
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 has a `isEmpty()` and a `get()` method as [explained here][12]. For example we can make `unapply()`
 return an `Option`:
 

@@ -18,7 +18,11 @@ before you can comfortably reason and work with them. They are very different fr
 imperative programming style that the majority of programmers have used and, at least for me,
 they require to give up many of the established practices of coding.
 
+<<<<<<< HEAD
 These are also the reasons why I find FP so fun and interesting, because they forced me to adapt to a
+=======
+These are also the reason why I find FP so fun and interesting, because they forced me to adapt a
+>>>>>>> d3d029f667292db712779a3bd2548a19c33abcc4
 new point of view and see problems from a different angle, increasing the tools at my disposal when
 I tackle a problem.
 
