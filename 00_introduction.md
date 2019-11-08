@@ -2,13 +2,13 @@
 
 ## A love-hate relationship
 
-I never studied functional programming (FP) at university and until few years ago it was just a fancy
-word that appeared on some random blogs. It's only after a long while that I discovered the Scala language.
-I was quickly captured by the it and I wanted to know more and be fluent. So I hit "functional
-programming" and I discovered it was not just a fancy word at all! As quick as my interest grew also
-my frustration grew because I found out that, for me at least, information is very spread around
-(blogs, videos, books, libraries etc.) and that I could find only extremes: very basic stuff or
-extremely complicated mathy contents "way beyond human comprehension".
+I never studied functional programming (FP) at university and until few years ago it was just a
+fancy word that appeared on some random blogs. It's only after a long while that I discovered the
+Scala language. I was quickly captured by it and I wanted to know more and be fluent. So I hit
+"functional programming" and I discovered it was not at all just a fancy word! As quick as my
+interest grew also my frustration did# because I found out that, for me at least, information is
+very spread around (blogs, videos, books, libraries etc.) and that I could find only extremes: very
+basic stuff or extremely complicated mathy contents "way beyond human comprehension".
 
 What I couldn't find was a place that told me what I was supposed to learn, in what order and that
 could explain concepts focusing on their intuition and usability rather than tasters or graduate
@@ -34,8 +34,9 @@ At the end I want the reader to be able to **understand** most of the material t
 online so that one can be independent in his or her own research.
 
 Also, this project will focus on **giving concepts and information** that are useful to understand
-libraries like Cats, scalaz and Shapeless that, if you've never done FP before, can be really obscure
-and not understandable. Although, now, some of them have very good documentation focused on usage.
+libraries like Cats, scalaz and Shapeless that, if you've never done FP before, can be really
+obscure and not understandable. Although, now, some of them have very good documentation focused on
+usage.
 
 To get to this point I want to do my best to **provide intuition** of the concepts and to connect
 them to real world problems that they solve. The more you will progress with FP, the more the
@@ -59,15 +60,15 @@ Overall, what I want the reader to achieve is:
 
 ## Why Scala
 
-Why Scala.... For a few reasons. I like the JVM, it's a solid and tested platform that's been around for
-several years, it has great adoption on the market and it will keep this position for many years to
-come thanks to Java. Scala and Java can exchange libraries and this is a big kickstart for Scala
+Why Scala.... For a few reasons. I like the JVM, it's a solid and tested platform that's been around
+for several years, it has great adoption on the market and it will keep this position for many years
+to come thanks to Java. Scala and Java can exchange libraries and this is a big kickstart for Scala
 because of the vast code base already available. I (mostly) like its syntax, its terseness and
 expressive power, I like the language features. I like the community around it and the problems that
 are solved by languages like Scala.
 
-However with Scala it's been really annoying for me to learn FP because the vast majority of the content
-found around is for Haskell. Haskell is *the* authority on FP and for good reasons, I'm not
+However with Scala it's been really annoying for me to learn FP because the vast majority of the
+content found around is for Haskell. Haskell is *the* authority on FP and for good reasons, I'm not
 denying that. But I see no reason why I should learn one language to learn another language. It
 would be a bit like going from London to Edinburgh via Paris. Sure you can do it but... I don't want
 to learn Haskell! I want to learn Scala!
