@@ -4,9 +4,9 @@
 
 I never studied functional programming (FP) at university and until few years ago it was just a
 fancy word that appeared on some random blogs. It's only after a long while that I discovered the
-Scala language. I was quickly captured by the it and I wanted to know more and be fluent. So I hit
+Scala language. I was quickly captured by it and I wanted to know more and be fluent. So I hit
 "functional programming" and I discovered it was not just a fancy word at all! As quick as my
-interest grew also my frustration grew because I found out that, for me at least, information is
+interest grew also my frustration did because I found out that, for me at least, information is
 very spread around (blogs, videos, books, libraries etc.) and that I could find only extremes: very
 basic stuff or extremely complicated mathy contents "way beyond human comprehension".
 
