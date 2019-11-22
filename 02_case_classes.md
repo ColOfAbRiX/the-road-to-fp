@@ -1,7 +1,7 @@
 # Scala language feature: Case classes
 
 Case classes in Scala are a somewhat simple concept as described very well in [this StackOverflow
-answer][1] that I report here:
+answer][1], that I report here:
 
 Case classes can be seen as plain and immutable data-holding objects that should exclusively depend
 on their constructor arguments.
@@ -26,16 +26,16 @@ here for more details and thoughts on case classes.
 Technically, there is no difference between a class and a case class. A case class is a normal class
 where the compiler add some predefined functionalities:
 
-* A companion object which contains a predefined `apply` and `unapply` methods;
-* Case classes automatically define getter (but no setter) methods for the constructor arguments so
+* a companion object which contains predefined `apply` and `unapply` methods;
+* case classes automatically define getter (but no setter) methods for the constructor arguments so
   that they become public fields;
-* Case classes automatically define `hashCode()` and `equals()` method to compare case classes
+* case classes automatically define `hashCode()` and `equals()` method to compare case classes
   between each other;
-* They provide a visually nice `toString` returning all the fields of the class;
-* They are also instances of `Product` and thus inherit these methods `productElement`,
+* they provide a visually nice `toString` returning all the fields of the class;
+* they are also instances of `Product` and thus inherit these methods `productElement`,
   `productArity` and `productIterator`.
 
-The `apply` method create a new instance of the case class providing a compact initialisation syntax
+The `apply` method creates a new instance of the case class providing a compact initialisation syntax
 `(Node(1, Leaf(2), None)))`.
 
 The `unapply` method is used to extract its fields and do pattern matching (see next section).
@@ -43,7 +43,7 @@ The `unapply` method is used to extract its fields and do pattern matching (see 
 ## Pattern matching with case classes
 
 Pattern matching is a really powerfool tool, so much that you will ask yourself how did you do when
-you didn't use it!
+you were not using it!
 
 In its essence it matches a variable with a given pattern. This definition is simple and yet it has
 many implication. For instance, we can match a variable against:
@@ -52,21 +52,21 @@ many implication. For instance, we can match a variable against:
 * a generic catch all pattern.
 * a simple type;
 * a type that has specific values in its fields;
-* a type that has values in its fields but without specified what value;
+* a type that has values in its fields but without specified values;
 * a type as above but with its fields composed of other types, recursively;
 
-In particular the last two points adds a lot of power. And, more than this, we ask the compiler to:
+In particular, the last two points add a lot of power. And, more than this, we ask the compiler to:
 
-* match a patter but only if a specific condition is satisfied (guard);
-* assign the matched value to a variable of that type so to **safely** force the type;
+* match a pattern but only if a specific condition is satisfied (guard);
+* assign the matched value to a variable of that type so as to **safely** force the type;
 * assign the values that the fields of the variable have to a variable so that we can use it later.
 
-Part of the magic of patter magic comes from the `unapply` method that is used by the compile to
+Part of the magic of pattern magic comes from the `unapply` method that is used by the compiler to
 extract the information it needs from the variable. The article [Scala pattern matching: apply the
 unapply][7] has a good description of `unapply` and how it works.
 
 Again, this is only a brief summary because other articles cover this topic with very good details.
-See the references below for more links
+See the references below for more links.
 
 ## Build data types with case classes
 
@@ -96,7 +96,7 @@ where I only reported the main definitions.
 Case classes, together with pattern matching, become a really powerful tool because we can use them
 to shift the focus from the values to the types and thus strengthening type safety.
 
-Why this is important? It's because the compiler can't know what value a variable will contain but
+Why is this important? It's because the compiler can't know what value a variable will contain but
 it can know what type a variable is and we can ask it to fail when it sees something that is not
 supposed to happen. The compiler will do more work for us even before we start our application!
 
@@ -104,12 +104,12 @@ The key for this is to start using types themselves as carrier of semantic infor
 insight is also what will enable much more power and expressiveness in the future when we will see
 functors and monads.
 
-The `Try` above is a great example of this. We have defined two type, both rooted in `Try`: one is
+The `Try` above is a great example of this. We have defined two types, both rooted in `Try`: one is
 used to carry the message "I am the result of a successful computation and I contain the result of
 that computation of type `T`" (and of course the actual result) while an instance of the other one
 carries the message "I am the result of a failed computation and I contain that failure".
 
-Once we have this we can use pattern matchin to see what happened to the computation and take
+Once we have this we can use pattern matching to see what happened to the computation and take
 different actions:
 
 ```Scala
@@ -119,7 +119,7 @@ val myResult = Try("abc".toInt)
 
 myResult match {
   case Success(number) =>
-    println(s"I succesfully converted a string into the integer $number")
+    println(s"I successfully converted a string into the integer $number")
   case Failure(exception) =>
     println(s"ERROR! The conversion of a string to integer returned $exception")
 }
@@ -129,7 +129,7 @@ But... we'll see ways to avoid this tedious way of writing and we'll let the lib
 
 ## Case classes best practices
 
-For this, i refer you straight to [Mark case classes as final][6]
+For this, I refer you straight to [Mark case classes as final][6]
 
 When case classes are used to create algebraic data types you should follow the [Algebraic Data
 Types][9] best practices.
