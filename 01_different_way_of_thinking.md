@@ -49,7 +49,7 @@ We'll see pure functions and immutable data structures in full details in a futu
 
 ## New concepts, techniques and tools
 
-As I said erlier you could write pure functions and use immutable values all day long without the
+As I said earlier you could write pure functions and use immutable values all day long without the
 need of anything else and you would be writing functional code.
 
 Issues will start to arise when you begin to write more complex and structured programs, when you
@@ -131,7 +131,7 @@ We will see many more examples of this in these pages!
 ## Use math to reason on your code
 
 FP has a strong foundation in a branch of mathematics called Category Theory
-which is essentialy a tool that can be used to:
+which is essentially a tool that can be used to:
 
 * express relationships between types;
 * discover new relationships;
