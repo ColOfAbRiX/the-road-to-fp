@@ -3,19 +3,20 @@
 Case classes in Scala are a somewhat simple concept as described very well in [this StackOverflow
 answer][1], that I report here:
 
-Case classes can be seen as plain and immutable data-holding objects that should exclusively depend
-on their constructor arguments.
+> Case classes can be seen as plain and immutable data-holding objects that should exclusively depend
+> on their constructor arguments.
+>
+> In combination with inheritance, case classes are used to mimic algebraic datatypes (we will see
+> Algebraic Data Types soon).
 
-In combination with inheritance, case classes are used to mimic algebraic datatypes (we will see
-Algebraic Data Types soon).
+The importance of case classes is that they are a tool to simplify and clean the way we think and
+work with data in FP. Contrary to OOP where we have objects that update their own (or other
+object's) states, in FP we usually have data (data structures or similar) and a bunch of functions,
+structured and organized throughout the code, that perform operations and transformations on this
+data.
 
-The importance of case classes is that they simplify and clean the way we think and work with data
-in FP. Contrary to OOP where we have objects that mutate their own or other object's states, in FP
-we usually have data (data structures or similar) and a bunch of functions, structured and organized
-throughout the code, that perform some operations and transformations on this data.
-
-In this view case classes allow us to create these data structures and to avoid code that is not
-strictly related to this way of working that can pollute cleanliness.
+With this in mind, case classes allow us to create these data structures and to avoid code that is
+not strictly related to this way of working that can pollute cleanliness.
 
 To begin working with case classes great introductory and comprehensive examples are [Demystifying
 Scala - Case Classes][2] and [Scala case classes in depth][3]. Have a good read and then come back
@@ -23,65 +24,96 @@ here for more details and thoughts on case classes.
 
 ## What they add to normal classes
 
-Technically, there is no difference between a class and a case class. A case class is a normal class
-where the compiler add some predefined functionalities:
+Technically, there is no difference between a class and a case class: they're both the same thing
+under the hood. A case class is a normal class where the compiler adds several predefined
+functionalities:
 
-* a companion object which contains predefined `apply` and `unapply` methods;
-* case classes automatically define getter (but no setter) methods for the constructor arguments so
-  that they become public fields;
-* case classes automatically define `hashCode()` and `equals()` method to compare case classes
-  between each other;
-* they provide a visually nice `toString` returning all the fields of the class;
-* they are also instances of `Product` and thus inherit these methods `productElement`,
-  `productArity` and `productIterator`.
+* a companion object which contains predefined `apply()` and `unapply()` methods;
+* getter (but no setter) methods for the constructor arguments so that they become public fields;
+* a `copy()` method is generated to enable cloning an object;
+* they provide a visually nice `toString()` returning all the fields of the class;
+* `hashCode()` and `equals()` method to compare case classes "the right way";
+* they are also instances of `Product` and thus inherit these methods `productElement()`,
+  `productArity()` and `productIterator()`.
 
-The `apply` method creates a new instance of the case class providing a compact initialisation syntax
-`(Node(1, Leaf(2), None)))`.
+At the bottom of this page there's a section that summarizes companion objects, `apply()` and
+`unapply()` methods.
 
-The `unapply` method is used to extract its fields and do pattern matching (see next section).
+Defining getters for constructor argument means that we can define public fields without using the
+`val` keywork in the constructor:
+
+```Scala
+class Class1(
+  privateField: String,                 // This is not public
+  val publicField: String               // Normal class requires `val` in the constructor argument
+)
+
+case class Class2(publicField: String)  // val is not required here to make the field public
+```
+=======
+```Scala
+class Class1(
+  privateField: String,                 // This is not public
+  val publicField: String               // Normal class requires `val` in the constructor argument
+)
+
+case class Class2(publicField: String)  // val is not required here to make the field public
+```
+
+The `copy()` method is an interesting one. Pure case classes are immutable data and cannot update
+their fields. The `copy()` method is used to create an **updated** copy of your instance, it simply
+creates a new instance of your class passing all the existing fields to the new instance except the
+ones you specify manually with the end result of "updating" these fields. It is a partial
+implementation of the [prototype pattern][4].
+
+We'll see immutable data structures in the future.
 
 ## Pattern matching with case classes
 
 Pattern matching is a really powerfool tool, so much that you will ask yourself how did you do when
 you were not using it!
 
-In its essence it matches a variable with a given pattern. This definition is simple and yet it has
-many implication. For instance, we can match a variable against:
+In its essence it matches a variable with a given pattern and execute some code for that case. This
+definition is simple and yet it has many implications. For instance, we can match a variable against:
 
-* a literal value like `true` or `"functional_programming"`;
-* a generic catch all pattern.
+* a generic catch all pattern;
+* a literal value like `true` or `"this is a string"`;
 * a simple type;
 * a type that has specific values in its fields;
-* a type that has values in its fields but without specified values;
+* a type that has values in its fields but without specified what value;
 * a type as above but with its fields composed of other types, recursively;
 
-In particular, the last two points add a lot of power. And, more than this, we ask the compiler to:
+In particular the last two points adds a lot of power. And, more than this, we ask the compiler to:
 
 * match a pattern but only if a specific condition is satisfied (guard);
-* assign the matched value to a variable of that type so as to **safely** force the type;
-* assign the values that the fields of the variable have to a variable so that we can use it later.
+* assign the matched value to a variable of that type so to **safely** enforce the type;
+* assign the values of the fields of the variable to an inner variable that we can use later.
 
-Part of the magic of pattern magic comes from the `unapply` method that is used by the compiler to
-extract the information it needs from the variable. The article [Scala pattern matching: apply the
-unapply][7] has a good description of `unapply` and how it works.
+Part of the magic of pattern magic comes from the `unapply()` method that is used by the compiler to
+extract the fields values from the variable. The article [Scala pattern matching: apply the
+unapply][6] has a good description of `unapply()` and how it works together with pattern matching
+and at the bottom of this page there is a summary about objects.
 
 Again, this is only a brief summary because other articles cover this topic with very good details.
 See the references below for more links.
 
+More reading on [this page][5].
+
 ## Build data types with case classes
 
-A very simple example of such types are trees. A binary tree, for instance, can be implemented like
-this:
+As said above, case classes are used to define data-holding structures. The following example shows
+how we can model a simple shopping cart that is made of a list of purchases made by accounts on
+items:
 
 ```Scala
-sealed abstract class Tree
-final case class Node(left: Tree, right: Tree) extends Tree
-final case class Leaf[A](value: A) extends Tree
-final case object EmptyLeaf extends Tree
+final case class Account(id: Int, name: String, address: String)
+final case class Item(id: Int, name: String, price: Double)
+final case class Purchase(date: String, account: Account, items: Seq[Item])
+final case class ShoppingCart(purchases: Seq[Purchase])
 ```
 
-Another example is a data structure that can express the success or failure of a computation using
-the `scala.util` data structure [Try][8]:
+Another example is a data structure that can express the success or failure of a computation. This
+example here is taken from the scala standard library [scala.util.Try][7]:
 
 ```Scala
 sealed abstract class Try[+T]{
@@ -89,7 +121,7 @@ final case class Failure[+T](exception: Throwable) extends Try[T]
 final case class Success[+T](value: T) extends Try[T]
 ```
 
-where I only reported the main definitions.
+(I only reported the main definitions).
 
 ## From values to types
 
@@ -115,43 +147,168 @@ different actions:
 ```Scala
 import scala.util._
 
-val myResult = Try("abc".toInt)
+val toConvert = "abc"
+val tryConversion = Try(toConvert.toInt)
 
-myResult match {
+tryConversion match {
   case Success(number) =>
-    println(s"I successfully converted a string into the integer $number")
+    println(s"Converted $toConvert into the integer $number")
   case Failure(exception) =>
-    println(s"ERROR! The conversion of a string to integer returned $exception")
+    println(s"ERROR! $exception")
 }
+
+// Output:
+//   ERROR! java.lang.NumberFormatException: For input string: "abc"
 ```
 
 But... we'll see ways to avoid this tedious way of writing and we'll let the libraries manage this.
 
 ## Case classes best practices
 
-For this, I refer you straight to [Mark case classes as final][6]
+For this, I refer you straight to [Mark case classes as final][8]
 
 When case classes are used to create algebraic data types you should follow the [Algebraic Data
 Types][9] best practices.
+
+## A quick tour of objects, singleton objects and companion objects
+
+A little refresher on what Scala companion objects are. [A full article here][10].
+
+Scala classes cannot have static variables or methods. Instead a Scala class can have what is called
+a singleton object which is a special instance of a class that the compiler guarantees to be unique
+and that makes available without an explicit instantiation.
+
+A singleton object is declared using the `object` keyword.
+
+```Scala
+object MyComponent {
+  val enabled: Boolean = false
+  private val otherConfig: String = "Some config"
+}
+
+println(MyComponent.enabled)
+
+// Output:
+//   false
+```
+
+By all means, this is a language-level implementation of the [Singleton pattern][11].
+
+When a singleton object is named the same as a class and it is defined inside the same source file,
+it is called a companion object.
+
+A companion object and its class can access each other’s private members (fields and methods).
+
+```Scala
+// Follows the example above, to work it must be define in the same file as its companion
+class MyComponent(name: String) {
+  val companionOtherConfig = MyComponent.otherConfig
+}
+
+println(new MyComponent("My name").companionOtherConfig)
+
+// Output:
+//   Some config
+```
+
+When you define a special method named `apply()` in an object the compiler can call it without
+explicitly naming this method which means that instead of writing `MyObject.apply(...)` you simply
+write `MyObject(...)`. This is useful in few cases:
+
+* to call methods with a shorter sintax;
+* to shorten the instantiation of new classes (omitting `new`);
+* to provide several simplified constructors.
+
+Here is a short example:
+
+```Scala
+class Loader(val name: String)
+
+object Loader {
+  def normal(): Int = 123
+  def apply(): Int = 5
+  def apply(name: String):Loader = new Loader(name)
+  def apply(first: String, second: String):Loader = new Loader(s"$first $second")
+}
+
+println(Loader.normal())             // As usual
+println(Loader())                    // Equivalent to Loader.apply()
+println(Loader("Matt Smith").name)
+println(Loader("Matt", "Smith").name)
+
+// Output:
+//   123
+//   5
+//   Matt Smith
+//   Matt Smith
+```
+
+There is another special method that can be defined in a object called `unapply()` and known as
+extractor. This method is used to "deconstruct" objects into its components, or "extract" the
+components, that are returned by the method and it's used by pattern matching to perform its duty.
+In the following example we can see how both `apply()` and `unapply()` are used to construct and
+deconstruct a sample object:
+
+```Scala
+class Person(val name: String, val age: Int)
+
+object Person {
+  def apply(name: String, age: Int): Person = new Person(name, age)
+  def unapply(p: Person): Tuple2[String, Int] = (p.name, p.age)
+}
+
+val matt = Person("Matt Smith", 30)
+println(Person.unapply(matt))
+
+// Output:
+//   (Matt Smith,30)
+```
+
+If we want to use extractors into pattern matching the unapply method must return a types that
+has a `isEmpty()` and a `get()` method as [explained here][12]. For example we can make `unapply()`
+return an `Option`:
+
+```Scala
+object Person {
+  // ...
+  def unapply(p: Person): Option[(String, Int)] = Some(p.name, p.age)
+}
+
+val matt = Person("Matt Smith", 30)
+
+matt match {
+  case Person(name, age) =>
+    println(s"Name: $name, Age: $age")
+}
+
+// Output:
+//   Name: Matt Smith, Age: 30
+```
 
 ## References
 
 * [What is the difference between Scala's case class and class?][1]
 * [Demystifying Scala - Case Classes][2]
 * [Scala case classes in depth][3]
-* [Pattern Matching][4]
-* [How to use pattern matching in Scala match/case expressions][5]
-* [Try.scala][8]
-* [Scala Best Practices - Mark case classes as final][6]
-* [Scala Best Practices - Algebraic Data Types][9]
-* [Scala pattern matching: apply the unapply][7]
+* [Prototype][4]
+* [Pattern Matching][5]
+* [Scala pattern matching: apply the unapply][6]
+* [scala.util.Try][7]
+* [Scala Best Practices - Mark case classes as final][8]
+* [Scala Best Practices- Algebraic Data Types][9]
+* [Companion Objects][10]
+* [Singleton Pattern][11]
+* [Why I have to return Some in unapply method][12]
 
 [1]: https://stackoverflow.com/a/2312936/1215156
 [2]: https://medium.com/@cachiama/demystifying-scala-case-classes-b4d756959dcd
 [3]: http://www.alessandrolacava.com/blog/scala-case-classes-in-depth/
-[4]: https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html
-[5]: https://alvinalexander.com/scala/how-to-use-pattern-matching-scala-match-case-expressions
-[6]: https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html
-[7]: https://medium.com/wix-engineering/scala-pattern-matching-apply-the-unapply-7237f8c30b41
-[8]: https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala
+[4]: https://refactoring.guru/design-patterns/prototype
+[5]: https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html
+[6]: https://medium.com/wix-engineering/scala-pattern-matching-apply-the-unapply-7237f8c30b41
+[7]: https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala
+[8]: https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html
 [9]: https://nrinaudo.github.io/scala-best-practices/definitions/adt.html
+[10]: https://hello-scala.com/409-scala-companion-objects.html
+[11]: https://refactoring.guru/design-patterns/singleton
+[12]: https://stackoverflow.com/a/46897645/1215156
