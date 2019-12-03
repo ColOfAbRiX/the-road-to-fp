@@ -26,23 +26,40 @@ here for more details and thoughts on case classes.
 Technically, there is no difference between a class and a case class. A case class is a normal class
 where the compiler add some predefined functionalities:
 
-* a companion object which contains predefined `apply` and `unapply` methods;
-* case classes automatically define getter (but no setter) methods for the constructor arguments so
-  that they become public fields;
-* case classes automatically define `hashCode()` and `equals()` method to compare case classes
-  between each other;
-* they provide a visually nice `toString` returning all the fields of the class;
-* they are also instances of `Product` and thus inherit these methods `productElement`,
-  `productArity` and `productIterator`.
+* a companion object which contains predefined `apply()` and `unapply()` methods;
+* getter (but no setter) methods for the constructor arguments so that they become public fields;
+* a `copy()` method is generated to enable cloning an object;
+* they provide a visually nice `toString()` returning all the fields of the class;
+* `hashCode()` and `equals()` method to compare case classes "the right way";
+* they are also instances of `Product` and thus inherit these methods `productElement()`,
+  `productArity()` and `productIterator()`.
 
-The `apply` method creates a new instance of the case class providing a compact initialisation syntax
-`(Node(1, Leaf(2), None)))`.
+At the bottom of this page there's a section that summarizes companion objects, `apply()`, and
+`unapply()` methods.
 
-The `unapply` method is used to extract its fields and do pattern matching (see next section).
+Defining getters for constructor arguments means that we can define public fields without using the
+`val` keyword in the constructor:
+
+```Scala
+class Class1(
+  privateField: String,                 // This is not public
+  val publicField: String               // Normal class requires `val` in the constructor argument
+)
+
+case class Class2(publicField: String)  // val is not required here to make the field public
+```
+
+The `copy()` method is an interesting one. Pure case classes are immutable data and cannot update
+their fields. The `copy()` method is used to create an **updated** copy of you instance; it simply
+creates a new instance of your class passing all the existing fields to the new instance except the
+ones you specify manually with the end result of "updating" these fields. It is a partial
+implementation of the [prototype pattern][4].
+
+We'll see immutable data structures in the future.
 
 ## Pattern matching with case classes
 
-Pattern matching is a really powerfool tool, so much that you will ask yourself how did you do when
+Pattern matching is a really powerfool tool, so much that you will ask yourself how you did when
 you were not using it!
 
 In its essence it matches a variable with a given pattern. This definition is simple and yet it has
@@ -52,32 +69,34 @@ many implication. For instance, we can match a variable against:
 * a generic catch all pattern.
 * a simple type;
 * a type that has specific values in its fields;
-* a type that has values in its fields but without specified values;
+* a type that has values in its fields but without specified them;
 * a type as above but with its fields composed of other types, recursively;
 
-In particular, the last two points add a lot of power. And, more than this, we ask the compiler to:
+In particular the last two points add a lot of power. And, more than this, we ask the compiler to:
 
 * match a pattern but only if a specific condition is satisfied (guard);
-* assign the matched value to a variable of that type so as to **safely** force the type;
-* assign the values that the fields of the variable have to a variable so that we can use it later.
+* assign the matched value to a variable of that type so to **safely** enforce the type;
+* assign the values of the fields of the variable to an inner variable that we can use later.
 
-Part of the magic of pattern magic comes from the `unapply` method that is used by the compiler to
-extract the information it needs from the variable. The article [Scala pattern matching: apply the
-unapply][7] has a good description of `unapply` and how it works.
+Part of the magic of pattern magic comes from the `unapply()` method that is used by the compiler to
+extract the field values from the variable. The article [Scala pattern matching: apply the
+unapply][6] has a good description of `unapply()` and how it works together with pattern matching
+and at the bottom of this page there is a summary about objects.
 
 Again, this is only a brief summary because other articles cover this topic with very good details.
 See the references below for more links.
 
 ## Build data types with case classes
 
-A very simple example of such types are trees. A binary tree, for instance, can be implemented like
-this:
+As said above, case classes are used to define data-holding structures. The following example shows
+how we can model a simple shopping cart that is made of a list of purchases made by accounts on
+items:
 
 ```Scala
-sealed abstract class Tree
-final case class Node(left: Tree, right: Tree) extends Tree
-final case class Leaf[A](value: A) extends Tree
-final case object EmptyLeaf extends Tree
+final case class Account(id: Int, name: String, address: String)
+final case class Item(id: Int, name: String, price: Double)
+final case class Purchase(date: String, account: Account, items: Seq[Item])
+final case class ShoppingCart(purchases: Seq[Purchase])
 ```
 
 Another example is a data structure that can express the success or failure of a computation using
@@ -115,15 +134,20 @@ different actions:
 ```Scala
 import scala.util._
 
-val myResult = Try("abc".toInt)
+val toConvert = "abc"
+val tryConversion = Try(toConvert.toInt)
 
-myResult match {
+tryConversion match {
   case Success(number) =>
-    println(s"I successfully converted a string into the integer $number")
+    println(s"Converted $toConvert into the integer $number")
   case Failure(exception) =>
-    println(s"ERROR! The conversion of a string to integer returned $exception")
+    println(s"ERROR! $exception")
 }
+
+// Output:
+//   ERROR! java.lang.NumberFormatException: For input string: "abc"
 ```
+
 
 But... we'll see ways to avoid this tedious way of writing and we'll let the libraries manage this.
 
