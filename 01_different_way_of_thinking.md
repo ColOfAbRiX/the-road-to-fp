@@ -86,8 +86,8 @@ do the job (I'm using Scala to write classic imperative style code. It's verbose
 
 ```Scala
 var inputList = List("apple", "orange", "fig")
-var outputList = collection.mutable.ListBuffer[String][)]
-for ( i <- 0 until inputList.length ) {
+var outputList = collection.mutable.ListBuffer[String]()
+for (i <- 0 until inputList.length) {
   outputList += inputList(i).toUpperCase()
 }
 
