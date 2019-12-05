@@ -2,7 +2,9 @@
 
 Educational material to learn functional programming starting from OOP
 
-Currently available only as [notes file](the_road_to_fp_notes.md)
+Website: https://colofabrix.github.io/the-road-to-fp/
+
+Available as [scratch notes](the_road_to_fp_notes.md)
 
 ## Chapters
 
@@ -54,7 +56,8 @@ Currently available only as [notes file](the_road_to_fp_notes.md)
 
 ## Author Information
 
-Scala developer and passionate about functional programming, former dev-ops and sysadmin, brewing beer with passion and 4-way formation skydiving competitor
+Scala developer and passionate about functional programming, former dev-ops and sysadmin, home
+brewing beer with a passion and 4-way formation skydiving competitor.
 
 [Fabrizio Colonna](mailto:colofabrix@tin.it)
 

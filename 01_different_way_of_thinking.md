@@ -22,7 +22,7 @@ These are also the reason why I find FP so fun and interesting, because they for
 new point of view and see problems from a different angle, increasing the tools at my disposal when
 I tackle a problem.
 
-I have highligted that these changes are needed to become proficient and write good code but you
+I have highlighted that these changes are needed to become proficient and write good code but you
 could say that there are "levels of functional style" where at one end you can work with just pure
 functions, composing and calling them, without introducing anything new or, on the other end, you
 can make use of tools developed to make specific tasks easier. The choice of where to stand is on
@@ -59,7 +59,7 @@ data from a network with its possible failures, validate user inputs and so on.
 
 Sure, you can absolutely write pure functions and you'll get the job done but the resulting code
 will be intricate, an endless forest of calls and compositions. So you'll try clever tricks to reuse
-what you wrote, put functions in libraries, make them generic as "The Good Cooder Guide (TM)" tells
+what you wrote, put functions in libraries, make them generic as "The Good Coder Guide (TM)" tells
 you to do to be DRY. But why reinvent the wheel? Here is where the next step comes in.
 
 There are a series of tools in FP that will make your life easier, that you'll be able to reuse and
@@ -87,11 +87,13 @@ do the job (I'm using Scala to write classic imperative style code. It's verbose
 ```Scala
 var inputList = List("apple", "orange", "fig")
 var outputList = collection.mutable.ListBuffer[String][)]
-for { i <- 0 until inputList.length } {
+for ( i <- 0 until inputList.length ) {
   outputList += inputList(i).toUpperCase()
 }
 
 println(outputList)
+// Output:
+//   ListBuffer(APPLE, ORANGE, FIG)
 ```
 
 This piece of code contains a lot of things that are **not** related to what I want to do. Remember,
@@ -110,6 +112,8 @@ Let's see how I would do it in FP style:
 var inputList = List("apple", "orange", "fig")
 val outputList = inputList.map(_.toUpperCase())
 println(outputList)
+// Output:
+//   List(APPLE, ORANGE, FIG)
 ```
 
 Leaving aside that it's much shorter (because it's not always the case) the real difference is how I
