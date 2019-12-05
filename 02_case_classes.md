@@ -59,8 +59,7 @@ We'll see immutable data structures in the future.
 
 ## Pattern matching with case classes
 
-Pattern matching is a really powerful tool, so much that you will ask yourself how you did when
-you were not using it!
+Pattern matching is a really powerful tool, so much that you will ask yourself how you did when you were not using it!
 
 In its essence it matches a variable with a given patternand executes some code for that case. This definition is simple and yet it has
 many implications. For instance, we can match a variable against:
@@ -78,8 +77,7 @@ In particular the last two points add a lot of power. And, more than this, we as
 * assign the matched value to a variable of that type so to **safely** enforce the type;
 * assign the values of the fields of the variable to an inner variable that we can use later.
 
-Part of the magic of pattern magic comes from the `unapply()` method that is used by the compiler to
-extract the fields values from the variable. The article [Scala pattern matching: apply the
+Part of the magic of pattern magic comes from the `unapply()` method that is used by the compiler to extract the fields values from the variable. The article [Scala pattern matching: apply the
 unapply][6] has a good description of `unapply()` and how it works together with pattern matching
 and, at the bottom of this page, there is a summary about objects.
 
