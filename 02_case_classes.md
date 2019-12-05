@@ -23,14 +23,15 @@ here for more details and thoughts on case classes.
 
 ## What they add to normal classes
 
-Technically, there is no difference between a class and a case class: they're both the same thing under the hood. A case class is a normal class
-where the compiler add some predefined functionalities:
+Technically, there is no difference between a class and a case class: they're both the same thing
+under the hood. A case class is a normal class where the compiler adds several predefined
+functionalities:
 
-* a companion object containing a predefined `apply()` and `unapply()` methods;
+* a companion object which contains a predefined `apply()` and `unapply()` methods;
 * getter (but no setter) methods for the constructor arguments so that they become public fields;
-* a `copy()` method generated to enable cloning an object;
+* a `copy()` method is generated to be able to clone an object;
 * they provide a visually nice `toString()` returning all the fields of the class;
-* `hashCode()` and `equals()` methods to compare case classes "the right way";
+* `hashCode()` and `equals()` method to compare case classes "the right way";
 * they are also instances of `Product` and thus inherit these methods `productElement()`,
   `productArity()` and `productIterator()`.
 
@@ -83,6 +84,8 @@ and, at the bottom of this page, there is a summary about objects.
 
 Again, this is only a brief summary because other articles cover this topic with very good details.
 See the references below for more links.
+
+More reading on [this page][5].
 
 ## Build data types with case classes
 
