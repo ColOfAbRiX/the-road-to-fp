@@ -246,6 +246,9 @@ references, comments, examples and exercises.
   * http://blog.higher-order.com/blog/2015/06/23/a-scala-comonad-tutorial/
   * https://bartoszmilewski.com/2017/01/02/comonads/
 
+## Cats
+* https://sihil.net/cats-validated.html
+
 ## Introduction to Category Theory
 
 * Types and mathematics
@@ -263,10 +266,17 @@ references, comments, examples and exercises.
   * https://milessabin.com/blog/2012/05/10/shapeless-polymorphic-function-values-2/
   * https://typelevel.org/cats/datatypes/functionk.html
   * http://eed3si9n.com/learning-scalaz/Natural-Transformation.html
+  * https://lukepalmer.wordpress.com/2008/04/28/whats-a-natural-transformation/
 * Parametric polymorphism
   * https://milessabin.com/blog/2012/05/10/shapeless-polymorphic-function-values-2/
   * https://bartoszmilewski.com/2014/09/22/parametricity-money-for-nothing-and-theorems-for-free/
   * https://stackoverflow.com/questions/3071136/what-does-the-forall-keyword-in-haskell-ghc-do
+* Algebras, Coalgebras, Catamorphisms
+  * https://stackoverflow.com/questions/16015020/what-does-coalgebra-mean-in-the-context-of-programming
+  * https://blog.hablapps.com/2016/10/11/yo-dawg-we-put-an-algebra-in-your-coalgebra/
+  * https://blog.hablapps.com/2017/02/20/algebras-for-the-masses/
+  * https://medium.com/@olxc/catamorphisms-and-f-algebras-b4e91380d134
+  * https://blog.hablapps.com/2016/10/11/yo-dawg-we-put-an-algebra-in-your-coalgebra/
 * References:
   * http://danshiebler.com/2018-11-10-category-solutions/
   * https://medium.com/free-code-camp/demistifying-the-monad-in-scala-part-2-a-category-theory-approach-2f0a6d370eff
@@ -275,14 +285,16 @@ references, comments, examples and exercises.
 
 * How to understand Scala type system using category theory
 * Representable functors, optimization
+* Folding
+  * https://softwaremill.com/beautiful-folds-in-scala/
 * Monoids, definition, generalization, examples
   * https://apocalisp.wordpress.com/2010/06/14/on-monoids/
   * https://apocalisp.wordpress.com/2010/07/21/more-on-monoids-and-monads/
-* Adjuctions and definition of Monads and Comonads
+* Adjunctions and definition of Monads and Comonads
 * Free monoids and free monads
   * http://blog.higher-order.com/blog/2013/08/20/free-monads-and-free-monoids/
   * https://bartoszmilewski.com/2015/07/21/free-monoids/
-* Lenses ad Comonad Coalgebras
+* Lenses and Comonad Coalgebras
   * https://r6research.livejournal.com/23705.html
 
 ## Few concepts in Type theory
@@ -300,13 +312,26 @@ references, comments, examples and exercises.
 
 ## Type Level Programming
 
+* Overcoming type erasure
+   * https://medium.com/@sinisalouc/overcoming-type-erasure-in-scala-8f2422070d20
 * The flexibility of dynamic types with the checkes of static types
+* Dependent types
 * Type resolution in scala: implicits, type, aux pattern
+  * https://www.youtube.com/watch?v=R8GksuRw3VI (great video on dependent types and Aux pattern)
+  * https://karlcode.owtelse.com/blog/2017/04/11/the-rise-and-hopefully-fall-of-the-aux-pattern-2/?mode=doc#slide-0
 * Example with Boolean/If
 * Example with natural numbers
-* HLists
-* Map on HLists
+* Shapeless basics: HLists, tuples, generics
+* Map on HLists and polymorphic functions
   * https://milessabin.com/blog/2012/05/10/shapeless-polymorphic-function-values-2/
+* Encoder/Decoder derivation with shapeless
+   * https://www.beyondthelines.net/programming/reducing-type-class-boilerplate-with-shapeless/
+   * https://stackoverflow.com/questions/22418309/creating-a-shapeless-polymorphic-function-with-a-naked-type-param
+   * https://blog.free2move.com/shapeless-hlists-and-how-to-traverse-them/
+   * https://www.beyondthelines.net/programming/reducing-type-class-boilerplate-with-shapeless/
+   * https://olegpy.com/traversing-hlists/
+* More on shapeless
+   * https://stackoverflow.com/questions/20912679/what-is-at-in-shapeless-scala
 * References:
   * https://gigiigig.github.io/tlp-step-by-step/introduction.html
   * https://apocalisp.wordpress.com/2010/06/08/type-level-programming-in-scala/
