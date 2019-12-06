@@ -44,9 +44,9 @@ Available as [scratch notes](the_road_to_fp_notes.md)
 
 [Chapter 17 - Comonads](17_comonads.md)
 
-[Chapter 18 - Introduction to Category Theory](18__intro_category_theory.md)
+[Chapter 18 - Introduction to Category Theory](18_intro_category_theory.md)
 
-[Chapter 19 - Basic concepts of Category Theory](19_basics_category_theory.md)
+[Chapter 19 - Basic concepts of Category Theory](19_basic_categories.md)
 
 [Chapter 20 - Revisiting structures and tools using Category Theory](20_revisiting_with_cats.md)
 
