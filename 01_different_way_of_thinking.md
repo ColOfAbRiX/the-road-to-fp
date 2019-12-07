@@ -92,7 +92,6 @@ for (i <- 0 until inputList.length) {
 }
 
 println(outputList)
-
 // Output:
 //   ListBuffer(APPLE, ORANGE, FIG)
 ```
@@ -113,7 +112,6 @@ Let's see how I would do it in FP style:
 var inputList = List("apple", "orange", "fig")
 val outputList = inputList.map(_.toUpperCase())
 println(outputList)
-
 // Output:
 //   List(APPLE, ORANGE, FIG)
 ```
