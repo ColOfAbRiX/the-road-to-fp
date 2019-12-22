@@ -1,5 +1,128 @@
 # Pure functions and referential transparency
 
+## Pure functions
+
+Pure functions are are the essence of functional programming.
+
+Adapting a quote from the book "Functional Programming Simplified" from Alvin Alexandre, functional
+programming are the techniques and methods that result from restricting ourselves to pure functions.
+
+So, what is a pure function? It is a very simple machine as seen from the outside world because it's
+a type of machine that need some stuff to work on and that spits out the result. We can imagine it
+as closed box with three simple parts:
+
+* an input, where you put the things the machine needs to work on;
+* the engine (the body of the function), which plays with the input and the inputs only to produce
+  the output;
+* an output, which is some elaboration of the things given in the and the input only.
+
+Here's a simple example in Scala:
+
+```Scala
+def double(input: Int): Int = input * 2
+def length(input: String): Int = input.length
+
+double(3)
+length("FP")
+
+// Output:
+// res1: Int = 6
+// res2: Int = 2
+```
+
+It's very important to stress that the engine **works only on the things given as inputs and
+produces a result that is only presented at its output**. There is another way to rephrase this same
+concept that I see quote more often on the web which says that **the output of a function depends
+only on its inputs**.
+
+There is nothing else that the engine can do:
+
+```Code
+Inputs -> elaboration of the inputs into output -> Output
+```
+
+Why? What other things can a normal function do beside giving a result? Plenty.
+
+Can you think of a function that does something other than returning a result? Let's see together
+some examples:
+
+* a function can print on the screen. That's not a value that it returns, actually `println` doesn't
+  return a value but just `Unit`;
+* it can read some text from the keyboard. This time the function returns something (what has been
+  read) but there is no input! The engine has no input work work with and the output is produced in
+  some other way;
+* it can return the current time, again as the previous example the output doesn't depend only on
+  the input so the function's engine didn't really work on the inputs to produce an output;
+* a function can work on a list to get the first elementthen throws an exception before it can
+  return the result. Yes, an exception is not an output, it's something else that the function can
+  do and that you can handle in some specific ways;
+* and more...
+
+And here the Scala code of the examples mentioned
+
+```Scala
+// def println(x: Any): Unit = Console.println(x)
+// NOTE: The return type is Unit
+println("Hello, World!")
+
+// def readLine(): String = in.readLine()
+// NOTE: There are no arguments
+val line = scala.io.StdIn.readLine()
+
+// public final Date getTime()
+// NOTE: This is defined in java. But still no arguments.
+import java.util.Calendar
+Calendar.getInstance().getTime()
+
+// The list is empty, there is no .head
+List().head
+
+// Output:
+//   Hello, World!
+//   res1: java.util.Date = Sun Dec 22 00:54:55 CET 2019
+//   java.util.NoSuchElementException: head of empty list
+```
+
+It's more difficult to reason with impure functions because they can do things that are not
+contained in their box and there are plenty of bad things that can happen that you need to handle.
+You need to handle exceptions. You need to reason about the interactions that the function calls
+you're making do with other components of your system, you need to plan for network delays, you need
+to check a file is present or your functions, you need to provide thread lock mechanisms if your
+functions shares a state.
+
+## On side effects
+
+So we don't like side effects. Or do we?
+
+Have you noticed that all the side effects mentioned above are somewhat related to interacting with
+the world? That's because what side effects are, interactions with the world. So we need them, we
+need interactions with the world, that's why we write programs in the first place, to do stuff! To
+read and process files, to communicate on the network, to calculate a result and display it. The
+reason to run a program is to have side effects!
+
+Pure functions **do** no real world work.
+
+Yes, this is the catch, pure functions are difficult to work with and make our lives as developers
+more unpredictable but we need them. Over the years a scientists and programmers all around the
+world have developed (and are still actively working on) a lot of techniques and tools to have side
+effects that we can control and deal with.
+
+I would like to say that functional programming is also about the tools and techniques to work with
+side effects efficiently.
+
+Right now is too early to introduce and talk about these tools and techniques, we need a bit more
+background but you can already start assimilating the facts that:
+
+* side effects are bad;
+* pure functions have no side effects;
+* we need side effects to interact with the world;
+* thus we need tools and techniques to tightly control side effects.
+
+A very good resource to get an all round understanding of pure function is provided by (Chapter
+1 of Functional Programming in Scala)[2]
+
+## Referential transparency
+
 ## Simple examples of both concepts and counter examples
 
 ## Show that loops are not good, they require mutability
@@ -10,6 +133,9 @@
 
 ## Importance of pure function signatures
 
+Functions with no inputs or functions that return `Unit` are always impure functions. Think of it:
+if they
+
 ## Working with expressions
 
 ## Generating random numbers
@@ -18,12 +144,12 @@
 
 ## References
 
-* [Functional programming in Scala][1] Chapter 1
-* [Referential transparency][2]
-* [The Benefits of Pure Functions][3]
-* [Understanding Immutability and Pure Functions (for OOP)][4]
+* [Functional programming in Scala][2] Chapter 1
+* [Referential transparency][3]
+* [The Benefits of Pure Functions][4]
+* [Understanding Immutability and Pure Functions (for OOP)][5]
 
-[1]: https://www.manning.com/books/functional-programming-in-scala
-[2]: https://www.wikiwand.com/en/Referential_transparency
-[3]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
-[4]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions
+[2]: https://www.manning.com/books/functional-programming-in-scala
+[3]: https://www.wikiwand.com/en/Referential_transparency
+[4]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
+[5]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions

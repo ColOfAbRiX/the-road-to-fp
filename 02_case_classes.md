@@ -224,7 +224,11 @@ it is called a companion object.
 A companion object and its class can access each other’s private members (fields and methods).
 
 ```Scala
-// Follows the example above, to work it must be define in the same file as its companion
+// Follows the example above (it won't work on REPL)
+object MyComponent {
+  val enabled: Boolean = false
+  private val otherConfig: String = "Some config"
+}
 class MyComponent(name: String) {
   val companionOtherConfig = MyComponent.otherConfig
 }
@@ -293,8 +297,9 @@ has a `isEmpty()` and a `get()` method as [explained here][12]. For example we c
 return an `Option`:
 
 ```Scala
+class Person(val name: String, val age: Int)
 object Person {
-  // ...
+  def apply(name: String, age: Int): Person = new Person(name, age)
   def unapply(p: Person): Option[(String, Int)] = Some(p.name, p.age)
 }
 
@@ -308,6 +313,17 @@ matt match {
 // Output:
 //   Name: Matt Smith, Age: 30
 ```
+
+## Exercises
+
+* Use case classes to represent a person with its name, surname and age. Create some instances to
+  demonstrate the use of your data structures
+
+* Use case classes to represent a pet with its name and owner. The owner is of type `Person`. Create
+  some instances to demonstrate the use of your data structures
+
+* Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`.
+  Create some instances to demonstrate the use of your data structures
 
 ## References
 

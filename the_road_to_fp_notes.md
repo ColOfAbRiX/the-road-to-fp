@@ -22,6 +22,10 @@ references, comments, examples and exercises.
 * Ease of reasoning with black-box approach
 * FP referential transparency makes things cumbersome. Requirements of new tools
 * The unfortunate way of learning FP in Scala: Haskell, few books, blog posts
+* Composability
+   * Design and analysis approaches: blackbox, top-down, bottom-up
+   * Composition of blocks
+   * Programming languages and modularity
 
 ## Scala language feature: Case classes
 
@@ -55,9 +59,10 @@ references, comments, examples and exercises.
 
 ## Recursion
 
-* Solves the lack of loops
+* Solves the lack of loops for primitives
   * https://sidburn.github.io/blog/2016/04/05/mutable-loops-to-immutability
 * Recursion is the equivalent of induction reasoning
+  * Rules of induction and how to translate them to programmi
 * Examples: list length, take nth element, flatten list, map, flatMap
 * Tail recursion. But it doesn't solve all problems!
 * Recursion from two different functions
@@ -75,6 +80,7 @@ references, comments, examples and exercises.
   * https://alvinalexander.com/scala/fp-book/how-to-use-by-name-parameters-scala-functions
 * Streams as infinite lists
   * https://www.youtube.com/watch?v=cahvyadYfX8&t=741s
+* Lazy collections and how they can improve performance
 * Lazyness is like functions as values
 * References:
   * https://www.manning.com/books/functional-programming-in-scala Chapter 5
@@ -154,6 +160,7 @@ references, comments, examples and exercises.
 * Apply as lifting funtions and pipelining
   * https://fsharpforfunandprofit.com/posts/elevated-world/#apply
 * Validating errors in a pipeline
+  * https://sihil.net/cats-validated.html
 * Traverse and sequence
   * https://fsharpforfunandprofit.com/posts/elevated-world-4/
   * https://sidburn.github.io/blog/2016/04/14/sequence-and-traverse
@@ -253,6 +260,7 @@ references, comments, examples and exercises.
 
 * Types and mathematics
   * https://bartoszmilewski.com/2014/11/24/types-and-functions/
+  * https://corecursive.com/category-theory-is-how-our-minds-work-with-bartosz-milewski/
 * Definition of a category
 * Mapping to types and other "things"
 * What "structure" means in mathematics
@@ -314,14 +322,15 @@ references, comments, examples and exercises.
 
 * Overcoming type erasure
    * https://medium.com/@sinisalouc/overcoming-type-erasure-in-scala-8f2422070d20
-* The flexibility of dynamic types with the checkes of static types
-* Dependent types
-* Type resolution in scala: implicits, type, aux pattern
+* How the compiler does type resolution and infers missing parameters
+* Dependent types and the Aux pattern
+* Type resolution in scala: implicits, type
   * https://www.youtube.com/watch?v=R8GksuRw3VI (great video on dependent types and Aux pattern)
   * https://karlcode.owtelse.com/blog/2017/04/11/the-rise-and-hopefully-fall-of-the-aux-pattern-2/?mode=doc#slide-0
-* Example with Boolean/If
+* Example of defining Boolean/If with types
 * Example with natural numbers
 * Shapeless basics: HLists, tuples, generics
+* Working with types and HList is working with recursion and induction reasoning
 * Map on HLists and polymorphic functions
   * https://milessabin.com/blog/2012/05/10/shapeless-polymorphic-function-values-2/
 * Encoder/Decoder derivation with shapeless
