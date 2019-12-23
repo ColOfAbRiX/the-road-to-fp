@@ -1,6 +1,7 @@
 # The Road to Functional Programming
 
-Educational material to learn functional programming from scratch
+Educational material to learn functional programming in Scala from scratch in a structured and
+complete way.
 
 **Only few chapters available!**
 

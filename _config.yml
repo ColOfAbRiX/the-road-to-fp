@@ -1,1 +1,20 @@
-theme: jekyll-theme-cayman
+theme: jekyll-theme-architect
+#theme: jekyll-theme-cayman
+#theme: jekyll-theme-dinky
+#theme: jekyll-theme-hacker
+#theme: jekyll-theme-leap-day
+#theme: jekyll-theme-merlot
+#theme: jekyll-theme-midnight
+#theme: jekyll-theme-midnight
+#theme: jekyll-theme-minimal
+#theme: jekyll-theme-modernist
+#theme: jekyll-theme-primer
+#theme: jekyll-theme-slate
+#theme: jekyll-theme-tactile
+#theme: jekyll-theme-tactile
+#theme: jekyll-theme-time-machine
+
+title: The Road to Functional Programming
+description: Educational material to learn functional programming in Scala from scratch in a structured and complete way.
+google_analytics: UA-154864461-1
+show_downloads: false
