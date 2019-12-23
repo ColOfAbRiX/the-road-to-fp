@@ -50,28 +50,44 @@ get the grasp of the most advanced topics. I will introduce concepts little by l
 understanding and intuition behind each of them and also what real world problems they solve. I will
 only assume that the reader is already well grounded in other programming paradigms.
 
+On the other hand I will assume that you area already a developer and know how to do your job, that
+you aware and apply good coding principle and that you strive for high quality. I will assume you
+are familiar with Scala and that the syntax is not new to you but I will explain the syntax and
+mechanics of what is needed for functional programming.
+
 Overall, what I want the reader to achieve is:
 
-* to be familiar in most of the FP concepts and know their purpose, from the simplest to the more
+* to be familiar with most of the FP concepts and know their purpose, from the simplest to the more
   advanced ones;
 * become autonomous and be able to use online material;
-* write functional code in Scala;
+* write purely functional code in Scala;
 * be able to use the most common FP libraries.
 
 ## Why Scala
 
-Why Scala.... For a few reasons. I like the JVM, it's a solid and tested platform that's been around
-for several years, it has great adoption on the market and it will keep this position for many years
-to come thanks to Java. Scala and Java can exchange libraries and this is a big kickstart for Scala
-because of the vast code base already available. I (mostly) like its syntax, its terseness and
-expressive power, I like the language features. I like the community around it and the problems that
-are solved by languages like Scala.
+Why Scala.... For a few reasons.
 
-However with Scala it's been really annoying for me to learn FP because the vast majority of the
+I like the JVM, it's a solid and tested platform that's been around for several years, I worked with
+it in the past years and I ended up appreciating its features, it has great adoption on the market
+and it will keep this position for many years to come thanks to Java and its ecosystem.
+
+Scala and Java can exchange libraries and this is a big kickstart for anyone coming from Java that
+want to build applications in Scala because you can start right off with what you already know.
+
+I like the community around it, there is a great bunch of people that are really good and motivated
+and produce a lot of great material and provide great support.
+
+I mostly love its syntax, its terseness and expressive power, I like the language features. Scala is
+also implementing advanced and modern FP techniques and type level programming features that make it
+very expressive, powerful and super fun to use and explore.
+
+However, with Scala, I found it really really annoying to learn FP because the vast majority of the
 content found around is for Haskell. Haskell is *the* authority on FP and for good reasons, I'm not
 denying that. But I see no reason why I should learn one language to learn another language. It
 would be a bit like going from London to Edinburgh via Paris. Sure you can do it but... I don't want
-to learn Haskell! I want to learn Scala!
+to learn Haskell! I want to learn Scala! I have to say this is changing in the past years because
+the community is realizing that Scala is a world on its own and we're gradually moving away from
+Haskell and more quality material is present on the internet (I hope this guide to be one).
 
 So this is also to have good, complete materials in Scala.
 

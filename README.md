@@ -16,7 +16,7 @@ Available as [scratch notes](the_road_to_fp_notes.md)
 
 [Chapter 2 - Scala language feature: Case classes](02_case_classes.md)
 
-[Chapter 3 - Pure functions and referential transparency](03_pure_functions.md) - Empty
+[Chapter 3 - Pure functions and referential transparency](03_pure_functions.md) - In progress
 
 [Chapter 4 - Recursion](04_recursion.md) - Empty
 

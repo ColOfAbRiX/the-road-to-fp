@@ -11,10 +11,10 @@ So, what is a pure function? It is a very simple machine as seen from the outsid
 a type of machine that need some stuff to work on and that spits out the result. We can imagine it
 as closed box with three simple parts:
 
-* an input, where you put the things the machine needs to work on;
+* the inputs, where you put the things the machine needs to work on;
 * the engine (the body of the function), which plays with the input and the inputs only to produce
-  the output;
-* an output, which is some elaboration of the things given in the and the input only.
+  an output;
+* the output, which is some elaboration of the things given in the and the input only.
 
 Here's a simple example in Scala:
 
@@ -23,11 +23,12 @@ def double(input: Int): Int = input * 2
 def length(input: String): Int = input.length
 
 double(3)
-length("FP")
-
 // Output:
-// res1: Int = 6
-// res2: Int = 2
+//   Int = 6
+
+length("FP")
+// Output:
+//   Int = 2
 ```
 
 It's very important to stress that the engine **works only on the things given as inputs and
@@ -44,44 +45,83 @@ Inputs -> elaboration of the inputs into output -> Output
 Why? What other things can a normal function do beside giving a result? Plenty.
 
 Can you think of a function that does something other than returning a result? Let's see together
-some examples:
-
-* a function can print on the screen. That's not a value that it returns, actually `println` doesn't
-  return a value but just `Unit`;
-* it can read some text from the keyboard. This time the function returns something (what has been
-  read) but there is no input! The engine has no input work work with and the output is produced in
-  some other way;
-* it can return the current time, again as the previous example the output doesn't depend only on
-  the input so the function's engine didn't really work on the inputs to produce an output;
-* a function can work on a list to get the first elementthen throws an exception before it can
-  return the result. Yes, an exception is not an output, it's something else that the function can
-  do and that you can handle in some specific ways;
-* and more...
-
-And here the Scala code of the examples mentioned
+some examples.
 
 ```Scala
 // def println(x: Any): Unit = Console.println(x)
-// NOTE: The return type is Unit
 println("Hello, World!")
+// Output:
+//   Hello, World!
+```
 
+A function can print on the screen. That's not a value that it returns, actually `println` doesn't
+return a value but just `Unit`. A function that returns `Unit` has always side effects or it won't
+be a useful function.
+
+```Scala
 // def readLine(): String = in.readLine()
-// NOTE: There are no arguments
 val line = scala.io.StdIn.readLine()
+```
 
+A function that can read some text from the keyboard. This time the function returns something (what
+has been read) but there is no input! The internal engine of the functions has no input to work with
+and the output is produced in some other way... side effects! A function that produces an output
+with an empty argument list is always an impure function or it won't do real work.
+
+```Scala
 // public final Date getTime()
 // NOTE: This is defined in java. But still no arguments.
 import java.util.Calendar
 Calendar.getInstance().getTime()
-
-// The list is empty, there is no .head
-List().head
-
 // Output:
-//   Hello, World!
-//   res1: java.util.Date = Sun Dec 22 00:54:55 CET 2019
+//   java.util.Date = Sun Dec 22 00:54:55 CET 2019
+```
+
+A function that returns the current time is similar to the previous previous example where the
+output doesn't depend only on the input. The function's engine didn't really work on the inputs to
+produce an output.
+
+```Scala
+// The list is empty, there is no head of the list
+List().head
+// Output:
 //   java.util.NoSuchElementException: head of empty list
 ```
+
+A sample function can work on a list to get the first element but then it throws an exception before
+it can return the head. Yes, an exception is not a return value of a function, it's something else
+that the function can do and that you can handle in some specific ways.
+
+```Scala
+var state: Int = 0
+
+def increment(amount: Int): Int = {
+    state += 1
+    state
+}
+
+increment(1)
+increment(1)
+increment(1)
+// Output:
+//   Int = 1
+//   Int = 2
+//   Int = 3
+```
+
+A function that works on a shared counter and increments this counter by a number and returns the
+current counter value. This is not pure because several calls of the same method with the same
+arguments return different values. Or in other words the output doesn't depend only on the inputs of
+the functions but also on an internal state.
+
+To summarize, some easy way to quickly understand if a function is impure is to check if:
+
+* it returns `Unit` (it must do side effects to be useful);
+* it requires no arguments (the output is produced );
+* it can throw exceptions;
+* there is an internal or shared state that the function uses.
+
+This is not an exhaustive list but it's a starting point.
 
 It's more difficult to reason with impure functions because they can do things that are not
 contained in their box and there are plenty of bad things that can happen that you need to handle.
@@ -103,8 +143,8 @@ reason to run a program is to have side effects!
 Pure functions **do** no real world work.
 
 Yes, this is the catch, pure functions are difficult to work with and make our lives as developers
-more unpredictable but we need them. Over the years a scientists and programmers all around the
-world have developed (and are still actively working on) a lot of techniques and tools to have side
+more unpredictable but we need them. Over the years scientists and programmers all around the world
+have developed (and are still actively working on) a lot of techniques and tools to have side
 effects that we can control and deal with.
 
 I would like to say that functional programming is also about the tools and techniques to work with
@@ -116,7 +156,7 @@ background but you can already start assimilating the facts that:
 * side effects are bad;
 * pure functions have no side effects;
 * we need side effects to interact with the world;
-* thus we need tools and techniques to tightly control side effects.
+* thus we need tools and techniques to tightly control and handle side effects.
 
 A very good resource to get an all round understanding of pure function is provided by (Chapter
 1 of Functional Programming in Scala)[2]
