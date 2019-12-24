@@ -62,7 +62,8 @@ Available as [scratch notes](the_road_to_fp_notes.md)
 ## Author Information
 
 Scala developer since 2014 and passionate about functional programming, former dev-ops and sysadmin
-engineer, I love brewing and discovering beer with and I compete in 4-way formation skydiving.
+engineer, I love brewing and discovering beer around the world and I compete in 4-way formation
+skydiving.
 
 [Fabrizio Colonna](mailto:colofabrix@tin.it)
 

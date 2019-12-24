@@ -23,6 +23,29 @@ println(MyComponent.enabled)
 
 By all means, this is a language-level implementation of the [Singleton pattern][2].
 
+Another use case for objects is to use them as containers to modularize the application. You just
+forget everything about OOP and FP and you just create an object when you want to organize your code
+and place things in a separate place from others. It's a bit like packages:
+
+```Scala
+package com.example
+
+object UserModule {
+  def createUser(name: String, surname: String): String = s"$name $surname"
+  // More methods, variables, classes and so on here
+}
+
+object PetModule {
+  def createPet(name: String, age: Int): String =  s"$name, age: $age"
+  // More methods, variables, classes and so on here
+}
+
+import UserModule._
+
+createUser("Matt", "Smith")
+PetModule.createPet("fido", 5)
+```
+
 When a singleton object is named the same as a class and it is defined inside the same source file,
 it is called a companion object.
 
@@ -108,6 +131,7 @@ return an `Option`:
 
 ```Scala
 class Person(val name: String, val age: Int)
+
 object Person {
   def apply(name: String, age: Int): Person = new Person(name, age)
   def unapply(p: Person): Option[(String, Int)] = Some(p.name, p.age)

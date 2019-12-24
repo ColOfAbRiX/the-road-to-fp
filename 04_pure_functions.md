@@ -140,7 +140,7 @@ need interactions with the world, that's why we write programs in the first plac
 read and process files, to communicate on the network, to calculate a result and display it. The
 reason to run a program is to have side effects!
 
-Pure functions **do** no real world work.
+Pure functions **do** no real-world work.
 
 Yes, this is the catch, pure functions are difficult to work with and make our lives as developers
 more unpredictable but we need them. Over the years scientists and programmers all around the world
@@ -150,7 +150,7 @@ effects that we can control and deal with.
 Before these techniques were discovered and developed in Haskell, the researchers that built haskell
 were having a very difficult time to just use pure functions and they didn't really know how
 interact with the operating system, read files, execute commands! Have a look at the [interesting
-story of the development of Haskell](6) to learn more about this process.
+story of the development of Haskell](6) to learn more about the development of FP.
 
 I would like to say that functional programming is also about working with the tools and techniques
 to work with side effects efficiently.
@@ -166,6 +166,8 @@ background but you can already start assimilating the facts that:
 A very good resource to get an all round understanding of pure function is provided by [Chapter
 1 of Functional Programming in Scala](2)
 
+## Pure functions and set theory
+
 ## Referential transparency
 
 ## Simple examples of both concepts and counter examples
@@ -178,14 +180,32 @@ A very good resource to get an all round understanding of pure function is provi
 
 ## Importance of pure function signatures
 
-Functions with no inputs or functions that return `Unit` are always impure functions. Think of it:
-if they
+Functions with no inputs or functions that return `Unit` are always impure functions because if they
+return unit without side effect then they won't be useful so they must have side effect and if they
+require no input then their output must come from a side effect.
+
+This is a very simple example of how the function signature can be of great interest in functional
+programming, because they can tell us a lot and we can reason about them in a very general way.
 
 ## Working with expressions
 
 ## Generating random numbers
 
 ## Memoization, or values as functions
+
+## Exercises
+
+* Create a pure function `String => String` that maps each input string into its uppercase string.
+
+* Reconnecting to the exercise of animals in the case classes chapter, create a pure function with
+  signature `Animal => String` that given an animal returns its name.
+
+* We want to work a counter, to increment and decrement it of a given amount. How can you write a
+  function that works on a counter but it's pure?
+
+* Write a pure function that discovers the maximum integer in a list of positive integers `List[Int]
+  => Int` and returns `-1` if the list is empty, if there are negative numbers or any other sort of
+  issues. The function must use mutable variables and a for loop. Is it still a pure function? Why?
 
 ## References
 
