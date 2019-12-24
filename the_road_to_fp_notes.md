@@ -4,43 +4,6 @@ At the moment this page is just a dump of raw ideas of what to put in the variou
 have a rough organization of the content. The topics below will have to be properly expanded, with
 references, comments, examples and exercises.
 
-## Target of this content
-
-* To learn functional programming applied to Scala
-* To be able to understand the existing online materials
-* To be able to use the main FP libraries
-* To have an intuition of the theory behind FP
-* To become fluent in the majority of FP concepts, tools and techniques
-
-## Different way of thinking
-
-* Put aside all other paradigms, you'll need to learn afresh
-* Paradigm shift: tons of new concepts, structures, techniques, abstractions
-* Declarative programming, cleaner way of thinking
-  * https://bartoszmilewski.com/2015/04/15/category-theory-and-declarative-programming/
-* Abstract over implementation details
-* Ease of reasoning with black-box approach
-* FP referential transparency makes things cumbersome. Requirements of new tools
-* The unfortunate way of learning FP in Scala: Haskell, few books, blog posts
-* Composability
-   * Design and analysis approaches: blackbox, top-down, bottom-up
-   * Composition of blocks
-   * Programming languages and modularity
-
-## Scala language feature: Case classes
-
-* What they add to normal classes
-  * https://stackoverflow.com/questions/2312881/what-is-the-difference-between-scalas-case-class-and-class
-* Pattern matching with case classes
-  * https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html
-  * https://alvinalexander.com/scala/how-to-use-pattern-matching-scala-match-case-expressions
-* How to define values with types
-* Build data types with case classes
-* Best practices (like sealed traits, ...)
-  * https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/
-  * https://medium.com/@cachiama/demystifying-scala-case-classes-b4d756959dcd
-  * http://www.alessandrolacava.com/blog/scala-case-classes-in-depth/
-
 ## Definition of pure functions and referential transparency
 
 * Simple examples of both concepts and counter examples

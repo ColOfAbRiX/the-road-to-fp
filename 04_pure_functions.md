@@ -147,8 +147,13 @@ more unpredictable but we need them. Over the years scientists and programmers a
 have developed (and are still actively working on) a lot of techniques and tools to have side
 effects that we can control and deal with.
 
-I would like to say that functional programming is also about the tools and techniques to work with
-side effects efficiently.
+Before these techniques were discovered and developed in Haskell, the researchers that built haskell
+were having a very difficult time to just use pure functions and they didn't really know how
+interact with the operating system, read files, execute commands! Have a look at the [interesting
+story of the development of Haskell](6) to learn more about this process.
+
+I would like to say that functional programming is also about working with the tools and techniques
+to work with side effects efficiently.
 
 Right now is too early to introduce and talk about these tools and techniques, we need a bit more
 background but you can already start assimilating the facts that:
@@ -158,8 +163,8 @@ background but you can already start assimilating the facts that:
 * we need side effects to interact with the world;
 * thus we need tools and techniques to tightly control and handle side effects.
 
-A very good resource to get an all round understanding of pure function is provided by (Chapter
-1 of Functional Programming in Scala)[2]
+A very good resource to get an all round understanding of pure function is provided by [Chapter
+1 of Functional Programming in Scala](2)
 
 ## Referential transparency
 
@@ -188,8 +193,10 @@ if they
 * [Referential transparency][3]
 * [The Benefits of Pure Functions][4]
 * [Understanding Immutability and Pure Functions (for OOP)][5]
+* [Escape from the ivory tower: the Haskell journey][6]
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
 [4]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
 [5]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions
+[6]: https://www.youtube.com/watch?v=re96UgMk6GQ

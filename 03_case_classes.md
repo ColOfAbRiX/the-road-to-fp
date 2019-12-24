@@ -39,9 +39,6 @@ functionalities:
 * they are also instances of `Product` and thus inherit the methods `productElement()`,
   `productArity()` and `productIterator()`.
 
-At the bottom of this page there's a section that summarises companion objects in Scala including
-the `apply()` and `unapply()` methods.
-
 ### Public fields
 
 Defining getters for constructor arguments means that we can define public fields without using the
@@ -148,7 +145,7 @@ insight is also what will enable much more power and expressiveness in the futur
 functors and monads.
 
 Bartosz again explains with a master example how we should think of types and what types and a clever
-compiler can do for us in his page [Types and Functions][13]:
+compiler can do for us in his page [Types and Functions][10]:
 
 > The simplest intuition for types is that they are sets of values.
 
@@ -194,136 +191,20 @@ For this, I refer you straight to [Mark case classes as final][8]
 When case classes are used to create algebraic data types you should follow the [Algebraic Data
 Types][9] best practices.
 
-## A quick tour of objects, singleton objects and companion objects
-
-A little refresher on what Scala companion objects are. [A full article here][10].
-
-Scala classes cannot have static variables or methods. Instead a Scala class can have what is called
-a _singleton object_ which is a special instance of a class that the compiler guarantees to be
-unique and that makes available in scope without an explicit instantiation.
-
-A singleton object is declared using the `object` keyword:
-
-```Scala
-object MyComponent {
-  val enabled: Boolean = false
-  private val otherConfig: String = "Some config"
-}
-
-println(MyComponent.enabled)
-
-// Output:
-//   false
-```
-
-By all means, this is a language-level implementation of the [Singleton pattern][11].
-
-When a singleton object is named the same as a class and it is defined inside the same source file,
-it is called a companion object.
-
-A companion object and its class can access each other’s private members (fields and methods).
-
-```Scala
-// Follows the example above (it won't work on REPL)
-object MyComponent {
-  val enabled: Boolean = false
-  private val otherConfig: String = "Some config"
-}
-class MyComponent(name: String) {
-  val companionOtherConfig = MyComponent.otherConfig
-}
-
-println(new MyComponent("My name").companionOtherConfig)
-
-// Output:
-//   Some config
-```
-
-When you define a special method named `apply()` in an object, the compiler can call it without
-explicitly naming this method which means that instead of writing `MyObject.apply(...)` you simply
-write `MyObject(...)`. This is useful in a few cases:
-
-* to call methods with a shorter syntax;
-* to shorten the instantiation of new classes (omitting `new`);
-* to provide several simplified constructors.
-
-Here is a short example:
-
-```Scala
-class Loader(val name: String)
-
-object Loader {
-  def normal(): Int = 123
-  def apply(): Int = 5
-  def apply(name: String):Loader = new Loader(name)
-  def apply(first: String, second: String):Loader = new Loader(s"$first $second")
-}
-
-println(Loader.normal())             // As usual
-println(Loader())                    // Equivalent to Loader.apply()
-println(Loader("Matt Smith").name)
-println(Loader("Matt", "Smith").name)
-
-// Output:
-//   123
-//   5
-//   Matt Smith
-//   Matt Smith
-```
-
-There is another special method that can be defined in a object called `unapply()` and it is known
-as extractor. This method is used to "deconstruct" objects into its components, or "extract" the
-components, that are returned by the method and it's used by pattern matching to perform its duty.
-In the following example we can see how both `apply()` and `unapply()` are used to construct and
-deconstruct a sample object:
-
-```Scala
-class Person(val name: String, val age: Int)
-
-object Person {
-  def apply(name: String, age: Int): Person = new Person(name, age)
-  def unapply(p: Person): Tuple2[String, Int] = (p.name, p.age)
-}
-
-val matt = Person("Matt Smith", 30)
-println(Person.unapply(matt))
-
-// Output:
-//   (Matt Smith,30)
-```
-
-If we want to use extractors into pattern matching the unapply method must return a types that
-has a `isEmpty()` and a `get()` method as [explained here][12]. For example we can make `unapply()`
-return an `Option`:
-
-```Scala
-class Person(val name: String, val age: Int)
-object Person {
-  def apply(name: String, age: Int): Person = new Person(name, age)
-  def unapply(p: Person): Option[(String, Int)] = Some(p.name, p.age)
-}
-
-val matt = Person("Matt Smith", 30)
-
-matt match {
-  case Person(name, age) =>
-    println(s"Name: $name, Age: $age")
-}
-
-// Output:
-//   Name: Matt Smith, Age: 30
-```
-
 ## Exercises
 
 * Use case classes to represent a person with its name, surname and age. Create some instances to
-  demonstrate the use of your data structures
+  demonstrate the use of your data structures.
 
 * Use case classes to represent a pet with its name and owner. The owner is of type `Person`. Create
-  some instances to demonstrate the use of your data structures
+  some instances to demonstrate the use of your data structures.
 
-* Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`.
-  Create some instances to demonstrate the use of your data structures
+* Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`. Is it
+  sufficient to use just case classes? Make sure you express that all the case classes are animals.
+  Create some instances to demonstrate the use of your data structures.
+
+* Create two instances of `Person` with the same values and then compare them with `==`. Does Scala
+  recognise them as different or equals? Why?
 
 ## References
 
@@ -333,13 +214,10 @@ matt match {
 * [Prototype][4]
 * [Pattern Matching][5]
 * [Scala pattern matching: apply the unapply][6]
-* [Types and Functions][13]
+* [Types and Functions][10]
 * [scala.util.Try][7]
 * [Scala Best Practices - Mark case classes as final][8]
 * [Scala Best Practices- Algebraic Data Types][9]
-* [Companion Objects][10]
-* [Singleton Pattern][11]
-* [Why I have to return Some in unapply method][12]
 
 [1]: https://stackoverflow.com/a/2312936/1215156
 [2]: https://medium.com/@cachiama/demystifying-scala-case-classes-b4d756959dcd
@@ -350,7 +228,4 @@ matt match {
 [7]: https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala
 [8]: https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html
 [9]: https://nrinaudo.github.io/scala-best-practices/definitions/adt.html
-[10]: https://hello-scala.com/409-scala-companion-objects.html
-[11]: https://refactoring.guru/design-patterns/singleton
-[12]: https://stackoverflow.com/a/46897645/1215156
-[13]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
+[10]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
