@@ -197,6 +197,8 @@ result of evaluating that expression everywhere in the program without changing 
 program. Said the other way around, if you can replace an expression with its value then that
 expression is referentially transparent.
 
+An expression is a single unit of code that returns a value.
+
 Let's see an example:
 
 ```Scala
@@ -212,7 +214,9 @@ a + 3 * a
 In this very simple example `a + 3 * a` is referentially transparent because if we substitute to `a`
 with is value `2` the result is the same.
 
-The same is true for pure functions:
+All pure functions are necessarily referentially transparent. Since, by definition, they cannot
+access anything other than what they are passed, their result must be fully determined by their
+arguments.
 
 ```Scala
 def stringLength(input: String): Int = {
@@ -260,24 +264,25 @@ incrementCounter(2) + incrementCounter(3)
 The two expressions return different values, as expected because `incrementCounter` is not pure as
 it makes use of a shared state in the form of the variable `counter`.
 
-So pure functions are a way to achieve referential transparency. Sounds easy to me! Let's see
-another example that is more edge case:
+Sounds easy to me! Let's see another example that is a more edge case:
 
 ```Scala
 def factorial(n: Int): Int = {
     // In this example I don't want to deal with error cases, so just return 1 when n < 0
     var accumulator: Int = 1
+
     for (i <- 1 to Math.max(0, n))
         accumulator = i * accumulator
+
     accumulator
 }
 ```
 
 Is this function pure or not? Is it referentially transparent or not? The for loop uses the state
-represented by the variable `accumulator` so you might think the function is not pure.
+represented by the variable `accumulator` so the function is not pure because it has impure code.
 
-But even if we use `var` the function is indeed pure and you can check it using the definition of
-referential transparency: we can replace the call to this function with its output:
+But even if we use a shared state the function is referentially transparent because we can replace
+the call to this function with its output:
 
 ```Scala
 factorial(3)
@@ -295,6 +300,10 @@ a very good reason like deep performance optimization you shouldn't do it.
 
 ## Loops and immutable values
 
+**WIP**
+
+What we just saw bring us to some considerations.
+
 ## Local mutabilty can be used
 
 ## Importance of pure function signatures
@@ -308,26 +317,83 @@ programming, because they can tell us a lot and we can reason about them in a ve
 
 ## Working with expressions
 
+**WIP**
+
+In functional programming we like that every statement has a value when evaluated. This ma
+
 ## Generating random numbers
 
 ## Memoization, or values as functions
 
+**WIP**
+
 There is another way we can understand pure functions: pure functions are replacement machines that
-for every input
+for every input substitute an output. The lambda calculus the embodyment of this concept.
 
-## Pure functions and algebra
+From this point of we can also perform a trick. We can tabulate each resulting value of a function
+in a table that for every input associates an output.
 
-With pure functions you have at your disposal algebra that can help you visualize what is happening
-and what the functions is doing because we can use this new tool to draw diagrams of the functions.
+Let's say the input type is the set of hexadecimal digits: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d,
+e and f. The function we want to write converts this digit into its corresponding integer. Such a
+function can be easily written as:
 
-I think it will be useful to give some names to algebra concepts that we will use to be more concise
-and accurate as we go on. It's not important you learn them all and you can come back to this
-section when you will need it.
+```Scala
+def hex2dec(s: String): Int = {
+  Integer.parseInt(s, 16)
+}
 
-In mathematics a function is a machine that given an input set and an output set (that can also be
-the same) it associates element of the input set to elements of the output set. We can
-**colloquially** call this operation mapping and say that *a function maps elements of the input
-set into elements of the output set*.
+hex2dec("a")
+
+// Output:
+//   Int = 10
+```
+
+We can think of a version where we tabulate all the possible input values and for each one we return
+the corresponding value. In this way we are establishing a relation which is a function:
+
+```Scala
+def hex2dec(s: String): Int = s.toLowerCase match {
+  case "0" => 0
+  case "1" => 1
+  case "2" => 2
+  case "3" => 3
+  case "4" => 4
+  case "5" => 5
+  case "6" => 6
+  case "7" => 7
+  case "8" => 8
+  case "9" => 9
+  case "a" => 10
+  case "b" => 11
+  case "c" => 12
+  case "d" => 13
+  case "e" => 14
+  case "f" => 15
+}
+
+hex2dec("a")
+
+// Output:
+//   Int = 10
+```
+
+## Composition
+
+## Pure functions and mathematics
+
+With pure functions you have at your disposal mathematics that can help you talk about functions and
+visualize what is happening and what the functions is doing because we can use this new tool to draw
+diagrams of the functions.
+
+I think it will be useful to give some names to mathematics concepts that we will use to be more
+concise and accurate as we go on. It's not important you learn them all and you can come back to
+this section when you will need it.
+
+In mathematics a function is a machine (a relation) that given an input set and an output set (that
+can also be the same) it associates element of the input set to elements of the output set and it
+never associates elements in the input set to multiple elements in the output set. We can
+**colloquially** call this operation mapping and say that *a function maps elements of the input set
+into elements of the output set*.
 
 The input set is called **domain** of the function and the output set is called **codomain** of the
 function.
@@ -340,12 +406,13 @@ the function is called **injective**. Injective functions don't collapse input e
 output but they keep them separate.
 
 If a function, after it has done its job of mapping inputs into outputs, has associated all the
-output elements of the codomain then the function is called **surjective**. Surjective functions are
-different than injective so different input elements can be mapped to the same output element.
+output elements of the codomain to some elements of the domain then the function is called
+**surjective**. Surjective functions are different than injective so different input elements can be
+mapped to the same output element.
 
 If a function is both injective and surjective then it is called **bijective** or **isomorphic**.
-This is a really important concept in algebra because it tells us that that to every input element
-there is one and only one output element associated to it and that all output elements are
+This is a really important concept in mathematics because it tells us that that to every input
+element there is one and only one output element associated to it and that all output elements are
 associated with one and only one input element. In turn this allows us to go back and for from an
 input element to and output element and vice-versa. In other words it exists a functions that
 reverses the functions we started with. Such a function is called **inverse**.
@@ -353,15 +420,22 @@ reverses the functions we started with. Such a function is called **inverse**.
 To summarize, this is the list of concepts we just talked about: domain, codomain, total, partial,
 injective, surjective, isomorphic, inverse.
 
+We don't need to go deeper than this and we'll use these concepts to visualize and to understand
+what happens. We'll see similar things when we will talk about categories.
+
 Pure functions allow us to use the same terminology in programming because they correspond to
 mathematical functions. In programming we talk of input and output *types* instead of sets.
 
-I am by no means an expert on type theory so I will limit myself to repeat what I've learn around
-and that you can think of types, in first approximation, as sets. Scala `Boolean` is a set with two
-elements, `Int` is a set that contains the integer that your JVM can represent, `String` is a set
-with infinite elements (limited by the memory you assign you the JVM).
+The job of translating math into pure functions is quite easy.
 
-I hope you see how we can use algebra concepts to talk about functions.
+The input and outputs are types and you can think of types, in first approximation, as sets. Scala
+`Boolean` is a set with two elements, `Int` is a set that contains the integer that your JVM can
+represent, `String` is a set with infinite elements (limited by the memory you assign you the JVM).
+
+Then we use programming language to define how the output relates to the input, using keywords,
+variables, calls to other functions and so on.
+
+I hope you see how we can use mathematics concepts to talk about functions.
 
 ## References
 
