@@ -19,6 +19,3 @@ description: Educational material to learn functional programming in Scala from 
 
 google_analytics: UA-154864461-1
 show_downloads: false
-highlighter: rouge
-kramdown:
-  syntax_highlighter: rouge

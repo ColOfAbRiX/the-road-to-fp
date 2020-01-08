@@ -130,6 +130,13 @@ you're making do with other components of your system, you need to plan for netw
 to check a file is present or your functions, you need to provide thread lock mechanisms if your
 functions shares a state.
 
+## Exercises
+
+* Create a pure function `String => String` that maps each input string into its uppercase string.
+
+* Reconnecting to the exercise of animals in the case classes chapter, create a pure function with
+  signature `Animal => String` that given an animal returns its name.
+
 ## On side effects
 
 So we don't like side effects. Or do we?
@@ -166,15 +173,127 @@ background but you can already start assimilating the facts that:
 A very good resource to get an all round understanding of pure function is provided by [Chapter
 1 of Functional Programming in Scala](2)
 
-## Pure functions and set theory
+## Exercises
+
+* We want to work with a counter and increment and decrement its value of a given amount. First
+  solve this exercise in imperative style and then try to solve the same problem but using only pure
+  functions. What's the problem you're encountering?
+
+* Write a pure function that discovers the maximum integer in a list of **positive integers**
+  `List[Int] => Int` and returns `-1` if the list is empty or if there are negative numbers or any
+  other sort of issues. Solve the exercise using mutable variables and a for loop. Is it still a
+  pure function? Why?
+
+* How can you solve the previous exercise if we want the function to be able to work on a list that
+  contains any integer and not just positive integers?
 
 ## Referential transparency
 
-## Simple examples of both concepts and counter examples
+Referential transparency is a concept that is very tight to pure functions even it's not strictly
+the same.
 
-## Show that loops are not good, they require mutability
+Referential transparency is a property of some code that allows to replace an expression with the
+result of evaluating that expression everywhere in the program without changing the result of the
+program. Said the other way around, if you can replace an expression with its value then that
+expression is referentially transparent.
 
-## Immutability as values that cannot change
+Let's see an example:
+
+```Scala
+val a = 2
+a + 3 * a
+2 + 3 * 2
+
+// Output:
+//   Int = 8
+//   Int = 8
+```
+
+In this very simple example `a + 3 * a` is referentially transparent because if we substitute to `a`
+with is value `2` the result is the same.
+
+The same is true for pure functions:
+
+```Scala
+def stringLength(input: String): Int = {
+  input.length
+}
+
+def someCalculation(input: Int): Int = {
+  input * 2 - 1
+}
+
+// Any of this is equivalent even if just the last evaluation is enough to prove it
+someCalculation(stringLength("functional")) + someCalculation(3)
+someCalculation("functional".length) + someCalculation(3)
+someCalculation(10) + someCalculation(3)
+(10 * 2 - 1) + (3 * 2 - 1)
+24
+
+// Output:
+//   Int = 24
+//   Int = 24
+//   Int = 24
+//   Int = 24
+//   Int = 24
+```
+
+Let's see a counter example where we use an impure function and study the consequences:
+
+```Scala
+var counter: Int = 0
+
+def incrementCounter(amount: Int): Int = {
+  counter += amount
+  counter
+}
+
+incrementCounter(2) + incrementCounter(3)
+(counter + 2) + (counter + 3)
+// What should I put as one number example?
+
+// Output:
+//   Int = 7
+//   Int = 15
+```
+
+The two expressions return different values, as expected because `incrementCounter` is not pure as
+it makes use of a shared state in the form of the variable `counter`.
+
+So pure functions are a way to achieve referential transparency. Sounds easy to me! Let's see
+another example that is more edge case:
+
+```Scala
+def factorial(n: Int): Int = {
+    // In this example I don't want to deal with error cases, so just return 1 when n < 0
+    var accumulator: Int = 1
+    for (i <- 1 to Math.max(0, n))
+        accumulator = i * accumulator
+    accumulator
+}
+```
+
+Is this function pure or not? Is it referentially transparent or not? The for loop uses the state
+represented by the variable `accumulator` so you might think the function is not pure.
+
+But even if we use `var` the function is indeed pure and you can check it using the definition of
+referential transparency: we can replace the call to this function with its output:
+
+```Scala
+factorial(3)
+6
+
+// Output:
+//   Int = 7
+//   Int = 15
+```
+
+The trick here is that we used **local mutability** and from the point of view of user of the user
+the output of `factorial` depends only on the inputs and it will never know that the function makes
+use of a shared state. This can be acceptable as the function is externally pure but unless you have
+a very good reason like deep performance optimization you shouldn't do it.
+
+## Loops and immutable values
 
 ## Local mutabilty can be used
 
@@ -193,19 +312,56 @@ programming, because they can tell us a lot and we can reason about them in a ve
 
 ## Memoization, or values as functions
 
-## Exercises
+There is another way we can understand pure functions: pure functions are replacement machines that
+for every input
 
-* Create a pure function `String => String` that maps each input string into its uppercase string.
+## Pure functions and algebra
 
-* Reconnecting to the exercise of animals in the case classes chapter, create a pure function with
-  signature `Animal => String` that given an animal returns its name.
+With pure functions you have at your disposal algebra that can help you visualize what is happening
+and what the functions is doing because we can use this new tool to draw diagrams of the functions.
 
-* We want to work a counter, to increment and decrement it of a given amount. How can you write a
-  function that works on a counter but it's pure?
+I think it will be useful to give some names to algebra concepts that we will use to be more concise
+and accurate as we go on. It's not important you learn them all and you can come back to this
+section when you will need it.
 
-* Write a pure function that discovers the maximum integer in a list of positive integers `List[Int]
-  => Int` and returns `-1` if the list is empty, if there are negative numbers or any other sort of
-  issues. The function must use mutable variables and a for loop. Is it still a pure function? Why?
+In mathematics a function is a machine that given an input set and an output set (that can also be
+the same) it associates element of the input set to elements of the output set. We can
+**colloquially** call this operation mapping and say that *a function maps elements of the input
+set into elements of the output set*.
+
+The input set is called **domain** of the function and the output set is called **codomain** of the
+function.
+
+If the function maps every element of the domain then the functions is called **total** otherwise it
+is called **partial**.
+
+If different input elements of a function are always associated with different output elements then
+the function is called **injective**. Injective functions don't collapse input elements in the
+output but they keep them separate.
+
+If a function, after it has done its job of mapping inputs into outputs, has associated all the
+output elements of the codomain then the function is called **surjective**. Surjective functions are
+different than injective so different input elements can be mapped to the same output element.
+
+If a function is both injective and surjective then it is called **bijective** or **isomorphic**.
+This is a really important concept in algebra because it tells us that that to every input element
+there is one and only one output element associated to it and that all output elements are
+associated with one and only one input element. In turn this allows us to go back and for from an
+input element to and output element and vice-versa. In other words it exists a functions that
+reverses the functions we started with. Such a function is called **inverse**.
+
+To summarize, this is the list of concepts we just talked about: domain, codomain, total, partial,
+injective, surjective, isomorphic, inverse.
+
+Pure functions allow us to use the same terminology in programming because they correspond to
+mathematical functions. In programming we talk of input and output *types* instead of sets.
+
+I am by no means an expert on type theory so I will limit myself to repeat what I've learn around
+and that you can think of types, in first approximation, as sets. Scala `Boolean` is a set with two
+elements, `Int` is a set that contains the integer that your JVM can represent, `String` is a set
+with infinite elements (limited by the memory you assign you the JVM).
+
+I hope you see how we can use algebra concepts to talk about functions.
 
 ## References
 
@@ -217,6 +373,7 @@ programming, because they can tell us a lot and we can reason about them in a ve
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
+[7]: https://wiki.haskell.org/Referential_transparency
 [4]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
 [5]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions
 [6]: https://www.youtube.com/watch?v=re96UgMk6GQ

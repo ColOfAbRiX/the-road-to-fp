@@ -153,6 +153,27 @@ up that functional languages tend to reach. It's the level above and as such it 
 bigger world to explore that you can then render with Scala (or the functional language of your
 choice)
 
+## About naming
+
+Functional programming was born in academy and it borrows a lot of names from mathematics.
+
+This means that many names that you will encounter might sound scary to you. Names like functors,
+comonad coalgebras, lifting or semigroups are certainly very unfamiliar to us programmers and I
+found them very cryptic and not understandable when I started to learn FP. But now I want to address
+this concern that many beginners might have because I believe it's completely unfounded.
+
+These terms are cryptic just because programmers are not familiar with mathematics and for no other
+reason. A name is just a label that is assigned to a concept and what is important is the concept
+not the word. FP started in mathematics so things got named by mathematicians first and that's the
+end of it, there is no relation to how easy or difficult to learn a name is. Just learn the concept
+and assign the label you're being told to it. If it makes it easier you can think of how difficult a
+mathematician might find to learn programming terms like REST API, subclassing, interface or Liskov
+substitution principle. They are just labels.
+
+For the concern that these terms are not understandable I point the finger to low quality
+educational material online or to the wrong understanding of people writing articles. Again, not a
+problem of the name itself. And this guide is meant to address precisely this issue.
+
 ## References
 
 * [Category Theory and Declarative Programming][1]

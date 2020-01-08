@@ -78,6 +78,17 @@ case object Singleton
 
 Case object cannot have constructor fields.
 
+## Exercises
+
+* Use case classes to represent a person with its name, surname and age. Create some instances to
+  demonstrate the use of your data structures.
+
+* Use case classes to represent a pet with its name and owner. The owner is of type `Person`. Create
+  some instances to demonstrate the use of your data structures.
+
+* Create a new instance of a person and associate with it one of the existing instances of pet
+  created in the previous exercise.
+
 ## Pattern matching with case classes
 
 Pattern matching is a really powerful tool, so much that you will ask yourself how did you do when
@@ -142,6 +153,16 @@ final case class Failure[+T](exception: Throwable) extends Try[T]
 final case class Success[+T](value: T) extends Try[T]
 ```
 
+## Exercises
+
+* Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`, cats
+  have a name and age, dogs just a name and dolphins a name and a weight. Is it sufficient to use
+  just case classes? Make sure you express that all the case classes are animals. Create some
+  instances to demonstrate the use of your data structures.
+
+* Once you've created the instances for the previous exercise, use pattern matching so that you can
+  print a different description of each type of animal and then you print the name of the animal.
+
 ## From values to types
 
 Case classes, together with pattern matching, become a really powerful tool because we can use them
@@ -202,23 +223,6 @@ When case classes are used to create algebraic data types you should follow the 
 Types][9] best practices.
 
 ## Exercises
-
-* Use case classes to represent a person with its name, surname and age. Create some instances to
-  demonstrate the use of your data structures.
-
-* Use case classes to represent a pet with its name and owner. The owner is of type `Person`. Create
-  some instances to demonstrate the use of your data structures.
-
-* Create a new instance of a person and assign it to one of the existing instances of pet created in
-  the previous exercise.
-
-* Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`, cats
-  have a name and age, dogs just a name and dolphins a name and a weight. Is it sufficient to use
-  just case classes? Make sure you express that all the case classes are animals. Create some
-  instances to demonstrate the use of your data structures.
-
-* Once you've created the instances for the previous exercise, use pattern matching so that you can
-  print a different description of each type of animal and then you print the name of the animal.
 
 * Create two instances of `Person` with the same values and then compare them with `==`. Does Scala
   recognise them as different or equals? Why? Now _modify_ one of the two instances and try to

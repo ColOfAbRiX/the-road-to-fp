@@ -135,6 +135,7 @@ references, comments, examples and exercises.
 
 * Updating data structures by creating copies
 * Lenses
+  * https://github.com/jdegoes/lambdaconf-2014-introgame
   * https://scalac.io/scala-optics-lenses-with-monocle/
   * http://adit.io/posts/2013-07-22-lenses-in-pictures.html
 * Prisms
@@ -161,6 +162,7 @@ references, comments, examples and exercises.
 * Writing your own LeMonad
 * References:
   * http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html
+  * https://github.com/jdegoes/lambdaconf-2014-introgame
   * https://stackoverflow.com/a/13388966/1215156
   * http://learnyouahaskell.com/a-fistful-of-monads
   * http://learnyouahaskell.com/for-a-few-monads-more
@@ -171,7 +173,9 @@ references, comments, examples and exercises.
 * Basic monads and examples: List, Option, Either, Writer, Try
   * https://www.scala-exercises.org/fp_in_scala/handling_error_without_exceptions
 * Evaluated-values monads and examples: Reader, Future, Eval/Task
-* Advanced monads and examples: IO, Trampoline, Cont
+* The I/O monad
+  * https://www.beyondthelines.net/programming/cats-effect-an-overview/
+* Advanced monads and examples: Trampoline, Cont
   * https://medium.com/@olxc/trampolining-and-stack-safety-in-scala-d8e86474ddfa
 * Real world examples of using these monads, writing a more complex application
 * Applicatives vs Monads
@@ -229,6 +233,8 @@ references, comments, examples and exercises.
 * What "structure" means in mathematics
 * Product and Coproduct (union and sum types)
 * Algebraic Data Types
+* References
+   * https://www.youtube.com/watch?v=mqCsfYERzzE
 
 ## Basic concepts of Category Theory
 
