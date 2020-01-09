@@ -78,7 +78,7 @@ case object Singleton
 
 Case object cannot have constructor fields.
 
-## Exercises
+## Exercises 1
 
 * Use case classes to represent a person with its name, surname and age. Create some instances to
   demonstrate the use of your data structures.
@@ -153,7 +153,7 @@ final case class Failure[+T](exception: Throwable) extends Try[T]
 final case class Success[+T](value: T) extends Try[T]
 ```
 
-## Exercises
+## Exercises 2
 
 * Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`, cats
   have a name and age, dogs just a name and dolphins a name and a weight. Is it sufficient to use
@@ -222,7 +222,7 @@ For this, I refer you straight to [Mark case classes as final][8]
 When case classes are used to create algebraic data types you should follow the [Algebraic Data
 Types][9] best practices.
 
-## Exercises
+## Exercises 3
 
 * Create two instances of `Person` with the same values and then compare them with `==`. Does Scala
   recognise them as different or equals? Why? Now _modify_ one of the two instances and try to

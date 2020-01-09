@@ -130,12 +130,39 @@ you're making do with other components of your system, you need to plan for netw
 to check a file is present or your functions, you need to provide thread lock mechanisms if your
 functions shares a state.
 
-## Exercises
+Alvin Alexander has a [great article about the benefits of pure functions][4] and I want to quote
+here just the summary of his points:
+
+> * They’re easier to reason about
+> * They’re easier to combine
+> * They’re easier to test
+> * They’re easier to debug
+> * They’re easier to parallelise
+> * They are idempotent
+> * They offer referential transparency
+> * They are memoizable
+> * They can be lazy
+
+The article goes in much more details and I advise you to read it till the end because.
+
+Pure functions are as close as we can get to mathematical functions in programming.
+
+In mathematics the input and output are sets while in programming they are types. Using [the
+description of Bartosz of types][8] "the simplest intuition for types is that they are sets of
+values.". Scala `Boolean` is a set with two elements called `true` and `false`, `Int` is a set that
+contains the integer that your JVM can represent, `String` is a set with infinite elements (limited
+by the memory you assign you the JVM).
+
+Then we use our programming language of choice to define how the output relates to the input, using
+keywords, variables, calls to other functions and so on, in other terms we program the engine of the
+function.
+
+## Exercises 1
 
 * Create a pure function `String => String` that maps each input string into its uppercase string.
 
-* Reconnecting to the exercise of animals in the case classes chapter, create a pure function with
-  signature `Animal => String` that given an animal returns its name.
+* Using your result of the exercise of animals in the case classes chapter, create a pure function
+  with signature `Animal => String` that given an animal returns its name.
 
 ## On side effects
 
@@ -157,7 +184,7 @@ effects that we can control and deal with.
 Before these techniques were discovered and developed in Haskell, the researchers that built haskell
 were having a very difficult time to just use pure functions and they didn't really know how
 interact with the operating system, read files, execute commands! Have a look at the [interesting
-story of the development of Haskell](6) to learn more about the development of FP.
+story of the development of Haskell][6] to learn more about the development of FP.
 
 I would like to say that functional programming is also about working with the tools and techniques
 to work with side effects efficiently.
@@ -171,9 +198,9 @@ background but you can already start assimilating the facts that:
 * thus we need tools and techniques to tightly control and handle side effects.
 
 A very good resource to get an all round understanding of pure function is provided by [Chapter
-1 of Functional Programming in Scala](2)
+1 of Functional Programming in Scala][2]
 
-## Exercises
+## Exercises 2
 
 * We want to work with a counter and increment and decrement its value of a given amount. First
   solve this exercise in imperative style and then try to solve the same problem but using only pure
@@ -296,15 +323,23 @@ factorial(3)
 The trick here is that we used **local mutability** and from the point of view of user of the user
 the output of `factorial` depends only on the inputs and it will never know that the function makes
 use of a shared state. This can be acceptable as the function is externally pure but unless you have
-a very good reason like deep performance optimization you shouldn't do it.
+a very good reason like deep performance optimization you shouldn't do it because it will become
+easier and easier to fall back to imperative style with all its drawbacks.
+
+At this point you know all the things about referential transparency useful for programming but you
+can find more details in the [Wikipedia page][3] and a more practical description in the
+[HaskellWiki][7].
+
+## Exercises 3
+
+* Write a pure function `List[A] => Int` that counts the number of elements in the given list. Be
+  mindful to not use mutable variables.
 
 ## Loops and immutable values
 
 **WIP**
 
 What we just saw bring us to some considerations.
-
-## Local mutabilty can be used
 
 ## Importance of pure function signatures
 
@@ -325,17 +360,18 @@ In functional programming we like that every statement has a value when evaluate
 
 ## Memoization, or values as functions
 
-**WIP**
+There is another way we can understand pure functions. Pure functions are replacement machines that
+for every input value substitute an output value. This is the very historical way functional
+programming came was born as programming style stemming from Church's lambda calculus which consists
+of replacing symbols with other symbols.
 
-There is another way we can understand pure functions: pure functions are replacement machines that
-for every input substitute an output. The lambda calculus the embodyment of this concept.
+From this point of we can perform a trick. We can tabulate each resulting value of a function in a
+table that for every input associates an output or we can memorize in a data structure the output
+for each given input.
 
-From this point of we can also perform a trick. We can tabulate each resulting value of a function
-in a table that for every input associates an output.
-
-Let's say the input type is the set of hexadecimal digits: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d,
-e and f. The function we want to write converts this digit into its corresponding integer. Such a
-function can be easily written as:
+Let's say the input type is the set of hexadecimal digits from the number `0` to the number `9` and
+from letter `a` to letter `f`. The function we want to write converts takes a single digit an
+converts it into its corresponding integer. Such a function can be easily written as:
 
 ```Scala
 def hex2dec(s: String): Int = {
@@ -377,17 +413,57 @@ hex2dec("a")
 //   Int = 10
 ```
 
+What I want to highlight here is that pure functions can actually be represented by simple data and
+a relation.
+
+This might seem a waste of time but this technique can be exploited to speed up the calculation of
+expensive functions by building a dynamic table of results as we go.
+
+Let's say we have an expensive function `expensiveOperation` that takes a long time to perform its
+job. We wrap it inside another function and then we make use of the concept of local mutability and
+we define a mutable dictionary that will map the relation between inputs and output values.
+
+Every time we call the function with a given input `x` we look in this dictionary if there is a key
+defined for `x`. If there is not we call the expensive function and we save the result in the
+dictionary otherwise we return the result immediately.
+
+```Scala
+import collection.mutable._
+
+// This variable is hidden from the user
+var calculateTable: HashMap[Int, Int] = HashMap.empty
+
+def calculate(n: Int): Int = {
+  // This function performs some CPU intensive operation
+  def expensiveOperation(x: Int): Int = {
+    Thread.sleep(3000)
+    x * x
+  }
+  calculateTable.getOrElseUpdate(n, expensiveOperation(n))
+}
+
+calculate(3)    // The first time you run this it will take 3 seconds
+calculate(3)    // This uses the memoized value and returns immediately
+
+// Output:
+//   Int = 9
+//   Int = 9
+```
+
+This technique is called memoization and it's a powerful tool made possible by the use of pure
+functions. Most of the times it's not as trivial as here to memoize a function because the values
+might be infinite and so on but this is not the place to go deeper.
+
 ## Composition
 
 ## Pure functions and mathematics
 
+This section is not strictly necessary and if you feel like it you can skip it and maybe come back
+to it later on.
+
 With pure functions you have at your disposal mathematics that can help you talk about functions and
 visualize what is happening and what the functions is doing because we can use this new tool to draw
 diagrams of the functions.
-
-I think it will be useful to give some names to mathematics concepts that we will use to be more
-concise and accurate as we go on. It's not important you learn them all and you can come back to
-this section when you will need it.
 
 In mathematics a function is a machine (a relation) that given an input set and an output set (that
 can also be the same) it associates element of the input set to elements of the output set and it
@@ -426,24 +502,15 @@ what happens. We'll see similar things when we will talk about categories.
 Pure functions allow us to use the same terminology in programming because they correspond to
 mathematical functions. In programming we talk of input and output *types* instead of sets.
 
-The job of translating math into pure functions is quite easy.
-
-The input and outputs are types and you can think of types, in first approximation, as sets. Scala
-`Boolean` is a set with two elements, `Int` is a set that contains the integer that your JVM can
-represent, `String` is a set with infinite elements (limited by the memory you assign you the JVM).
-
-Then we use programming language to define how the output relates to the input, using keywords,
-variables, calls to other functions and so on.
-
-I hope you see how we can use mathematics concepts to talk about functions.
-
 ## References
 
 * [Functional programming in Scala][2] Chapter 1
-* [Referential transparency][3]
+* [Referential transparency - Wikipedia][3]
+* [Referential transparency - HaskellWiki][7]
 * [The Benefits of Pure Functions][4]
 * [Understanding Immutability and Pure Functions (for OOP)][5]
 * [Escape from the ivory tower: the Haskell journey][6]
+* [Types and Functions][8]
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
@@ -451,3 +518,4 @@ I hope you see how we can use mathematics concepts to talk about functions.
 [4]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
 [5]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions
 [6]: https://www.youtube.com/watch?v=re96UgMk6GQ
+[8]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
