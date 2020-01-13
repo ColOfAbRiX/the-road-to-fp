@@ -94,9 +94,9 @@ So this is also to have good, complete materials in Scala.
 With time I also hope that more languages will be added by other people. Languages like Haskell
 itself or F# too, why not!
 
+## Running the code examples
 
-## Running the code
+Except otherwise stated I tried to make all code snippets working on Ammonite, a Scala REPL, so that
+you can just copy-paste the code and see the result.
 
-Except otherwise stated I tried to make all code snippes working on Ammonite, a Scala REPL.
-
-Check out Ammonite at http://ammonite.io/
+You can download Ammonite at <http://ammonite.io/>

@@ -84,16 +84,18 @@ The most simple example I can think of is... doing something on a list! Let's sa
 `List[String]` and we want to convert each string to upper case. In imperative style this code would
 do the job (I'm using Scala to write classic imperative style code. It's verbose on purpose):
 
-```Scala
+```scala
 var inputList = List("apple", "orange", "fig")
 var outputList = collection.mutable.ListBuffer[String]()
+
 for (i <- 0 until inputList.length) {
   outputList += inputList(i).toUpperCase()
 }
 
-println(outputList)
+outputList
+
 // Output:
-//   ListBuffer(APPLE, ORANGE, FIG)
+//   collection.mutable.ListBuffer[String] = ListBuffer("APPLE", "ORANGE", "FIG")
 ```
 
 This piece of code contains a lot of things that are **not** related to what I want to do. Remember,
@@ -108,12 +110,13 @@ problem, isn't it?
 
 Let's see how I would do it in FP style:
 
-```Scala
+```scala
 var inputList = List("apple", "orange", "fig")
 val outputList = inputList.map(_.toUpperCase())
-println(outputList)
+outputList
+
 // Output:
-//   List(APPLE, ORANGE, FIG)
+//   List[String] = List("APPLE", "ORANGE", "FIG")
 ```
 
 Leaving aside that it's much shorter (because it's not always the case) the real difference is how I
@@ -127,7 +130,7 @@ how to solve the problem locally on one item only (what I do inside `.map()`).
 
 If you ask me, that's conceptually pretty neat and powerful.
 
-Bartoz Milewski has a [great post about declarative programming][1] and goes much more philosophical
+Bartosz Milewski has a [great post about declarative programming][1] and goes much more philosophical
 than I do and I strongly recommend you to read it because it's really deep and interesting.
 
 We will see many more examples of this in these pages!
@@ -153,7 +156,7 @@ up that functional languages tend to reach. It's the level above and as such it 
 bigger world to explore that you can then render with Scala (or the functional language of your
 choice)
 
-## About naming
+## About names
 
 Functional programming was born in academy and it borrows a lot of names from mathematics.
 

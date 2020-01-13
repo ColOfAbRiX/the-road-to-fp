@@ -47,11 +47,11 @@ versus case classes for constructor arguments:
 
 ```scala
 class Class1(
-  privateField: String,    // This is not public
-  val publicField: String  // A normal class requires `val` in the constructor argument
+  privateField: String,    // This is not a public field
+  val publicField: String  // `val` makes this one a public field
 )
 
-case class Class2(publicField: String)  // Here val is not required to make the field public
+case class Class2(publicField: String)  // `val` not required to make the field public
 ```
 
 ### Updating values
@@ -64,6 +64,18 @@ your class passing all the existing fields to the new instance except the ones y
 with the end result of "updating" these fields. It is a partial implementation of the [prototype
 pattern][4].
 
+```scala
+case class MyClass(aNumber: Int, aString: String)
+
+val initial = MyClass(123, "ABC")
+
+initial.copy(aString = "DEF")
+
+// Output:
+//   MyClass = MyClass(123, "ABC")
+//   MyClass = MyClass(123, "DEF")
+```
+
 We'll see immutable data structures in the future.
 
 ## Case objects
@@ -72,7 +84,7 @@ All around the material there is a little thing that is not well mentioned and t
 objects. Case objects are the same thing as case classes but for objects and this means that there
 is only one instace of the case object in your scope.
 
-```Scala
+```scala
 case object Singleton
 ```
 
@@ -136,7 +148,7 @@ As said above, case classes are used to define data-holding structures. The foll
 how we can model a simple shopping cart that is made of a list of purchases made by accounts on
 items:
 
-```Scala
+```scala
 final case class Account(id: Int, name: String, address: String)
 final case class Item(id: Int, name: String, price: Double)
 final case class Purchase(date: String, account: Account, items: Seq[Item])
@@ -146,7 +158,7 @@ final case class ShoppingCart(purchases: Seq[Purchase])
 Another example is a data structure that can express the success or failure of a computation. This
 example here is taken from the scala standard library [scala.util.Try][7]:
 
-```Scala
+```scala
 // I only reported the main definitions
 sealed abstract class Try[+T]{
 final case class Failure[+T](exception: Throwable) extends Try[T]
@@ -157,8 +169,8 @@ final case class Success[+T](value: T) extends Try[T]
 
 * Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`, cats
   have a name and age, dogs just a name and dolphins a name and a weight. Is it sufficient to use
-  just case classes? Make sure you express that all the case classes are animals. Create some
-  instances to demonstrate the use of your data structures.
+  just case classes? Make sure you express the fact that cats, dogs and dolphins are animals. Create
+  some instances to demonstrate the use of your data structures.
 
 * Once you've created the instances for the previous exercise, use pattern matching so that you can
   print a different description of each type of animal and then you print the name of the animal.
@@ -198,19 +210,19 @@ carries the message _"I am the result of a failed computation and I contain that
 Once we have this result in a variable we can use pattern matching to see what happened to the
 computation and take different actions:
 
-```Scala
+```scala
 import scala.util._
 
 val toConvert = "abc"
 val tryConversion = Try(toConvert.toInt)
 
 tryConversion match {
-  case Success(number)    => println(s"Converted $toConvert into the integer $number")
-  case Failure(exception) => println(s"ERROR! $exception")
+  case Success(number)    => s"Converted $toConvert into the integer $number"
+  case Failure(exception) => s"ERROR! $exception"
 }
 
 // Output:
-//   ERROR! java.lang.NumberFormatException: For input string: "abc"
+//   String = "ERROR! java.lang.NumberFormatException: For input string: \"abc\""
 ```
 
 But... we'll see ways to avoid this tedious way of writing and we'll let the libraries manage this.
@@ -228,9 +240,10 @@ Types][9] best practices.
   recognise them as different or equals? Why? Now _modify_ one of the two instances and try to
   compare it again with the unmodified one. Are they still equals?
 
-* Use case classes to represent a boxes that can contain other boxes or things. With more details,
-  one box can either contain one or more things (you can use a `String` to represent "things") or
-  one or more boxes that in turn can contain what we just described. This is a recursive structure.
+* Use case classes to represent a package that can contain other packages or objects. To give some
+  more details, one package can either contain one or more objects (you can use a `String` to represent
+  "objects") or one or more package that in turn can contain what we just described. This is a
+  recursive structure.
 
 ## References
 

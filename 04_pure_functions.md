@@ -16,18 +16,19 @@ as closed box with three simple parts:
   an output;
 * the output, which is some elaboration of the things given in the and the input only.
 
+Note that "the engine" is not allowed to modify its inputs.
+
 Here's a simple example in Scala:
 
-```Scala
+```scala
 def double(input: Int): Int = input * 2
 def length(input: String): Int = input.length
 
 double(3)
+length("FP")
+
 // Output:
 //   Int = 6
-
-length("FP")
-// Output:
 //   Int = 2
 ```
 
@@ -47,9 +48,10 @@ Why? What other things can a normal function do beside giving a result? Plenty.
 Can you think of a function that does something other than returning a result? Let's see together
 some examples.
 
-```Scala
+```scala
 // def println(x: Any): Unit = Console.println(x)
 println("Hello, World!")
+
 // Output:
 //   Hello, World!
 ```
@@ -58,7 +60,7 @@ A function can print on the screen. That's not a value that it returns, actually
 return a value but just `Unit`. A function that returns `Unit` has always side effects or it won't
 be a useful function.
 
-```Scala
+```scala
 // def readLine(): String = in.readLine()
 val line = scala.io.StdIn.readLine()
 ```
@@ -68,11 +70,12 @@ has been read) but there is no input! The internal engine of the functions has n
 and the output is produced in some other way... side effects! A function that produces an output
 with an empty argument list is always an impure function or it won't do real work.
 
-```Scala
+```scala
 // public final Date getTime()
 // NOTE: This is defined in java. But still no arguments.
 import java.util.Calendar
 Calendar.getInstance().getTime()
+
 // Output:
 //   java.util.Date = Sun Dec 22 00:54:55 CET 2019
 ```
@@ -81,9 +84,10 @@ A function that returns the current time is similar to the previous previous exa
 output doesn't depend only on the input. The function's engine didn't really work on the inputs to
 produce an output.
 
-```Scala
+```scala
 // The list is empty, there is no head of the list
 List().head
+
 // Output:
 //   java.util.NoSuchElementException: head of empty list
 ```
@@ -92,7 +96,7 @@ A sample function can work on a list to get the first element but then it throws
 it can return the head. Yes, an exception is not a return value of a function, it's something else
 that the function can do and that you can handle in some specific ways.
 
-```Scala
+```scala
 var state: Int = 0
 
 def increment(amount: Int): Int = {
@@ -103,6 +107,7 @@ def increment(amount: Int): Int = {
 increment(1)
 increment(1)
 increment(1)
+
 // Output:
 //   Int = 1
 //   Int = 2
@@ -159,10 +164,14 @@ function.
 
 ## Exercises 1
 
-* Create a pure function `String => String` that maps each input string into its uppercase string.
+* Create a pure function `String => String` that associates each input string into its uppercase
+  string.
+
+* Create a pure function `Int => Boolean` that associates even numbers with the value `true` and odd
+  numbers with the value `false`.
 
 * Using your result of the exercise of animals in the case classes chapter, create a pure function
-  with signature `Animal => String` that given an animal returns its name.
+  with signature `Animal => String` that given an animal it returns the type of animal.
 
 ## On side effects
 
@@ -216,19 +225,21 @@ A very good resource to get an all round understanding of pure function is provi
 
 ## Referential transparency
 
-Referential transparency is a concept that is very tight to pure functions even it's not strictly
-the same.
+Referential transparency is a concept that is very tight to pure functions even it's strictly the
+same.
 
 Referential transparency is a property of some code that allows to replace an expression with the
 result of evaluating that expression everywhere in the program without changing the result of the
-program. Said the other way around, if you can replace an expression with its value then that
-expression is referentially transparent.
+program. Said the other way around, if you can replace a value with a reference to it (an
+expression) then that expression is referentially transparent. An expression is a single unit of
+code that has a value.
 
-An expression is a single unit of code that returns a value.
+Being able to reason with the resulting value of a function is part of what makes FP simpler because
+it takes away the details of how that value is obtained.
 
 Let's see an example:
 
-```Scala
+```scala
 val a = 2
 a + 3 * a
 2 + 3 * 2
@@ -242,10 +253,10 @@ In this very simple example `a + 3 * a` is referentially transparent because if 
 with is value `2` the result is the same.
 
 All pure functions are necessarily referentially transparent. Since, by definition, they cannot
-access anything other than what they are passed, their result must be fully determined by their
+access anything other than what they are given, their result must be fully determined by their
 arguments.
 
-```Scala
+```scala
 def stringLength(input: String): Int = {
   input.length
 }
@@ -271,7 +282,7 @@ someCalculation(10) + someCalculation(3)
 
 Let's see a counter example where we use an impure function and study the consequences:
 
-```Scala
+```scala
 var counter: Int = 0
 
 def incrementCounter(amount: Int): Int = {
@@ -293,7 +304,7 @@ it makes use of a shared state in the form of the variable `counter`.
 
 Sounds easy to me! Let's see another example that is a more edge case:
 
-```Scala
+```scala
 def factorial(n: Int): Int = {
     // In this example I don't want to deal with error cases, so just return 1 when n < 0
     var accumulator: Int = 1
@@ -311,7 +322,7 @@ represented by the variable `accumulator` so the function is not pure because it
 But even if we use a shared state the function is referentially transparent because we can replace
 the call to this function with its output:
 
-```Scala
+```scala
 factorial(3)
 6
 
@@ -337,11 +348,28 @@ can find more details in the [Wikipedia page][3] and a more practical descriptio
 
 ## Loops and immutable values
 
-**WIP**
+From the previous exercise you should have noticed that it's not possible to use a classic for/while
+loop without using mutable variables. This is because of the very nature of the loop itself.
 
-What we just saw bring us to some considerations.
+An imperative style loop needs to update a shared state (in many cases a variable defined outside
+the loop) to perform it job. The instruction it contains are executed a certain amount of time, in
+accordance with the condition of the loop and the result of each iteration is stored in this shared
+state that ultimately becomes the result of the entire loop.
 
-## Importance of pure function signatures
+Taking this reasoning to its logical conclusion we can say that a loop has side effects and mutable
+variables allow these side effects. So they should be avoided.
+
+As [this answer on StackOverflow] points out, using pure functions and immutable variables allows us
+to prove facts about our system (functions, data) that we can later use to abstract over the details
+and understand
+
+This can sound like a big crippling problem for a developer. How can we work without loops? We have
+already started to build the tools necessary to understand how to work in a pure manner in FP and in
+the next few chapters we will carry this work on and we will analyse and discuss the techniques used
+to overcome this apparent limitation and actually gain more power and elegance from our code:
+immutable data structures and recursion.
+
+## Usefulness of pure function signatures
 
 Functions with no inputs or functions that return `Unit` are always impure functions because if they
 return unit without side effect then they won't be useful so they must have side effect and if they
@@ -361,33 +389,33 @@ In functional programming we like that every statement has a value when evaluate
 ## Memoization, or values as functions
 
 There is another way we can understand pure functions. Pure functions are replacement machines that
-for every input value substitute an output value. This is the very historical way functional
-programming came was born as programming style stemming from Church's lambda calculus which consists
-of replacing symbols with other symbols.
+for every input value substitute an output value.
 
-From this point of we can perform a trick. We can tabulate each resulting value of a function in a
-table that for every input associates an output or we can memorize in a data structure the output
-for each given input.
+Using this point of view we can perform a trick. We can tabulate each resulting value of a function
+in a table that for every input associates an output or we can memorize in a data structure the
+output for each given input.
 
 Let's say the input type is the set of hexadecimal digits from the number `0` to the number `9` and
 from letter `a` to letter `f`. The function we want to write converts takes a single digit an
 converts it into its corresponding integer. Such a function can be easily written as:
 
-```Scala
+```scala
 def hex2dec(s: String): Int = {
   Integer.parseInt(s, 16)
 }
 
-hex2dec("a")
+hex2dec("2")
+hex2dec("b")
 
 // Output:
-//   Int = 10
+//   Int = 2
+//   Int = 11
 ```
 
 We can think of a version where we tabulate all the possible input values and for each one we return
 the corresponding value. In this way we are establishing a relation which is a function:
 
-```Scala
+```scala
 def hex2dec(s: String): Int = s.toLowerCase match {
   case "0" => 0
   case "1" => 1
@@ -427,14 +455,13 @@ Every time we call the function with a given input `x` we look in this dictionar
 defined for `x`. If there is not we call the expensive function and we save the result in the
 dictionary otherwise we return the result immediately.
 
-```Scala
+```scala
 import collection.mutable._
 
 // This variable is hidden from the user
 var calculateTable: HashMap[Int, Int] = HashMap.empty
 
 def calculate(n: Int): Int = {
-  // This function performs some CPU intensive operation
   def expensiveOperation(x: Int): Int = {
     Thread.sleep(3000)
     x * x
@@ -458,18 +485,15 @@ might be infinite and so on but this is not the place to go deeper.
 
 ## Pure functions and mathematics
 
-This section is not strictly necessary and if you feel like it you can skip it and maybe come back
-to it later on.
-
 With pure functions you have at your disposal mathematics that can help you talk about functions and
 visualize what is happening and what the functions is doing because we can use this new tool to draw
 diagrams of the functions.
 
-In mathematics a function is a machine (a relation) that given an input set and an output set (that
-can also be the same) it associates element of the input set to elements of the output set and it
-never associates elements in the input set to multiple elements in the output set. We can
-**colloquially** call this operation mapping and say that *a function maps elements of the input set
-into elements of the output set*.
+In mathematics a function is a relation that given an input set and an output set (that can also be
+the same) it associates element of the input set to elements of the output set and it never
+associates elements in the input to more than one element in the output. We can **colloquially**
+call this operation mapping and say that *a function maps elements of the input set into elements of
+the output set*.
 
 The input set is called **domain** of the function and the output set is called **codomain** of the
 function.
@@ -478,20 +502,20 @@ If the function maps every element of the domain then the functions is called **
 is called **partial**.
 
 If different input elements of a function are always associated with different output elements then
-the function is called **injective**. Injective functions don't collapse input elements in the
-output but they keep them separate.
+the function is called **injective**. Intuitively injective functions don't collapse input elements
+in the output but they keep them separate.
 
-If a function, after it has done its job of mapping inputs into outputs, has associated all the
-output elements of the codomain to some elements of the domain then the function is called
-**surjective**. Surjective functions are different than injective so different input elements can be
-mapped to the same output element.
+If a function, after it has done its job of associating inputs elements into outputs elements, has
+used all the elements of the codomain then the function is called **surjective**. Surjective
+functions are different than injective so different input elements can be mapped to the same output
+element.
 
 If a function is both injective and surjective then it is called **bijective** or **isomorphic**.
 This is a really important concept in mathematics because it tells us that that to every input
 element there is one and only one output element associated to it and that all output elements are
-associated with one and only one input element. In turn this allows us to go back and for from an
-input element to and output element and vice-versa. In other words it exists a functions that
-reverses the functions we started with. Such a function is called **inverse**.
+associated with one and only one input element. In turn this gives us the power to go back and forth
+from any input element to an output element and vice-versa. In other words it exists a functions
+that reverses the original functions. Such a function is called **inverse**.
 
 To summarize, this is the list of concepts we just talked about: domain, codomain, total, partial,
 injective, surjective, isomorphic, inverse.
@@ -502,6 +526,22 @@ what happens. We'll see similar things when we will talk about categories.
 Pure functions allow us to use the same terminology in programming because they correspond to
 mathematical functions. In programming we talk of input and output *types* instead of sets.
 
+## Exercises 4
+
+* For each of the following questions tell the domain and codomain of the function, if the function
+  is total or partial and if it is surjective, injective or bijective:
+
+  * a function `String => String` that associate each string with their reverse (e.g. "Scala" ->
+    "alacS");
+
+  * a function `Int => Boolean` that associates negative numbers with their positive value;
+
+  * a function `Int => Int` that associates even numbers into their double;
+
+* Given a case class `case class Person(name: String, surname: String)` create a function `Person =>
+  (String, String)` that associates an instance of `Person` to a tuple that contains name and
+  surname. Is this function a bijection? If yes write also its inverse.
+
 ## References
 
 * [Functional programming in Scala][2] Chapter 1
@@ -511,6 +551,7 @@ mathematical functions. In programming we talk of input and output *types* inste
 * [Understanding Immutability and Pure Functions (for OOP)][5]
 * [Escape from the ivory tower: the Haskell journey][6]
 * [Types and Functions][8]
+* [Why do immutable objects enable functional programming?][9]
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
@@ -519,3 +560,4 @@ mathematical functions. In programming we talk of input and output *types* inste
 [5]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions
 [6]: https://www.youtube.com/watch?v=re96UgMk6GQ
 [8]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
+[9]: https://stackoverflow.com/a/12208744/1215156

@@ -9,16 +9,16 @@ unique and that makes available in scope without an explicit instantiation.
 
 A singleton object is declared using the `object` keyword:
 
-```Scala
+```scala
 object MyComponent {
   val enabled: Boolean = false
   private val otherConfig: String = "Some config"
 }
 
-println(MyComponent.enabled)
+MyComponent.enabled
 
 // Output:
-//   false
+//   Boolean = false
 ```
 
 By all means, this is a language-level implementation of the [Singleton pattern][2].
@@ -27,23 +27,25 @@ Another use case for objects is to use them as containers to modularize the appl
 forget everything about OOP and FP and you just create an object when you want to organize your code
 and place things in a separate place from others. It's a bit like packages:
 
-```Scala
-package com.example
-
+```scala
 object UserModule {
   def createUser(name: String, surname: String): String = s"$name $surname"
-  // More methods, variables, classes and so on here
+  // ... more methods, variables, classes and so on here ...
 }
 
 object PetModule {
   def createPet(name: String, age: Int): String =  s"$name, age: $age"
-  // More methods, variables, classes and so on here
+  // ... more methods, variables, classes and so on here ...
 }
 
 import UserModule._
 
 createUser("Matt", "Smith")
 PetModule.createPet("fido", 5)
+
+// Output:
+//   String = "Matt Smith"
+//   String = "fido, age: 5"
 ```
 
 When a singleton object is named the same as a class and it is defined inside the same source file,
@@ -51,7 +53,7 @@ it is called a companion object.
 
 A companion object and its class can access each other’s private members (fields and methods).
 
-```Scala
+```scala
 object Container { // Container is used to make the example work on REPL
 
   object MyComponent {
@@ -66,10 +68,10 @@ object Container { // Container is used to make the example work on REPL
 }
 import Container._
 
-println(new MyComponent("My name").companionOtherConfig)
+new MyComponent("My name").companionOtherConfig
 
 // Output:
-//   Some config
+//   String = "Some config"
 ```
 
 When you define a special method named `apply()` in an object, the compiler can call it without
@@ -82,26 +84,26 @@ write `MyObject(...)`. This is useful in a few cases:
 
 Here is a short example:
 
-```Scala
+```scala
 class Loader(val name: String)
 
 object Loader {
   def normal(): Int = 123
   def apply(): Int = 5
-  def apply(name: String):Loader = new Loader(name)
-  def apply(first: String, second: String):Loader = new Loader(s"$first $second")
+  def apply(name: String): Loader = new Loader(name)
+  def apply(first: String, second: String): Loader = new Loader(s"$first $second")
 }
 
-println(Loader.normal())             // As usual
-println(Loader())                    // Equivalent to Loader.apply()
-println(Loader("Matt Smith").name)
-println(Loader("Matt", "Smith").name)
+Loader.normal()             // As usual
+Loader()                    // Equivalent to Loader.apply()
+Loader("Matt Smith").name
+Loader("Matt", "Smith").name
 
 // Output:
-//   123
-//   5
-//   Matt Smith
-//   Matt Smith
+//   Int = 123
+//   Int = 5
+//   String = "Matt Smith"
+//   String = "Matt Smith"
 ```
 
 There is another special method that can be defined in a object called `unapply()` and it is known
@@ -110,7 +112,7 @@ components, that are returned by the method and it's used by pattern matching to
 We'll explain morea about pattern matching in the next chapter. In the following example we can see
 how both `apply()` and `unapply()` are used to construct and deconstruct a sample object:
 
-```Scala
+```scala
 class Person(val name: String, val age: Int)
 
 object Person {
@@ -119,17 +121,17 @@ object Person {
 }
 
 val matt = Person("Matt Smith", 30)
-println(Person.unapply(matt))
+Person.unapply(matt)
 
 // Output:
-//   (Matt Smith,30)
+//   (String, Int) = ("Matt Smith", 30)
 ```
 
 If we want to use extractors into pattern matching the unapply method must return a types that
 has a `isEmpty()` and a `get()` method as [explained here][3]. For example we can make `unapply()`
 return an `Option`:
 
-```Scala
+```scala
 class Person(val name: String, val age: Int)
 
 object Person {
@@ -140,11 +142,11 @@ object Person {
 val matt = Person("Matt Smith", 30)
 
 matt match {
-  case Person(name, age) => println(s"Name: $name, Age: $age")
+  case Person(name, age) => s"Name: $name, Age: $age"
 }
 
 // Output:
-//   Name: Matt Smith, Age: 30
+//   String = "Name: Matt Smith, Age: 30"
 ```
 
 ## References
