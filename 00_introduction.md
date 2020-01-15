@@ -1,5 +1,7 @@
 # Introduction
 
+Estimated reading time: 5 minutes
+
 ## A love-hate relationship
 
 I never studied functional programming (FP) at university and until few years ago it was just a
@@ -97,6 +99,11 @@ itself or F# too, why not!
 ## Running the code examples
 
 Except otherwise stated I tried to make all code snippets working on Ammonite, a Scala REPL, so that
-you can just copy-paste the code and see the result.
+you can just copy-paste the code and see the result. Alternatively you can save the snippets in a
+file `*.sc` and run it with Ammonite:
+
+```shell
+amm <file>.sc
+```
 
 You can download Ammonite at <http://ammonite.io/>

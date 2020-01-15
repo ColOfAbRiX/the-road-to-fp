@@ -1,7 +1,7 @@
 # The Road to Functional Programming
 
-Educational material to learn functional programming in Scala from scratch in a structured and
-complete way.
+Educational material to learn functional programming in Scala, from scratch, in a structured and
+comprehensive way.
 
 **This is work in progress, only few chapters are available!**
 
@@ -62,7 +62,7 @@ Available as [scratch notes](the_road_to_fp_notes.md)
 ## Author Information
 
 Scala developer since 2014 and passionate about functional programming, former dev-ops and sysadmin
-engineer, I love brewing and discovering beer around the world and I compete in 4-way formation
+engineer, I love brewing and discovering beer around the world and I compete in 4-way team formation
 skydiving.
 
 [Fabrizio Colonna](mailto:colofabrix@tin.it)

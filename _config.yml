@@ -15,7 +15,7 @@ theme: jekyll-theme-architect
 #theme: jekyll-theme-time-machine
 
 title: The Road to Functional Programming
-description: Educational material to learn functional programming in Scala from scratch in a structured and complete way.
+description: Educational material to learn functional programming in Scala, from scratch, in a structured and comprehensive way.
 
 google_analytics: UA-154864461-1
 show_downloads: false

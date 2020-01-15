@@ -1,5 +1,7 @@
 # Pure functions and referential transparency
 
+Estimated reading time: 20 minutes
+
 ## Pure functions
 
 Pure functions are are the essence of functional programming.

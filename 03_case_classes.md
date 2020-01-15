@@ -1,5 +1,7 @@
 # Scala language feature: Case classes
 
+Estimated reading time: 10 minutes
+
 Case classes in Scala are a somewhat simple concept as described very well in [this StackOverflow
 answer][1], that I report here:
 
@@ -237,8 +239,8 @@ Types][9] best practices.
 ## Exercises 3
 
 * Create two instances of `Person` with the same values and then compare them with `==`. Does Scala
-  recognise them as different or equals? Why? Now _modify_ one of the two instances and try to
-  compare it again with the unmodified one. Are they still equals?
+  recognise them as different or equals? Why? Now _modify_ one of the two instances (using
+  `.copy()`) and try to compare it again with the unmodified one. Are they still equals?
 
 * Use case classes to represent a package that can contain other packages or objects. To give some
   more details, one package can either contain one or more objects (you can use a `String` to represent

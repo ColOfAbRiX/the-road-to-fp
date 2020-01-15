@@ -1,5 +1,7 @@
 # A different way of thinking
 
+Estimated reading time: 8 minutes
+
 Learning functional programming (FP) has been one of the best things I could do for my programming
 skills. It changed the way I reason about code and the way I solve problems, it made me see code in
 a different way and it's been really beneficial to simplify my programs in terms of logic and

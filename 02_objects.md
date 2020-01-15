@@ -1,5 +1,7 @@
 # A quick tour of object, singleton objects and companion objects
 
+Estimated reading time: 4 minutes
+
 A little refresher on what Scala companion objects are. You can complement this page with a well
 written [full article here][1].
 
