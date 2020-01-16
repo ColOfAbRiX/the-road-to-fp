@@ -164,16 +164,22 @@ Then we use our programming language of choice to define how the output relates 
 keywords, variables, calls to other functions and so on, in other terms we program the engine of the
 function.
 
-## Exercises 1
+## Exercises 4.1
 
-* Create a pure function `String => String` that associates each input string into its uppercase
-  string.
+### 4.1.1
 
-* Create a pure function `Int => Boolean` that associates even numbers with the value `true` and odd
-  numbers with the value `false`.
+Create a pure function `String => String` that associates each input string into its uppercase
+string.
 
-* Using your result of the exercise of animals in the case classes chapter, create a pure function
-  with signature `Animal => String` that given an animal it returns the type of animal.
+### 4.1.2
+
+Create a pure function `Int => Boolean` that associates even numbers with the value `true` and odd
+numbers with the value `false`.
+
+### 4.1.3
+
+Using your result of the exercise of animals in the case classes chapter, create a pure function
+with signature `Animal => String` that given an animal it returns the type of animal.
 
 ## On side effects
 
@@ -211,19 +217,27 @@ background but you can already start assimilating the facts that:
 A very good resource to get an all round understanding of pure function is provided by [Chapter
 1 of Functional Programming in Scala][2]
 
-## Exercises 2
+## Exercises 4.2
 
-* We want to work with a counter and increment and decrement its value of a given amount. First
-  solve this exercise in imperative style and then try to solve the same problem but using only pure
-  functions. What's the problem you're encountering?
+### 4.2.1
 
-* Write a pure function that discovers the maximum integer in a list of **positive integers**
-  `List[Int] => Int` and returns `-1` if the list is empty or if there are negative numbers or any
-  other sort of issues. Solve the exercise using mutable variables and a for loop. Is it still a
-  pure function? Why?
+We want to work with a counter and write two functions to increment/decrement its value of a given
+amount. First solve this exercise writing a function in imperative style and then try to solve the
+same problem but using only pure functions. What's the problem you're encountering?
 
-* How can you solve the previous exercise if we want the function to be able to work on a list that
-  contains any integer and not just positive integers?
+### 4.2.2
+
+Write a pure function that discovers the maximum integer in a list of **positive integers**
+`List[Int] => Int` and returns `-1` if the list is empty or if there are negative numbers or any
+other sort of issues. Solve the exercise without using scala `.max()` function but using mutable
+variables and a for loop. Is it still a pure function? Why?
+
+### 4.2.3
+
+How can you solve the previous exercise if we want the function to be able to work on a list that
+contains any integer and not just positive integers? You now need to express a situation where you
+can't use the type `Int` to represent an "exceptional" situation because `Int` is part of your
+normal output.
 
 ## Referential transparency
 
@@ -343,10 +357,12 @@ At this point you know all the things about referential transparency useful for 
 can find more details in the [Wikipedia page][3] and a more practical description in the
 [HaskellWiki][7].
 
-## Exercises 3
+## Exercises 4.3
 
-* Write a pure function `List[A] => Int` that counts the number of elements in the given list. Be
-  mindful to not use mutable variables.
+### 4.3.1
+
+Write a pure function `List[A] => Int` that counts the number of elements in the given list. Be
+mindful to not use mutable variables. Is it possible at all?
 
 ## Loops and immutable values
 
@@ -528,21 +544,25 @@ what happens. We'll see similar things when we will talk about categories.
 Pure functions allow us to use the same terminology in programming because they correspond to
 mathematical functions. In programming we talk of input and output *types* instead of sets.
 
-## Exercises 4
+## Exercises 4.4
 
-* For each of the following questions tell the domain and codomain of the function, if the function
-  is total or partial and if it is surjective, injective or bijective:
+### 4.4.1
 
-  * a function `String => String` that associate each string with their reverse (e.g. "Scala" ->
-    "alacS");
+For each of the following questions tell the domain and codomain of the function, if the function is
+total or partial and if it is surjective, injective or bijective:
 
-  * a function `Int => Boolean` that associates negative numbers with their positive value;
+1. a function `String => String` that associate each string with their reverse (e.g. "Scala" ->
+  "alacS");
 
-  * a function `Int => Int` that associates even numbers into their double;
+2. a function `Int => Int` that associates negative numbers with their positive value;
 
-* Given a case class `case class Person(name: String, surname: String)` create a function `Person =>
-  (String, String)` that associates an instance of `Person` to a tuple that contains name and
-  surname. Is this function a bijection? If yes write also its inverse.
+3. a function `Int => Int` that associates even numbers into their double;
+
+### 4.4.2
+
+Given a case class `case class Person(name: String, surname: String)` create a function `Person =>
+(String, String)` that associates an instance of `Person` to a tuple that contains name and surname.
+Is this function a bijection? If yes write also its inverse.
 
 ## References
 

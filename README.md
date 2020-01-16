@@ -59,6 +59,8 @@ Available as [scratch notes](the_road_to_fp_notes.md)
 
 [Chapter 23 - Type Level Programming](23_type_level_programming.md) - Empty
 
+[Exercises solutions](exercises.md)
+
 ## Author Information
 
 Scala developer since 2014 and passionate about functional programming, former dev-ops and sysadmin

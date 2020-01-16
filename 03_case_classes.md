@@ -2,6 +2,8 @@
 
 Estimated reading time: 10 minutes
 
+## Introduction
+
 Case classes in Scala are a somewhat simple concept as described very well in [this StackOverflow
 answer][1], that I report here:
 
@@ -92,16 +94,22 @@ case object Singleton
 
 Case object cannot have constructor fields.
 
-## Exercises 1
+## Exercises 3.1
 
-* Use case classes to represent a person with its name, surname and age. Create some instances to
-  demonstrate the use of your data structures.
+### 3.1.1
 
-* Use case classes to represent a pet with its name and owner. The owner is of type `Person`. Create
-  some instances to demonstrate the use of your data structures.
+Use case classes to represent a person with its name, surname and age. Create some instances to
+demonstrate the use of your data structures.
 
-* Create a new instance of a person and associate with it one of the existing instances of pet
-  created in the previous exercise.
+### 3.1.2
+
+Use case classes to represent a pet with its name and owner. The owner is of type `Person`. Create
+some instances to demonstrate the use of your data structures.
+
+### 3.1.3
+
+Create a new instance of a person and associate with it one of the existing instances of pet created
+in the previous exercise.
 
 ## Pattern matching with case classes
 
@@ -167,15 +175,19 @@ final case class Failure[+T](exception: Throwable) extends Try[T]
 final case class Success[+T](value: T) extends Try[T]
 ```
 
-## Exercises 2
+## Exercises 3.2
 
-* Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`, cats
-  have a name and age, dogs just a name and dolphins a name and a weight. Is it sufficient to use
-  just case classes? Make sure you express the fact that cats, dogs and dolphins are animals. Create
-  some instances to demonstrate the use of your data structures.
+### 3.2.1
 
-* Once you've created the instances for the previous exercise, use pattern matching so that you can
-  print a different description of each type of animal and then you print the name of the animal.
+Use case classes to represent a type of animal. The animals can be `Cat`, `Dog`, `Dolphin`, cats
+have a name and age, dogs just a name and dolphins a name and a weight. Is it sufficient to use just
+case classes? Make sure you express the fact that cats, dogs and dolphins are animals. Create some
+instances to demonstrate the use of your data structures.
+
+### 3.2.2
+
+Once you've created the instances for the previous exercise, use pattern matching so that you can
+print a different description of each type of animal and then you print the name of the animal.
 
 ## From values to types
 
@@ -236,16 +248,20 @@ For this, I refer you straight to [Mark case classes as final][8]
 When case classes are used to create algebraic data types you should follow the [Algebraic Data
 Types][9] best practices.
 
-## Exercises 3
+## Exercises 3.3
 
-* Create two instances of `Person` with the same values and then compare them with `==`. Does Scala
-  recognise them as different or equals? Why? Now _modify_ one of the two instances (using
-  `.copy()`) and try to compare it again with the unmodified one. Are they still equals?
+### 3.3.1
 
-* Use case classes to represent a package that can contain other packages or objects. To give some
-  more details, one package can either contain one or more objects (you can use a `String` to represent
-  "objects") or one or more package that in turn can contain what we just described. This is a
-  recursive structure.
+Create two instances of `Person` with the same values and then compare them with `==`. Does Scala
+recognise them as different or equals? Why? Now _modify_ one of the two instances (using `.copy()`)
+and try to compare it again with the unmodified one. Are they still equals?
+
+### 3.3.2
+
+Use case classes to represent a package that can contain other packages or objects. To give some
+more details, one package can either contain one or more objects (you can use a `String` to
+represent "objects") or one or more package that in turn can contain what we just described. This is
+a recursive structure, in particular it's a tree. Create some instances to see how it works.
 
 ## References
 
