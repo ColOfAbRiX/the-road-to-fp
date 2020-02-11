@@ -2,6 +2,9 @@
 
 Estimated reading time: 20 minutes
 
+TODO:
+https://www.youtube.com/watch?v=3VQ382QG-y4
+
 ## Pure functions
 
 Pure functions are are the essence of functional programming.
@@ -387,22 +390,24 @@ the next few chapters we will carry this work on and we will analyse and discuss
 to overcome this apparent limitation and actually gain more power and elegance from our code:
 immutable data structures and recursion.
 
-## Usefulness of pure function signatures
+## Parametricity and pure function signatures
 
 Functions with no inputs or functions that return `Unit` are always impure functions because if they
 return unit without side effect then they won't be useful so they must have side effect and if they
 require no input then their output must come from a side effect.
 
-This is a very simple example of how the function signature can be of great interest in functional
-programming, because they can tell us a lot and we can reason about them in a very general way.
+This is a very simple example of how the signature of a function can be of great interest in
+functional programming, because they can tell us a lot and we can reason about them in a very
+general way.
+
+Function signatures can be used to prove general properties about the function you're analysing and
+these gives us safeties of what the function can do and what it cannot di
 
 ## Working with expressions
 
 **WIP**
 
 In functional programming we like that every statement has a value when evaluated. This ma
-
-## Generating random numbers
 
 ## Memoization, or values as functions
 

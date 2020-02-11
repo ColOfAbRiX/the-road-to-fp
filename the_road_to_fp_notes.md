@@ -98,6 +98,8 @@ references, comments, examples and exercises.
 * Mapping doesn't change the shape of the container
 * Mapping as lifting of functions
 * Simple example with List+map as functor
+* Covariant and contravariant functors
+  * https://ocharles.org.uk/blog/guest-posts/2013-12-21-24-days-of-hackage-contravariant.html
 * Exceptions and null are evil. Option+map as functor
   * https://sidburn.github.io/blog/2016/03/20/null-is-evil
 * References:

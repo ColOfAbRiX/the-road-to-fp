@@ -241,6 +241,51 @@ tryConversion match {
 
 But... we'll see ways to avoid this tedious way of writing and we'll let the libraries manage this.
 
+## The newtype pattern
+
+An interesting and very simple pattern that can be built using case classes is the pattern called
+newtype. The name derives from a similar Haskell feature that uses the Haskell keyword `newtype`.
+
+The technique consist of wrapping primitive values (`Int`, `String`, `Boolean` and so on) into case
+classes with one single member:
+
+```scala
+final case class UserId(id: String)
+```
+
+This might seem useless at first but what we are trying to achieve is to enforce type safety by
+assigning meaningful types to what would otherwise be a String. The compiler will be working with
+the type `UserId` instead of `String` and will provide additional checks. Also refactoring will be
+easier because if I make a change I can quickly see where I used `UsedId`.
+
+Let's make an example. Let's say you have function that can multiply money, like so:
+
+```scala
+def multiply(factor: Int, amount: Int): Int = factor * amount
+```
+
+The problem with this is that it would be very easy to confuse the two arguments and therefore call
+the function incorrectly. With the newtype pattern, you could create a `Money` type and re-write the
+function like so:
+
+```scala
+case class Money(amount: Int)
+def multiply(factor: Int, amount: Money): Money = Money(amount.amount * factor)
+
+multiply(3, Money(4))
+
+// Output:
+//  Money = Money(12)
+```
+
+Now with your special `Money` type, the compiler will tell you if you try to pass arguments in the
+wrong order.
+
+When using the newtype pattern there are other considerations to make that concern performance as
+they add overhead and it might not always be a good idea to use them or to use the vanilla Scala
+implementation but this is not the place to discuss about this. If you're interested you might want
+to have a look at [value classes][11], [newtype library][12] and [tagged types][13].
+
 ## Case classes best practices
 
 For this, I refer you straight to [Mark case classes as final][8]
@@ -275,6 +320,9 @@ a recursive structure, in particular it's a tree. Create some instances to see h
 * [scala.util.Try][7]
 * [Scala Best Practices - Mark case classes as final][8]
 * [Scala Best Practices- Algebraic Data Types][9]
+* [Value Classes and Universal Traits][11]
+* [NewTypes for Scala with no runtime overhead][12]
+* [Tagged type][13]
 
 [1]: https://stackoverflow.com/a/2312936/1215156
 [2]: https://medium.com/@cachiama/demystifying-scala-case-classes-b4d756959dcd
@@ -286,3 +334,6 @@ a recursive structure, in particular it's a tree. Create some instances to see h
 [8]: https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html
 [9]: https://nrinaudo.github.io/scala-best-practices/definitions/adt.html
 [10]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
+[11]: https://docs.scala-lang.org/overviews/core/value-classes.html
+[12]: https://github.com/estatico/scala-newtype
+[13]: http://eed3si9n.com/learning-scalaz/Tagged+type.html

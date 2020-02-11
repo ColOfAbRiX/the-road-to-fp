@@ -156,7 +156,7 @@ It's a very interesting topic that will open your mind to a even higher degree.
 Quoting again [Bartosz in this video][2], category theory is the abstraction, it is the next level
 up that functional languages tend to reach. It's the level above and as such it will give you a
 bigger world to explore that you can then render with Scala (or the functional language of your
-choice)
+choice).
 
 ## About names
 
