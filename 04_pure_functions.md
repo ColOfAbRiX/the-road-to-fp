@@ -2,9 +2,6 @@
 
 Estimated reading time: 20 minutes
 
-TODO:
-https://www.youtube.com/watch?v=3VQ382QG-y4
-
 ## Pure functions
 
 Pure functions are are the essence of functional programming.
@@ -393,8 +390,8 @@ immutable data structures and recursion.
 ## Parametricity and pure function signatures
 
 Functions with no inputs or functions that return `Unit` are always impure functions because if they
-return unit without side effect then they won't be useful so they must have side effect and if they
-require no input then their output must come from a side effect.
+return unit without any side effect then they won't be useful and therefore they must have side
+effects. If they require no input then their output must come from a side effect.
 
 This is a very simple example of how the signature of a function can be of great interest in
 functional programming, because they can tell us a lot and we can reason about them in a very
@@ -403,16 +400,71 @@ general way.
 Function signatures can be used to prove general properties about the function you're analysing and
 these gives us safeties of what the function can do and what it cannot di
 
-## Working with expressions
-
 **WIP**
 
-In functional programming we like that every statement has a value when evaluated. This ma
+## Working with expressions
+
+Any program is composed of statements and expressions where statements are operations, or actions,
+that can be performed and expressions are something that produce a value. We already mentioned
+expressions when talking about referential transparency.
+
+In functional programming we like that every statement has a value when evaluated because we can use
+the definition of referential transparency and reason better about our code.
+
+Scala adopts this line of reasoning and everything is an expressions so that constructs that you
+would normally consider as statements are in fact expressions. Ifs and pattern matching are examples
+of this even when it doesn't seem so.
+
+Here we have a simple `if` expression that prints a different text depending on the value of a
+condition:
+
+```scala
+if (true) println("true") else println("false")
+
+// Output:
+//   true
+```
+
+and we can prove that this code has in fact a well defined value:
+
+```scala
+val result = if (true) println("true") else println("false")
+println(result)
+
+// Output:
+//   true
+//   ()
+```
+
+and this value is `Unit` (the double `()`) because the value that the evaluations of the `if`
+statement produces is the value returned by the `println` function and that is `Unit`.
+
+When working inside functions is good practice to never use the `return` keyword because it can
+introduce parts of the code that are not evaluated or that return values not compatible with the
+return type. In this example we see how a missing `else` statement makes the code failing at
+compilation:
+
+```scala
+def badStatement(cond: Boolean): String = {
+  if (cond) return "A"
+}
+
+// Output
+//   type mismatch;
+//    found   : Unit
+//    required: String
+//     if (cond)
+//     ^
+//   Compilation Failed
+```
+
+In Scala the value of an expression is always the value of the last expression evaluated, this is
+why you don't have to use the `return` keyword inside a function.
 
 ## Memoization, or values as functions
 
-There is another way we can understand pure functions. Pure functions are replacement machines that
-for every input value substitute an output value.
+There is another way we can understand pure functions different from what we have talked so far.
+Pure functions are replacement machines that for every input value substitute an output value.
 
 Using this point of view we can perform a trick. We can tabulate each resulting value of a function
 in a table that for every input associates an output or we can memorize in a data structure the
@@ -479,21 +531,22 @@ defined for `x`. If there is not we call the expensive function and we save the 
 dictionary otherwise we return the result immediately.
 
 ```scala
-import collection.mutable._
+object Calculations {
+  import collection.mutable._
 
-// This variable is hidden from the user
-var calculateTable: HashMap[Int, Int] = HashMap.empty
+  private var calculateTable: HashMap[Int, Int] = HashMap.empty
 
-def calculate(n: Int): Int = {
-  def expensiveOperation(x: Int): Int = {
-    Thread.sleep(3000)
-    x * x
+  def calculate(n: Int): Int = {
+    def expensiveOperation(x: Int): Int = {
+      Thread.sleep(3000)
+      x * x
+    }
+    calculateTable.getOrElseUpdate(n, expensiveOperation(n))
   }
-  calculateTable.getOrElseUpdate(n, expensiveOperation(n))
 }
 
-calculate(3)    // The first time you run this it will take 3 seconds
-calculate(3)    // This uses the memoized value and returns immediately
+Calculations.calculate(3)    // The first time you run this it will take 3 seconds
+Calculations.calculate(3)    // This uses the memoized value and returns immediately
 
 // Output:
 //   Int = 9
@@ -579,6 +632,8 @@ Is this function a bijection? If yes write also its inverse.
 * [Escape from the ivory tower: the Haskell journey][6]
 * [Types and Functions][8]
 * [Why do immutable objects enable functional programming?][9]
+* [Statements and Expressions in Scala][9]
+* [What is a Closure?][9]
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
@@ -588,3 +643,5 @@ Is this function a bijection? If yes write also its inverse.
 [6]: https://www.youtube.com/watch?v=re96UgMk6GQ
 [8]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
 [9]: https://stackoverflow.com/a/12208744/1215156
+[10]: https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/
+[11]: https://www.learningjournal.guru/article/scala/functional-programming/closures/

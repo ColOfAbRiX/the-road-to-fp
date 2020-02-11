@@ -1,6 +1,6 @@
 # Scala language feature: Case classes
 
-Estimated reading time: 10 minutes
+Estimated reading time: 11 minutes
 
 ## Introduction
 
@@ -253,10 +253,11 @@ classes with one single member:
 final case class UserId(id: String)
 ```
 
-This might seem useless at first but what we are trying to achieve is to enforce type safety by
+This might seem useless, at first, but what we are trying to achieve is to enforce type safety by
 assigning meaningful types to what would otherwise be a String. The compiler will be working with
-the type `UserId` instead of `String` and will provide additional checks. Also refactoring will be
-easier because if I make a change I can quickly see where I used `UsedId`.
+the type `UserId` instead of `String` and will provide additional checks. Refactoring will also
+benefit from this pattern because if you make a change you can quickly see where the type `UsedId`
+is used.
 
 Let's make an example. Let's say you have function that can multiply money, like so:
 
@@ -280,6 +281,10 @@ multiply(3, Money(4))
 
 Now with your special `Money` type, the compiler will tell you if you try to pass arguments in the
 wrong order.
+
+Scala type alias defined with `type` is not the same thing and it can't be used as an alternative to
+newtype because, as the name suggests, it's only an alias and the compiler will treat it in all
+contexts as its base type.
 
 When using the newtype pattern there are other considerations to make that concern performance as
 they add overhead and it might not always be a good idea to use them or to use the vanilla Scala
