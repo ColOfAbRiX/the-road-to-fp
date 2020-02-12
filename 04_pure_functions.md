@@ -1,6 +1,6 @@
 # Pure functions and referential transparency
 
-Estimated reading time: 20 minutes
+Estimated reading time: 22 minutes
 
 ## Pure functions
 
@@ -389,6 +389,9 @@ immutable data structures and recursion.
 
 ## Parametricity and pure function signatures
 
+I won't get into details on what parametricity is and I will assume the reader is familiar with type
+parameters.
+
 Functions with no inputs or functions that return `Unit` are always impure functions because if they
 return unit without any side effect then they won't be useful and therefore they must have side
 effects. If they require no input then their output must come from a side effect.
@@ -397,10 +400,95 @@ This is a very simple example of how the signature of a function can be of great
 functional programming, because they can tell us a lot and we can reason about them in a very
 general way.
 
-Function signatures can be used to prove general properties about the function you're analysing and
-these gives us safeties of what the function can do and what it cannot di
+Function signatures are a very powerful and general tool that can be used to prove general
+properties about the function you're analysing. Tony Morris has [an excellent and comprehensive set
+of slides][12] on why parametricity is an important very useful. Amongst other things he argues that
+polymorphic functions can prove things that a function can or cannot do.
+
+Given a function with this signature:
+
+```scala
+def mickeymouse(n: Int): Int
+```
+
+how many implementations can you think of? There is a vast amount of functions that fit this
+signature and we cannot say much about its content. Let's see this other function, which has the
+same signature as the previous one:
+
+```scala
+def double(n: Int): Int = if (n % 2 == 0) n * 2 else n * 3
+```
+
+Well, clearly this is a pure function and has a well defined body. But it's name can't be trusted as
+documentation! In fact trying to unit test this function might result in a lot of frustration!
+
+Time to use parametricity to see what we gain. And what we loose. Given this function definition:
+
+```scala
+def donalduck[A](a: A): A
+```
+
+guess its complete implementation.
+
+When we start writing the body of the function we see that the function must return a value of type
+`A`. How many ways we have to obtain an `A` to return? Can we make it up? We can't because we don't
+know what actual type `A` is. In one call it might be an `Int` in another it might be an instance of
+an object. From inside the function there is only one place where we can obtain an `A` and that is
+in the variable `a` of type `A`. There's no other way.
+
+So given the signature above we can be confident that the function's complete and correct
+implementation is:
+
+```scala
+def unclescrooge[A, B](a: A, f: A => B): B
+```
+
+We can analyse this function again by starting from the output value and working only with what we
+have available inside the function. The function has to return a `B` and we have a function that
+returns a value of type `B` but it requires an `A`. Where can we get an `A`? From the value `a` that
+is also passed and the final implementation becomes:
+
+```scala
+def apply[A, B](a: A, f: A => B): B = f(a)
+```
+
+These are simple examples where the possible implementations are only one while in the real word we
+can have more possible implementations. Nonetheless the concept remains the same and this technique
+is very powerful. I strongly encourage you to read the slides linked in the references and to work
+on the following exercises.
+
+## Exercises 4.4
+
+### 4.4.1
+
+Implements the functions with the following definitions. Note that there might be any number of
+implementation, none, one or more (in this last case implement only a few):
+
+```scala
+def f[A](a: A, b: A): A
+def g[A, B](a: A, b: B): A
+def h[A, B](a: A, b: B): B
+```
+
+### 4.4.2
+
+Implements the functions with the following definitions:
+
+```scala
+def f[A, B](as: Option[A]): Option[B]
+def g[A, B](as: List[A]): List[B]
+def h[A](as: List[A]): List[A]
+def i[A, B](as: List[A], f: A => B): List[B]
+```
+
+How many implementations did you find? Why is that?
+
+## Closures
 
 **WIP**
+What are closures
+How to use them
+Examples and exercises
 
 ## Working with expressions
 
@@ -463,16 +551,18 @@ why you don't have to use the `return` keyword inside a function.
 
 ## Memoization, or values as functions
 
-There is another way we can understand pure functions different from what we have talked so far.
-Pure functions are replacement machines that for every input value substitute an output value.
+There is another way we can understand pure functions different from what we have talked so far. We
+can think of pure functions are replacement machines that for every input value substitute an output
+value (see later on the discussion about mathematical functions).
 
-Using this point of view we can perform a trick. We can tabulate each resulting value of a function
-in a table that for every input associates an output or we can memorize in a data structure the
-output for each given input.
+Using this point of view we can perform a neat trick: we can tabulate each result value of running a
+function in a table that for every input it associates the relative output and/or we can store this
+correspondence in a data structure.
 
-Let's say the input type is the set of hexadecimal digits from the number `0` to the number `9` and
-from letter `a` to letter `f`. The function we want to write converts takes a single digit an
-converts it into its corresponding integer. Such a function can be easily written as:
+Let's make an example and create a function to convert hexadecimal digits into decimal. The input
+type of this function is the set of hexadecimal digits from the number `0` to the number `9` and
+from letter `a` to letter `f`. The function we want to write converts each single digit into its
+corresponding integer value. Such a function can be easily written as:
 
 ```scala
 def hex2dec(s: String): Int = {
@@ -516,19 +606,22 @@ hex2dec("a")
 //   Int = 10
 ```
 
-What I want to highlight here is that pure functions can actually be represented by simple data and
-a relation.
+Of course this is a useless example but in real world application we can have all sort of relations
+and what I want to highlight here is that pure functions can actually be represented by simple data
+and a relation.
 
 This might seem a waste of time but this technique can be exploited to speed up the calculation of
-expensive functions by building a dynamic table of results as we go.
+expensive functions by building a dynamic table of the results as we go.
 
-Let's say we have an expensive function `expensiveOperation` that takes a long time to perform its
-job. We wrap it inside another function and then we make use of the concept of local mutability and
-we define a mutable dictionary that will map the relation between inputs and output values.
+Let's say we have an expensive function, `expensiveOperation`, that takes a long time to perform its
+job. We can wrap it inside another function, we then define a mutable dictionary that will map the
+relation between inputs and output values and we place this dictionary inside an `object` to hide it
+from the user. The resulting function will be pure because we make use of the concept of local
+mutability so that our version of `expensiveOperation` is referentially transparent.
 
-Every time we call the function with a given input `x` we look in this dictionary if there is a key
-defined for `x`. If there is not we call the expensive function and we save the result in the
-dictionary otherwise we return the result immediately.
+Every time we call the function with a given input `x` we look inside this dictionary and if there
+is a key defined for `x`. If there is not we call the expensive function and we save the result in
+the dictionary otherwise we return the result immediately:
 
 ```scala
 object Calculations {
@@ -554,10 +647,18 @@ Calculations.calculate(3)    // This uses the memoized value and returns immedia
 ```
 
 This technique is called memoization and it's a powerful tool made possible by the use of pure
-functions. Most of the times it's not as trivial as here to memoize a function because the values
-might be infinite and so on but this is not the place to go deeper.
+functions. Many times it's not as trivial as here to memoize a function because the values might be
+infinite but this is not the place to get into more details.
 
 ## Composition
+
+**WIP**
+Simple composition of functions
+Why composition is important
+Example with complex return types
+Compostion has to work on bigger blocks too
+Hence functional patterns
+Examples and exercises
 
 ## Pure functions and mathematics
 
@@ -602,9 +703,17 @@ what happens. We'll see similar things when we will talk about categories.
 Pure functions allow us to use the same terminology in programming because they correspond to
 mathematical functions. In programming we talk of input and output *types* instead of sets.
 
-## Exercises 4.4
+## Lambda Calculus and pure functions
 
-### 4.4.1
+**WIP**
+What is lambda calculus and why it's important. Brief historical overview
+Explain turing machines and equivalence to lambda calculus
+Everything is a function so we can use function to build everything
+Closures as free variables in lambda calculus
+
+## Exercises 4.5
+
+### 4.5.1
 
 For each of the following questions tell the domain and codomain of the function, if the function is
 total or partial and if it is surjective, injective or bijective:
@@ -616,7 +725,7 @@ total or partial and if it is surjective, injective or bijective:
 
 3. a function `Int => Int` that associates even numbers into their double;
 
-### 4.4.2
+### 4.5.2
 
 Given a case class `case class Person(name: String, surname: String)` create a function `Person =>
 (String, String)` that associates an instance of `Person` to a tuple that contains name and surname.
@@ -634,6 +743,7 @@ Is this function a bijection? If yes write also its inverse.
 * [Why do immutable objects enable functional programming?][9]
 * [Statements and Expressions in Scala][9]
 * [What is a Closure?][9]
+* [Parametricity - Types are documentation][12]
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
@@ -645,3 +755,4 @@ Is this function a bijection? If yes write also its inverse.
 [9]: https://stackoverflow.com/a/12208744/1215156
 [10]: https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/
 [11]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
+[12]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf

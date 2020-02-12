@@ -315,14 +315,73 @@ mindful to not use mutable variables. Is it possible at all?
 // It's not possible!
 ```
 
-### Exercises 4.4
+## Exercises 4.4
 
-#### 4.4.1
+### 4.4.1
+
+Implements the functions with the following definitions. Note that there might be any number of
+implementation, none, one or more (though not too many):
+
+```scala
+// f
+def f1[A](a: A, b: A): A = a
+def f1[A](a: A, b: A): A = b
+
+// g
+def g[A, B](a: A, b: B): A = a
+
+// h
+def h[A, B](a: A, b: B): B = b
+```
+
+### 4.4.2
+
+Implements the functions with the following definitions:
+
+```scala
+// f
+def f[A, B](as: List[A]): List[B] = Nil
+
+// g
+def g1[A, B](as: Option[A]): Option[B] = None
+def g2[A, B](as: Option[A]): Option[B] = as
+
+// h
+def h1[A](as: List[A]): List[A] = Nil
+def h2[A](as: List[A]): List[A] = as
+def h3[A](as: List[A]): List[A] = {
+  if (as.isEmpty) Nil else as.head :: Nil
+}
+def h4[A](as: List[A]): List[A] = {
+  if (as.isEmpty) Nil else as.tail
+}
+
+// i
+def i1[A, B](as: List[A], f: A => B): List[B] = Nil
+def i2[A, B](as: List[A], f: A => B): List[B] = {
+  if (as.isEmpty) Nil else f(as.head) :: Nil
+}
+def i3[A, B](as: List[A], f: A => B): List[B] = {
+  if (as.isEmpty) Nil else f(as.head) :: h3(as.tail, f)
+}
+```
+
+How many implementations did you find? Why is that?
+
+The signatures `g`, `h` and `i` have multiple implementations and this number is bounded by the
+number of different input values we have. For `Option` we only have 2 implementations and for `List`
+the number is bounded by the elements of the list.
+
+This happens because we have lost parametricity in favour of using `Option` and `List`.
+
+### Exercises 4.5
+
+#### 4.5.1
 
 For each of the following questions tell the domain and codomain of the function, if the function is
 total or partial and if it is surjective, injective or bijective:
 
-##### 4.4.1.1
+##### 4.5.1.1
 
 A function `String => String` that associate each string with their reverse (e.g. "Scala"->"alacS")
 
@@ -350,7 +409,7 @@ It is injective because for each input string it always produce a different outp
 
 Because it's surjective and injective it is also bijective. It's inverse function is itself.
 
-##### 4.4.1.2
+##### 4.5.1.2
 
 A function `Int => Int` that associates negative numbers with their positive value;
 
@@ -380,7 +439,7 @@ both -4 and 4 in the input are associated with 4 in the output)
 
 The function is not bijective.
 
-##### 4.4.1.3
+##### 4.5.1.3
 
 A function `Int => Int` that associates even numbers into their double;
 
@@ -409,7 +468,7 @@ It is injective because each distinct input is associated with a different outpu
 
 The function is not bijective.
 
-#### 4.4.2
+#### 4.5.2
 
 Given a case class `case class Person(name: String, surname: String)` create a function `Person =>
 (String, String)` that associates an instance of `Person` to a tuple that contains name and surname.

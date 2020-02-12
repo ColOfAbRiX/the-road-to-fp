@@ -10,6 +10,18 @@
 
 ## Recursion from two different functions
 
+## Exercises 5.1
+
+### 5.1.1
+
+Implements the functions with the following definitions:
+
+```scala
+def f[A](as: List[List[A]]): List[A]
+def g[A, B](as: List[A], f: A => List[B]): List[B]
+def h[A, B](as: Option[A], f: A => Option[B]): Option[B]
+```
+
 ## References
 
 * [From mutable loops to immutable folds][1]

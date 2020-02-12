@@ -1,5 +1,6 @@
 # Summary of Functional Patterns
 
+* Lazy execution
 * Algebraic Data Types
   * Product
   * Sum

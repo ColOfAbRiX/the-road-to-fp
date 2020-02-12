@@ -9,6 +9,10 @@ Website: <https://colofabrix.github.io/the-road-to-fp/>
 
 Available as [scratch notes](the_road_to_fp_notes.md)
 
+[Exercises solutions](exercises.md)
+
+[Summary of functional patterns](patterns_summary.md)
+
 ## Chapters
 
 [Chapter 0 - Introduction](00_introduction.md)
@@ -58,8 +62,6 @@ Available as [scratch notes](the_road_to_fp_notes.md)
 [Chapter 22 - Few concepts in Type theory](22_type_theory_concepts.md) - Empty
 
 [Chapter 23 - Type Level Programming](23_type_level_programming.md) - Empty
-
-[Exercises solutions](exercises.md)
 
 ## Author Information
 
