@@ -27,6 +27,7 @@
   * State
   * IO
   * ErrorMonad
+  * Cont
 * Monad transformers
   * ListT
   * EitherT
@@ -45,3 +46,4 @@
 * Lenses
 * Prisms
 * Continuation Passing Style
+* Type level programming

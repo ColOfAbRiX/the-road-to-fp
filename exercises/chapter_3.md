@@ -68,8 +68,8 @@ val shadow = Dolphin("Shadow", 62.4)
 
 // Output:
 //   lucy: Cat = Cat("Lucy", 3)
-//   fido: Dolphin = Dolphin("Fido", 6.0)
-//   shadow: Dog = Dog("Shadow")
+//   fido: Dog = Dog("Fido")
+//   shadow: Dolphin = Dolphin("Shadow", 62.4)
 
 def greet(animal: Animal): Unit = {
   animal match {

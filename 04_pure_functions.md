@@ -379,7 +379,8 @@ Examples and exercises
 
 Any program is composed of statements and expressions where statements are operations, or actions,
 that can be performed and expressions are something that produce a value. We already mentioned
-expressions when talking about referential transparency.
+expressions when talking about referential transparency. I summarized this sentence from the article
+[Statements and Expressions in Scala][10].
 
 In functional programming we like that every statement has a value when evaluated because we can use
 the definition of referential transparency and reason better about our code.
@@ -449,7 +450,8 @@ variables allow these side effects. So they should be avoided.
 
 As [this answer on StackOverflow] points out, using pure functions and immutable variables allows us
 to prove facts about our system (functions, data) that we can later use to abstract over the details
-and understand
+and understand. We will cover immutable data structures in a future chapter but if you like you can
+understand how immutable variables are essential for FP in this [Stackoverflow question][10].
 
 This can sound like a big crippling problem for a developer. How can we work without loops? We have
 already started to build the tools necessary to understand how to work in a pure manner in FP and in
@@ -467,9 +469,7 @@ immutable data structures and recursion.
 * [Escape from the ivory tower: the Haskell journey][6]
 * [Types and Functions][8]
 * [Why do immutable objects enable functional programming?][9]
-* [Statements and Expressions in Scala][9]
-* [What is a Closure?][9]
-* [Parametricity - Types are documentation][12]
+* [Statements and Expressions in Scala][10]
 
 [2]: https://www.manning.com/books/functional-programming-in-scala
 [3]: https://www.wikiwand.com/en/Referential_transparency
@@ -480,5 +480,3 @@ immutable data structures and recursion.
 [8]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
 [9]: https://stackoverflow.com/a/12208744/1215156
 [10]: https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/
-[11]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
-[12]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf

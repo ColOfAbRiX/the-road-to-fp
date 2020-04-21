@@ -289,26 +289,8 @@ Is this function a bijection? If yes write also its inverse.
 
 ## References
 
-* [Functional programming in Scala][2] Chapter 1
-* [Referential transparency - Wikipedia][3]
-* [Referential transparency - HaskellWiki][7]
-* [The Benefits of Pure Functions][4]
-* [Understanding Immutability and Pure Functions (for OOP)][5]
-* [Escape from the ivory tower: the Haskell journey][6]
-* [Types and Functions][8]
-* [Why do immutable objects enable functional programming?][9]
-* [Statements and Expressions in Scala][9]
-* [What is a Closure?][9]
+* [What is a Closure?][11]
 * [Parametricity - Types are documentation][12]
 
-[2]: https://www.manning.com/books/functional-programming-in-scala
-[3]: https://www.wikiwand.com/en/Referential_transparency
-[7]: https://wiki.haskell.org/Referential_transparency
-[4]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
-[5]: https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions
-[6]: https://www.youtube.com/watch?v=re96UgMk6GQ
-[8]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
-[9]: https://stackoverflow.com/a/12208744/1215156
-[10]: https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/
 [11]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
 [12]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf

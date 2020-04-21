@@ -7,7 +7,9 @@ comprehensive way.
 
 Website: <https://colofabrix.github.io/the-road-to-fp/>
 
-Available as [scratch notes](the_road_to_fp_notes.md)
+[The original scratchpad](the_road_to_fp_notes.md) with my notes for this website.
+
+[Solved exercises](exercises/README.md) of the chapters.
 
 [Summary of functional patterns](patterns_summary.md)
 
