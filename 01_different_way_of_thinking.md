@@ -4,16 +4,16 @@ Estimated reading time: 8 minutes
 
 Learning functional programming (FP) has been one of the best things I could do for my programming
 skills. It changed the way I reason about code and the way I solve problems, it made me see code in
-a different way and it's been really beneficial to simplify my programs in terms of logic and
-internal works.
+a different light and it's been really beneficial to simplify my programs in terms of logic and
+internal working gears.
 
 When learning FP there are several paradigm shifts that you will have to go through and they are all
 necessary **to become proficient**:
 
-* pure functions and Immutability;
-* new concepts, techniques and tools;
+* pure functions and immutability;
+* new concepts, techniques, patterns and tools;
 * declarative programming;
-* use math to reason on your code (ok, this one is not really necessary...).
+* use math to reason on your code (ok, this one is not really necessary but fun...).
 
 In my opinion these are quite big conceptual shifts and they will probably require a lot of practice
 before you can comfortably reason and work with them. They are very different from the traditional

@@ -7,6 +7,7 @@
 * Newtypes
 * Typeclasses
 * Tagless final
+* Phantom types
 * Functors
   * Covariant Functors
   * Contravariant Functors
@@ -25,17 +26,21 @@
   * Writer
   * State
   * IO
+  * ErrorMonad
 * Monad transformers
   * ListT
   * EitherT
+  * StateT
+  * ReaderT
 * Comonads
   * Store
   * Product
-* Free monoids
-* Free functors
-* Free applicatives
-* Free monads
-* Free comonads
+* Free structures
+  * Monoids
+  * Functors
+  * Applicatives
+  * Monads
+  * Comonads
 * Trampolining
 * Lenses
 * Prisms

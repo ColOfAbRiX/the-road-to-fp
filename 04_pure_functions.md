@@ -1,6 +1,6 @@
 # Pure functions and referential transparency
 
-Estimated reading time: 22 minutes
+Estimated reading time: 15 minutes
 
 ## Pure functions
 
@@ -364,130 +364,15 @@ can find more details in the [Wikipedia page][3] and a more practical descriptio
 Write a pure function `List[A] => Int` that counts the number of elements in the given list. Be
 mindful to not use mutable variables. Is it possible at all?
 
-## Loops and immutable values
-
-From the previous exercise you should have noticed that it's not possible to use a classic for/while
-loop without using mutable variables. This is because of the very nature of the loop itself.
-
-An imperative style loop needs to update a shared state (in many cases a variable defined outside
-the loop) to perform it job. The instruction it contains are executed a certain amount of time, in
-accordance with the condition of the loop and the result of each iteration is stored in this shared
-state that ultimately becomes the result of the entire loop.
-
-Taking this reasoning to its logical conclusion we can say that a loop has side effects and mutable
-variables allow these side effects. So they should be avoided.
-
-As [this answer on StackOverflow] points out, using pure functions and immutable variables allows us
-to prove facts about our system (functions, data) that we can later use to abstract over the details
-and understand
-
-This can sound like a big crippling problem for a developer. How can we work without loops? We have
-already started to build the tools necessary to understand how to work in a pure manner in FP and in
-the next few chapters we will carry this work on and we will analyse and discuss the techniques used
-to overcome this apparent limitation and actually gain more power and elegance from our code:
-immutable data structures and recursion.
-
-## Parametricity and pure function signatures
-
-I won't get into details on what parametricity is and I will assume the reader is familiar with type
-parameters.
-
-Functions with no inputs or functions that return `Unit` are always impure functions because if they
-return unit without any side effect then they won't be useful and therefore they must have side
-effects. If they require no input then their output must come from a side effect.
-
-This is a very simple example of how the signature of a function can be of great interest in
-functional programming, because they can tell us a lot and we can reason about them in a very
-general way.
-
-Function signatures are a very powerful and general tool that can be used to prove general
-properties about the function you're analysing. Tony Morris has [an excellent and comprehensive set
-of slides][12] on why parametricity is an important very useful. Amongst other things he argues that
-polymorphic functions can prove things that a function can or cannot do.
-
-Given a function with this signature:
-
-```scala
-def mickeymouse(n: Int): Int
-```
-
-how many implementations can you think of? There is a vast amount of functions that fit this
-signature and we cannot say much about its content. Let's see this other function, which has the
-same signature as the previous one:
-
-```scala
-def double(n: Int): Int = if (n % 2 == 0) n * 2 else n * 3
-```
-
-Well, clearly this is a pure function and has a well defined body. But it's name can't be trusted as
-documentation! In fact trying to unit test this function might result in a lot of frustration!
-
-Time to use parametricity to see what we gain. And what we loose. Given this function definition:
-
-```scala
-def donalduck[A](a: A): A
-```
-
-guess its complete implementation.
-
-When we start writing the body of the function we see that the function must return a value of type
-`A`. How many ways we have to obtain an `A` to return? Can we make it up? We can't because we don't
-know what actual type `A` is. In one call it might be an `Int` in another it might be an instance of
-an object. From inside the function there is only one place where we can obtain an `A` and that is
-in the variable `a` of type `A`. There's no other way.
-
-So given the signature above we can be confident that the function's complete and correct
-implementation is:
-
-```scala
-def unclescrooge[A, B](a: A, f: A => B): B
-```
-
-We can analyse this function again by starting from the output value and working only with what we
-have available inside the function. The function has to return a `B` and we have a function that
-returns a value of type `B` but it requires an `A`. Where can we get an `A`? From the value `a` that
-is also passed and the final implementation becomes:
-
-```scala
-def apply[A, B](a: A, f: A => B): B = f(a)
-```
-
-These are simple examples where the possible implementations are only one while in the real word we
-can have more possible implementations. Nonetheless the concept remains the same and this technique
-is very powerful. I strongly encourage you to read the slides linked in the references and to work
-on the following exercises.
-
-## Exercises 4.4
-
-### 4.4.1
-
-Implements the functions with the following definitions. Note that there might be any number of
-implementation, none, one or more (in this last case implement only a few):
-
-```scala
-def f[A](a: A, b: A): A
-def g[A, B](a: A, b: B): A
-def h[A, B](a: A, b: B): B
-```
-
-### 4.4.2
-
-Implements the functions with the following definitions:
-
-```scala
-def f[A, B](as: Option[A]): Option[B]
-def g[A, B](as: List[A]): List[B]
-def h[A](as: List[A]): List[A]
-def i[A, B](as: List[A], f: A => B): List[B]
-```
-
-How many implementations did you find? Why is that?
-
-## Closures
+## Composition
 
 **WIP**
-What are closures
-How to use them
+Pure functions can be composed, show counterexample
+Simple composition of functions
+Why composition is important
+Example with complex return types
+Compostion has to work on bigger blocks too
+Hence functional patterns
 Examples and exercises
 
 ## Working with expressions
@@ -549,187 +434,28 @@ def badStatement(cond: Boolean): String = {
 In Scala the value of an expression is always the value of the last expression evaluated, this is
 why you don't have to use the `return` keyword inside a function.
 
-## Memoization, or values as functions
+## Loops and immutable values
 
-There is another way we can understand pure functions different from what we have talked so far. We
-can think of pure functions are replacement machines that for every input value substitute an output
-value (see later on the discussion about mathematical functions).
+From the previous exercise you should have noticed that it's not possible to use a classic for/while
+loop without using mutable variables. This is because of the very nature of the loop itself.
 
-Using this point of view we can perform a neat trick: we can tabulate each result value of running a
-function in a table that for every input it associates the relative output and/or we can store this
-correspondence in a data structure.
+An imperative style loop needs to update a shared state (in many cases a variable defined outside
+the loop) to perform it job. The instruction it contains are executed a certain amount of time, in
+accordance with the condition of the loop and the result of each iteration is stored in this shared
+state that ultimately becomes the result of the entire loop.
 
-Let's make an example and create a function to convert hexadecimal digits into decimal. The input
-type of this function is the set of hexadecimal digits from the number `0` to the number `9` and
-from letter `a` to letter `f`. The function we want to write converts each single digit into its
-corresponding integer value. Such a function can be easily written as:
+Taking this reasoning to its logical conclusion we can say that a loop has side effects and mutable
+variables allow these side effects. So they should be avoided.
 
-```scala
-def hex2dec(s: String): Int = {
-  Integer.parseInt(s, 16)
-}
+As [this answer on StackOverflow] points out, using pure functions and immutable variables allows us
+to prove facts about our system (functions, data) that we can later use to abstract over the details
+and understand
 
-hex2dec("2")
-hex2dec("b")
-
-// Output:
-//   Int = 2
-//   Int = 11
-```
-
-We can think of a version where we tabulate all the possible input values and for each one we return
-the corresponding value. In this way we are establishing a relation which is a function:
-
-```scala
-def hex2dec(s: String): Int = s.toLowerCase match {
-  case "0" => 0
-  case "1" => 1
-  case "2" => 2
-  case "3" => 3
-  case "4" => 4
-  case "5" => 5
-  case "6" => 6
-  case "7" => 7
-  case "8" => 8
-  case "9" => 9
-  case "a" => 10
-  case "b" => 11
-  case "c" => 12
-  case "d" => 13
-  case "e" => 14
-  case "f" => 15
-}
-
-hex2dec("a")
-
-// Output:
-//   Int = 10
-```
-
-Of course this is a useless example but in real world application we can have all sort of relations
-and what I want to highlight here is that pure functions can actually be represented by simple data
-and a relation.
-
-This might seem a waste of time but this technique can be exploited to speed up the calculation of
-expensive functions by building a dynamic table of the results as we go.
-
-Let's say we have an expensive function, `expensiveOperation`, that takes a long time to perform its
-job. We can wrap it inside another function, we then define a mutable dictionary that will map the
-relation between inputs and output values and we place this dictionary inside an `object` to hide it
-from the user. The resulting function will be pure because we make use of the concept of local
-mutability so that our version of `expensiveOperation` is referentially transparent.
-
-Every time we call the function with a given input `x` we look inside this dictionary and if there
-is a key defined for `x`. If there is not we call the expensive function and we save the result in
-the dictionary otherwise we return the result immediately:
-
-```scala
-object Calculations {
-  import collection.mutable._
-
-  private var calculateTable: HashMap[Int, Int] = HashMap.empty
-
-  def calculate(n: Int): Int = {
-    def expensiveOperation(x: Int): Int = {
-      Thread.sleep(3000)
-      x * x
-    }
-    calculateTable.getOrElseUpdate(n, expensiveOperation(n))
-  }
-}
-
-Calculations.calculate(3)    // The first time you run this it will take 3 seconds
-Calculations.calculate(3)    // This uses the memoized value and returns immediately
-
-// Output:
-//   Int = 9
-//   Int = 9
-```
-
-This technique is called memoization and it's a powerful tool made possible by the use of pure
-functions. Many times it's not as trivial as here to memoize a function because the values might be
-infinite but this is not the place to get into more details.
-
-## Composition
-
-**WIP**
-Simple composition of functions
-Why composition is important
-Example with complex return types
-Compostion has to work on bigger blocks too
-Hence functional patterns
-Examples and exercises
-
-## Pure functions and mathematics
-
-With pure functions you have at your disposal mathematics that can help you talk about functions and
-visualize what is happening and what the functions is doing because we can use this new tool to draw
-diagrams of the functions.
-
-In mathematics a function is a relation that given an input set and an output set (that can also be
-the same) it associates element of the input set to elements of the output set and it never
-associates elements in the input to more than one element in the output. We can **colloquially**
-call this operation mapping and say that *a function maps elements of the input set into elements of
-the output set*.
-
-The input set is called **domain** of the function and the output set is called **codomain** of the
-function.
-
-If the function maps every element of the domain then the functions is called **total** otherwise it
-is called **partial**.
-
-If different input elements of a function are always associated with different output elements then
-the function is called **injective**. Intuitively injective functions don't collapse input elements
-in the output but they keep them separate.
-
-If a function, after it has done its job of associating inputs elements into outputs elements, has
-used all the elements of the codomain then the function is called **surjective**. Surjective
-functions are different than injective so different input elements can be mapped to the same output
-element.
-
-If a function is both injective and surjective then it is called **bijective** or **isomorphic**.
-This is a really important concept in mathematics because it tells us that that to every input
-element there is one and only one output element associated to it and that all output elements are
-associated with one and only one input element. In turn this gives us the power to go back and forth
-from any input element to an output element and vice-versa. In other words it exists a functions
-that reverses the original functions. Such a function is called **inverse**.
-
-To summarize, this is the list of concepts we just talked about: domain, codomain, total, partial,
-injective, surjective, isomorphic, inverse.
-
-We don't need to go deeper than this and we'll use these concepts to visualize and to understand
-what happens. We'll see similar things when we will talk about categories.
-
-Pure functions allow us to use the same terminology in programming because they correspond to
-mathematical functions. In programming we talk of input and output *types* instead of sets.
-
-## Lambda Calculus and pure functions
-
-**WIP**
-What is lambda calculus and why it's important. Brief historical overview
-Explain turing machines and equivalence to lambda calculus
-Everything is a function so we can use function to build everything
-Closures as free variables in lambda calculus
-
-## Exercises 4.5
-
-### 4.5.1
-
-For each of the following questions tell the domain and codomain of the function, if the function is
-total or partial and if it is surjective, injective or bijective:
-
-1. a function `String => String` that associate each string with their reverse (e.g. "Scala" ->
-  "alacS");
-
-2. a function `Int => Int` that associates negative numbers with their positive value;
-
-3. a function `Int => Int` that associates even numbers into their double;
-
-### 4.5.2
-
-Given a case class `case class Person(name: String, surname: String)` create a function `Person =>
-(String, String)` that associates an instance of `Person` to a tuple that contains name and surname.
-Is this function a bijection? If yes write also its inverse.
+This can sound like a big crippling problem for a developer. How can we work without loops? We have
+already started to build the tools necessary to understand how to work in a pure manner in FP and in
+the next few chapters we will carry this work on and we will analyse and discuss the techniques used
+to overcome this apparent limitation and actually gain more power and elegance from our code:
+immutable data structures and recursion.
 
 ## References
 

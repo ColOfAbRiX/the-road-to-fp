@@ -29,8 +29,9 @@ with examples and exercises to make the life of people that want to get into FP 
 I want to focus on **functional programming applied to Scala** and Scala only, although there will
 be multiple references to materials in Haskell.
 
-I also want to dig deep and go as far as possible, including **advanced concepts** like category
-theory.
+I also want to dig deep and go as far as possible, including **advanced concepts** like references
+to mathematics and category theory. I will connect to other branches of computer science and I will
+talk about OOP too.
 
 At the end I want the reader to be able to **understand** most of the material that can be found
 online so that one can be independent in his or her own research.
@@ -61,6 +62,7 @@ Overall, what I want the reader to achieve is:
 
 * to be familiar with most of the FP concepts and know their purpose, from the simplest to the more
   advanced ones;
+* understand and be able to use functional design patterns;
 * become autonomous and be able to use online material;
 * write purely functional code in Scala;
 * be able to use the most common FP libraries.

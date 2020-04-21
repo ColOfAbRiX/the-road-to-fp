@@ -1,4 +1,4 @@
-# A quick tour of object, singleton objects and companion objects
+# A quick tour of the Scala object keyword
 
 Estimated reading time: 4 minutes
 
