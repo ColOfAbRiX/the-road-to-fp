@@ -23,7 +23,7 @@ def h[A, B](a: A, b: B): B = b
 
 #### 5.1.2
 
-Implements the functions with the following definitions:
+Implement the functions with the following definitions:
 
 ```scala
 // f

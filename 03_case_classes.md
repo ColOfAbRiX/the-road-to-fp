@@ -2,8 +2,6 @@
 
 Estimated reading time: 11 minutes
 
-## Introduction
-
 Case classes in Scala are a somewhat simple concept as described very well in [this StackOverflow
 answer][1], that I report here:
 

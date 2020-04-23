@@ -2,72 +2,90 @@
 
 Estimated reading time: 10 minutes
 
+After having introduced pure functions in the previous chapter, there are many more things to know
+about them and how Scala works with functions.
+
 ## Parametricity and pure function signatures
 
-I won't get into details on what parametricity is and I will assume the reader is familiar with type
-parameters.
+For now I won't get into details on what parametricity is and I will assume the reader is familiar
+with the Scala type parameters and more details can be read in [this excellent article in two
+parts][3] that also talk about bounds, variance and subtyping.
 
-Functions with no inputs or functions that return `Unit` are always impure functions because if they
-return unit without any side effect then they won't be useful and therefore they must have side
-effects. If they require no input then their output must come from a side effect.
+If you think about it, functions with no inputs or functions that return `Unit` are always impure
+functions because if they return `Unit` without any side effect then they won't be useful and
+therefore they must have side effects. If they require no input then their output must come from a
+side effect making it again impure pretty much by definition.
 
 This is a very simple example of how the signature of a function can be of great interest in
 functional programming, because they can tell us a lot and we can reason about them in a very
 general way.
 
 Function signatures are a very powerful and general tool that can be used to prove general
-properties about the function you're analysing. Tony Morris has [an excellent and comprehensive set
-of slides][12] on why parametricity is an important very useful. Amongst other things he argues that
-polymorphic functions can prove things that a function can or cannot do.
+properties about the function you're analysing. This concept is much more general and it was
+introduced by Philip Wadler in his paper [Theorems for free][4] and Tony Morris has [an excellent
+and comprehensive set of slides][2] on why parametricity is an important very useful and how it can
+be used. Amongst other things he argues that polymorphic functions can prove things about what a
+function can or cannot do.
 
-Given a function with this signature:
+Let's see some examples to get an intuition of what I mean. Given a function with this signature:
 
 ```scala
 def mickeymouse(n: Int): Int
 ```
 
 how many implementations can you think of? There is a vast amount of functions that fit this
-signature and we cannot say much about its content. Let's see this other function, which has the
-same signature as the previous one:
+signature and we cannot say much about its content. The function could simply return always the same
+number, it can do any kind of operation to the input number before spitting it out, it can contain
+logic like `if` statements and so on. Let's pick one implementation like this other function, which
+has the same signature as the previous one:
 
 ```scala
-def double(n: Int): Int = if (n % 2 == 0) n * 2 else n * 3
+def doubleInput(n: Int): Int = if (n % 2 == 0) n * 2 else n * 3
 ```
 
-Well, clearly this is a pure function and has a well defined body. But it's name can't be trusted as
+Well, clearly this is a pure function and has a well defined body. But its name can't be trusted as
 documentation! In fact trying to unit test this function might result in a lot of frustration!
 
-Time to use parametricity to see what we gain. And what we loose. Given this function definition:
+Time to use parametricity to see what we gain. But also what we loose. Given this function
+definition:
 
 ```scala
 def donalduck[A](a: A): A
 ```
 
-guess its complete implementation.
+find its complete implementation.
 
 When we start writing the body of the function we see that the function must return a value of type
-`A`. How many ways we have to obtain an `A` to return? Can we make it up? We can't because we don't
-know what actual type `A` is. In one call it might be an `Int` in another it might be an instance of
-an object. From inside the function there is only one place where we can obtain an `A` and that is
-in the variable `a` of type `A`. There's no other way.
+`A`. How many ways we have to obtain a value of type `A` to return? Can we make it up? We can't
+because we don't know what the actual type `A` is. In one call it might be an `Int` in another it
+might be an instance of an object. Because we're creating a pure function we can't magically find
+this value in a upper scope. From inside the function there is only one place where we can obtain an
+`A` and that is in the variable `a` of type `A`. There's no other way.
 
 So given the signature above we can be confident that the function's complete and correct
 implementation is:
+
+```scala
+def identity[A](a: A): A = a
+```
+
+Let's try again with a different example but similar reasoning:
 
 ```scala
 def unclescrooge[A, B](a: A, f: A => B): B
 ```
 
 We can analyse this function again by starting from the output value and working only with what we
-have available inside the function. The function has to return a `B` and we have a function that
-returns a value of type `B` but it requires an `A`. Where can we get an `A`? From the value `a` that
-is also passed and the final implementation becomes:
+have available inside the function. The function has to return a `B` and we can obtain that value
+from the result of the function `f`. `f` returns a value of type `B` but it requires a value of type
+`A` to operate. Where can we get an `A`? From the value `a` that is also given as argument and the
+final implementation becomes:
 
 ```scala
 def apply[A, B](a: A, f: A => B): B = f(a)
 ```
 
-These are simple examples where the possible implementations are only one while in the real word we
+These are simple examples where there is only one possible implementations while in the real word we
 can have more possible implementations. Nonetheless the concept remains the same and this technique
 is very powerful. I strongly encourage you to read the slides linked in the references and to work
 on the following exercises.
@@ -87,7 +105,7 @@ def h[A, B](a: A, b: B): B
 
 ### 5.1.2
 
-Implements the functions with the following definitions:
+Implement the functions with the following definitions:
 
 ```scala
 def f[A, B](as: Option[A]): Option[B]
@@ -97,6 +115,10 @@ def i[A, B](as: List[A], f: A => B): List[B]
 ```
 
 How many implementations did you find? Why is that?
+
+## Type inhabitants
+
+
 
 ## Scala encoding of functions
 
@@ -289,8 +311,14 @@ Is this function a bijection? If yes write also its inverse.
 
 ## References
 
-* [What is a Closure?][11]
-* [Parametricity - Types are documentation][12]
+* [What is a Closure?][1]
+* [Parametricity - Types are documentation][2]
+* [Scala type system: Parametrized types and variance, Part 1][3]
+* [P.Wadler - Theorems for free][4]
+* [Why is Function[-A1,…,+B] not about allowing any supertypes as parameters?][5]
 
-[11]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
-[12]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf
+[1]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
+[2]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf
+[3]: https://blog.codecentric.de/en/2015/03/scala-type-system-parameterized-types-variances-part-1/
+[4]: https://people.mpi-sws.org/~dreyer/tor/papers/wadler.pdf
+[5]: https://stackoverflow.com/questions/10603982/why-is-function-a1-b-not-about-allowing-any-supertypes-as-parameters

@@ -2,8 +2,10 @@
 
 Estimated reading time: 4 minutes
 
-A little refresher on what Scala companion objects are. You can complement this page with a well
-written [full article here][1].
+This chapter is a little refresher on what the Scala `object` keyword does. You can complement this
+page with a well written [full article here][1].
+
+## Singleton objects
 
 Scala classes cannot have static variables or methods. Instead a Scala class can have what is called
 a _singleton object_ which is a special instance of a class that the compiler guarantees to be
@@ -23,7 +25,9 @@ MyComponent.enabled
 //   Boolean = false
 ```
 
-By all means, this is a language-level implementation of the [Singleton pattern][2].
+By all means, this is a language-level implementation of the well known [Singleton pattern][2].
+
+## Modules
 
 Another use case for objects is to use them as containers to modularize the application. You just
 forget everything about OOP and FP and you just create an object when you want to organize your code
@@ -49,6 +53,8 @@ PetModule.createPet("fido", 5)
 //   String = "Matt Smith"
 //   String = "fido, age: 5"
 ```
+
+## Companion Objects
 
 When a singleton object is named the same as a class and it is defined inside the same source file,
 it is called a companion object.
@@ -107,6 +113,8 @@ Loader("Matt", "Smith").name
 //   String = "Matt Smith"
 //   String = "Matt Smith"
 ```
+
+## Pattern matching
 
 There is another special method that can be defined in a object called `unapply()` and it is known
 as extractor. This method is used to "deconstruct" objects into its components, or "extract" the
