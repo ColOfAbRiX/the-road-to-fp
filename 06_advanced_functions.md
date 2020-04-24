@@ -9,7 +9,7 @@ about them and how Scala works with functions.
 
 For now I won't get into details on what parametricity is and I will assume the reader is familiar
 with the Scala type parameters and more details can be read in [this excellent article in two
-parts][3] that also talk about bounds, variance and subtyping.
+parts][a3] that also talk about bounds, variance and subtyping.
 
 If you think about it, functions with no inputs or functions that return `Unit` are always impure
 functions because if they return `Unit` without any side effect then they won't be useful and
@@ -22,8 +22,8 @@ general way.
 
 Function signatures are a very powerful and general tool that can be used to prove general
 properties about the function you're analysing. This concept is much more general and it was
-introduced by Philip Wadler in his paper [Theorems for free][4] and Tony Morris has [an excellent
-and comprehensive set of slides][2] on why parametricity is an important very useful and how it can
+introduced by Philip Wadler in his paper [Theorems for free][a4] and Tony Morris has [an excellent
+and comprehensive set of slides][a2] on why parametricity is an important very useful and how it can
 be used. Amongst other things he argues that polymorphic functions can prove things about what a
 function can or cannot do.
 
@@ -312,13 +312,20 @@ Is this function a bijection? If yes write also its inverse.
 ## References
 
 * [What is a Closure?][1]
-* [Parametricity - Types are documentation][2]
-* [Scala type system: Parametrized types and variance, Part 1][3]
-* [P.Wadler - Theorems for free][4]
+* [Parametricity - Types are documentation][a2]
+* [Scala type system: Parametrized types and variance, Part 1][a3]
+* [P.Wadler - Theorems for free][a4]
 * [Why is Function[-A1,…,+B] not about allowing any supertypes as parameters?][5]
 
 [1]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
-[2]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf
-[3]: https://blog.codecentric.de/en/2015/03/scala-type-system-parameterized-types-variances-part-1/
-[4]: https://people.mpi-sws.org/~dreyer/tor/papers/wadler.pdf
+[a2]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf
+[a3]: https://blog.codecentric.de/en/2015/03/scala-type-system-parameterized-types-variances-part-1/
+[a4]: https://people.mpi-sws.org/~dreyer/tor/papers/wadler.pdf
 [5]: https://stackoverflow.com/questions/10603982/why-is-function-a1-b-not-about-allowing-any-supertypes-as-parameters
+
+[a3]
+[a4]
+[a2]
+
+https://alexknvl.com/posts/counting-type-inhabitants.html
+https://medium.com/@sinisalouc/on-method-invocations-or-what-exactly-is-eta-expansion-1019b37e010c

@@ -17,27 +17,28 @@
 * [Demystifying Scala - Case Classes](https://medium.com/@cachiama/demystifying-scala-case-classes-b4d756959dcd)
 * [Scala case classes in depth](http://www.alessandrolacava.com/blog/scala-case-classes-in-depth/)
 * [Prototype](https://refactoring.guru/design-patterns/prototype)
-* [Pattern Matching](https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html)
 * [Scala pattern matching: apply the unapply](https://medium.com/wix-engineering/scala-pattern-matching-apply-the-unapply-7237f8c30b41)
-* [Types and Functions](https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala)
-* [scala.util.Try](https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html)
-* [Scala Best Practices - Mark case classes as final](https://nrinaudo.github.io/scala-best-practices/definitions/adt.html)
-* [Scala Best Practices- Algebraic Data Types](https://bartoszmilewski.com/2014/11/24/types-and-functions/)
+* [Pattern Matching](https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html)
+* [scala.util.Try](https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala)
+* [Types and Functions](https://bartoszmilewski.com/2014/11/24/types-and-functions/)
 * [Value Classes and Universal Traits](https://docs.scala-lang.org/overviews/core/value-classes.html)
 * [NewTypes for Scala with no runtime overhead](https://github.com/estatico/scala-newtype)
 * [Tagged type](http://eed3si9n.com/learning-scalaz/Tagged+type.html)
+* [Scala Best Practices - Mark case classes as final](https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html)
+* [Scala Best Practices- Algebraic Data Types](https://nrinaudo.github.io/scala-best-practices/definitions/adt.html)
 
 ## Chapter 4
 
-* [Functional programming in Scala](https://www.manning.com/books/functional-programming-in-scala) Chapter 1
+* [Functional Programming, Simplified](https://alvinalexander.com/scala/functional-programming-simplified-book/)
+* [The Benefits of Pure Functions](https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions)
+* [Types and Functions](https://bartoszmilewski.com/2014/11/24/types-and-functions/)
 * [Referential transparency - Wikipedia](https://www.wikiwand.com/en/Referential_transparency)
 * [Referential transparency - HaskellWiki](https://wiki.haskell.org/Referential_transparency)
-* [The Benefits of Pure Functions](https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions)
-* [Understanding Immutability and Pure Functions (for OOP)](https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions)
-* [Escape from the ivory tower: the Haskell journey](https://www.youtube.com/watch?v=re96UgMk6GQ)
-* [Types and Functions](https://bartoszmilewski.com/2014/11/24/types-and-functions/)
-* [Why do immutable objects enable functional programming?](https://stackoverflow.com/a/12208744/1215156)
 * [Statements and Expressions in Scala](https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/)
+* [Escape from the ivory tower: the Haskell journey](https://www.youtube.com/watch?v=re96UgMk6GQ)
+* [Functional programming in Scala](https://www.manning.com/books/functional-programming-in-scala) Chapter 1
+* [Why do immutable objects enable functional programming?](https://stackoverflow.com/a/12208744/1215156)
+* [Understanding Immutability and Pure Functions (for OOP)](https://sidburn.github.io/blog/2016/03/14/immutability-and-pure-functions)
 
 ## Chapter 5
 

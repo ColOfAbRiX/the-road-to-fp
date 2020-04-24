@@ -34,9 +34,9 @@ def animalToString(animal: Animal): String = animal match {
 }
 ```
 
-## Exercise 4.2
+### Exercise 4.2
 
-### 4.2.1
+#### 4.2.1
 
 Given the following code that contains a component that deal with users and another one that deal
 with calculating bills:
@@ -85,7 +85,9 @@ while (condition) {
 }
 ```
 
-## Exercise 4.3
+### Exercise 4.3
+
+#### 4.3.1
 
 Given the following code create a function that given a name and an age determines if a user is
 adult.

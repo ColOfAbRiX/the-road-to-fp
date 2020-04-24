@@ -25,47 +25,49 @@ Chapter 3: [Scala language feature: Case classes](03_case_classes.md) - Exercise
 
 Chapter 4: [Pure functions and referential transparency](04_pure_functions.md) - Exercises: [solutions](exercises/chapter_4.md)
 
-Chapter 5: [Advanced function concepts](05_advanced_functions) - Exercises: [solutions](exercises/chapter_5.md) - In progress
+Chapter 5: [Composition](05_composition.md) - Exercises: [solutions](exercises/chapter_5.md)
 
-Chapter 6: [Recursion](06_recursion.md) - Empty
+Chapter 6: [Advanced function concepts](05_advanced_functions) - Exercises: [solutions](exercises/chapter_6.md) - In progress
 
-Chapter 7: [Scala language feature: Lazyness](07_lazyness.md) - Empty
+Chapter 7: [Recursion](07_recursion.md) - Empty
 
-Chapter 8: [Purely functional data structures](08_data_structures.md) - Empty
+Chapter 8: [Scala language feature: Lazyness](08_lazyness.md) - Empty
 
-Chapter 9: [Scala language feature: Higher order functions](09_higher_order.md) - Empty
+Chapter 9: [Purely functional data structures](09_data_structures.md) - Empty
 
-Chapter 10: [Ad-hoc polymorphism: Typeclasses](10_typeclasses.md) - Empty
+Chapter 10: [Scala language feature: Higher order functions](10_higher_order.md) - Empty
 
-Chapter 11: [Functors and the world of containers](11_functors.md) - Empty
+Chapter 11: [Ad-hoc polymorphism: Typeclasses](11_typeclasses.md) - Empty
 
-Chapter 12: [Monoids](12_monoids.md) - Empty
+Chapter 12: [Functors and the world of containers](12_functors.md) - Empty
 
-Chapter 13: [Applicative functors](13_applicatives.md) - Empty
+Chapter 13: [Monoids](13_monoids.md) - Empty
 
-Chapter 14: [Optics](14_optics.md) - Empty
+Chapter 14: [Applicative functors](14_applicatives.md) - Empty
 
-Chapter 15: [Introducing monads](15_introducing_monads.md) - Empty
+Chapter 15: [Optics](15_optics.md) - Empty
 
-Chapter 16: [Most common monads](16_common_monads.md) - Empty
+Chapter 16: [Introducing monads](16_introducing_monads.md) - Empty
 
-Chapter 17: [Functional error handling](17_error_handling.md) - Empty
+Chapter 17: [Most common monads](17_common_monads.md) - Empty
 
-Chapter 18: [Monad transformers](18_monad_transformers.md) - Empty
+Chapter 18: [Functional error handling](18_error_handling.md) - Empty
 
-Chapter 19: [Free applicatives and free monads](19_free_applicatives_monads.md) - Empty
+Chapter 19: [Monad transformers](19_monad_transformers.md) - Empty
 
-Chapter 20: [Comonads](20_comonads.md) - Empty
+Chapter 20: [Free applicatives and free monads](20_free_applicatives_monads.md) - Empty
 
-Chapter 21: [Introduction to Category Theory](21_intro_category_theory.md) - Empty
+Chapter 21: [Comonads](21_comonads.md) - Empty
 
-Chapter 22: [Basic concepts of Category Theory](22_basic_categories.md) - Empty
+Chapter 22: [Introduction to Category Theory](22_intro_category_theory.md) - Empty
 
-Chapter 23: [Revisiting structures and tools using Category Theory](23_revisiting_with_cats.md) - Empty
+Chapter 23: [Basic concepts of Category Theory](23_basic_categories.md) - Empty
 
-Chapter 24: [Few concepts in Type theory](24_type_theory_concepts.md) - Empty
+Chapter 24: [Revisiting structures and tools using Category Theory](24_revisiting_with_cats.md) - Empty
 
-Chapter 25: [Type Level Programming](25_type_level_programming.md) - Empty
+Chapter 25: [Few concepts in Type theory](25_type_theory_concepts.md) - Empty
+
+Chapter 26: [Type Level Programming](26_type_level_programming.md) - Empty
 
 ## Author Information
 

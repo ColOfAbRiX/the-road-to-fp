@@ -142,13 +142,13 @@ below.
 
 Part of the magic of pattern magic comes from the `unapply()` method that is used by the compiler to
 extract the fields values from the variable. The article [Scala pattern matching: apply the
-unapply][6] has a good description of `unapply()` and how it works together with pattern matching
+unapply][5] has a good description of `unapply()` and how it works together with pattern matching
 and, at the bottom of this page, there is a summary about objects.
 
 Again, this is only a brief summary because other articles cover this topic with very good details.
 See the references below for more links.
 
-More reading on [this page][5].
+More reading on [this page][6].
 
 ## Build data types with case classes
 
@@ -202,7 +202,7 @@ insight is also what will enable much more power and expressiveness in the futur
 functors and monads.
 
 Bartosz again explains with a master example how we should think of types and what types and a clever
-compiler can do for us in his page [Types and Functions][10]:
+compiler can do for us in his page [Types and Functions][8]:
 
 > The simplest intuition for types is that they are sets of values.
 
@@ -287,14 +287,14 @@ contexts as its base type.
 When using the newtype pattern there are other considerations to make that concern performance as
 they add overhead and it might not always be a good idea to use them or to use the vanilla Scala
 implementation but this is not the place to discuss about this. If you're interested you might want
-to have a look at [value classes][11], [newtype library][12] and [tagged types][13].
+to have a look at [value classes][9], [newtype library][10] and [tagged types][11].
 
 ## Case classes best practices
 
-For this, I refer you straight to [Mark case classes as final][8]
+For this, I refer you straight to [Mark case classes as final][12]
 
 When case classes are used to create algebraic data types you should follow the [Algebraic Data
-Types][9] best practices.
+Types][13] best practices.
 
 ## Exercises 3.3
 
@@ -317,26 +317,26 @@ a recursive structure, in particular it's a tree. Create some instances to see h
 * [Demystifying Scala - Case Classes][2]
 * [Scala case classes in depth][3]
 * [Prototype][4]
-* [Pattern Matching][5]
-* [Scala pattern matching: apply the unapply][6]
-* [Types and Functions][10]
+* [Scala pattern matching: apply the unapply][5]
+* [Pattern Matching][6]
 * [scala.util.Try][7]
-* [Scala Best Practices - Mark case classes as final][8]
-* [Scala Best Practices- Algebraic Data Types][9]
-* [Value Classes and Universal Traits][11]
-* [NewTypes for Scala with no runtime overhead][12]
-* [Tagged type][13]
+* [Types and Functions][8]
+* [Value Classes and Universal Traits][9]
+* [NewTypes for Scala with no runtime overhead][10]
+* [Tagged type][11]
+* [Scala Best Practices - Mark case classes as final][12]
+* [Scala Best Practices- Algebraic Data Types][13]
 
 [1]: https://stackoverflow.com/a/2312936/1215156
 [2]: https://medium.com/@cachiama/demystifying-scala-case-classes-b4d756959dcd
 [3]: http://www.alessandrolacava.com/blog/scala-case-classes-in-depth/
 [4]: https://refactoring.guru/design-patterns/prototype
-[5]: https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html
-[6]: https://medium.com/wix-engineering/scala-pattern-matching-apply-the-unapply-7237f8c30b41
+[5]: https://medium.com/wix-engineering/scala-pattern-matching-apply-the-unapply-7237f8c30b41
+[6]: https://docs.scala-lang.org/tutorials/tour/pattern-matching.html.html
 [7]: https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala
-[8]: https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html
-[9]: https://nrinaudo.github.io/scala-best-practices/definitions/adt.html
-[10]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
-[11]: https://docs.scala-lang.org/overviews/core/value-classes.html
-[12]: https://github.com/estatico/scala-newtype
-[13]: http://eed3si9n.com/learning-scalaz/Tagged+type.html
+[8]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
+[9]: https://docs.scala-lang.org/overviews/core/value-classes.html
+[10]: https://github.com/estatico/scala-newtype
+[11]: http://eed3si9n.com/learning-scalaz/Tagged+type.html
+[12]: https://nrinaudo.github.io/scala-best-practices/tricky_behaviours/final_case_classes.html
+[13]: https://nrinaudo.github.io/scala-best-practices/definitions/adt.html
