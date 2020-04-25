@@ -1,6 +1,10 @@
 # Composition
 
-Estimated reading time: 8 minutes
+Estimated reading time: 9 minutes
+
+This chapter will explain the importance of modularity in system designs and why FP is so good at
+it. We will also introduce the basic building block of FP modularity and a glimpse on how to do it
+for less trivial situations.
 
 ## Exercise 5.1
 
@@ -63,13 +67,14 @@ object BillComponent {
 ## Modularity and Composition
 
 The last exercise wanted to show how difficult it can be to program with impure functions and to use
-together components that are coupled together. Ok, it's a silly example created with the explicit
-purpose of making it difficult but in real life you will have tens or hundreds of components,
-probably a shared state somewhere in the form of a database or a connection, you'll have thousand of
-lines between functions and you or your colleagues won't notice subtle side effects.
+together components that are coupled together, even if they are only few lines it can still be
+difficult to reason about them. Ok, it's a silly example created with the explicit purpose of making
+it difficult but in real life you will have tens or hundreds of components, probably a shared state
+somewhere in the form of a database or a connection, you'll have thousand of lines between functions
+and you or your colleagues won't notice subtle side effects.
 
 This brings us to the next topic. Composition and modularity are the two key properties of software
-that enable us to build complex software systems (complex, not complicated!).
+design that enable us to build complex software systems (complex, not complicated!).
 
 Quoting the definition of modularity from Wikipedia:
 
@@ -111,35 +116,19 @@ composition other modules.
 [This article][1] expands on software composition in the specific, it discusses how developers do
 it all the time, even without noticing and gives several examples.
 
-## On Scala functions
-
-Side note: here i've used Scala function instead of methods because Scala treats functions and
-methods in different ways. Functions, like the ones defined above, are instances of objects while
-methods are directly called as JVM methods. This distinction is caused by design choices that Scala
-made to work on the JVM. I will cover few basic things here and in the next chapters but for the
-rest internet is full of articles that explain the differences in details. I find [this
-Stackoverflow question][2] very good at explaining what they are and their differences.
-
-```scala
-val f: Int => Int = { _ * 2 }     // This is a function
-def g(x: Int) => Int = { _ * 2 }  // This is a method
-val h = g _                       // This is a method that is transformed into a function using eta-expansion
-```
-
 ## Function composition
 
-The introduction to modularity and composition should make it clear how important they are. Now a
+The introduction to modularity and composition should make clear how important they are. Now a
 question: what is the smaller module that you, as a developer, can write? That is a pure function!
 
 Pure functions are the smallest modules you can build that have the properties described above. They
 are reusable and testable, they are independent and maintainable. Once you define a function, that
-function can be called by other code or by tests. Being a pure function it can be parallelisable
-and, if you are a good developer, small enough that is easily maintainable.
+function can be called by other code or by tests. Being a pure function it can be used in concurrent
+computation and, if you are a good developer, it's small enough that is easily maintainable.
 
 You could argue that expressions, that we've seen at the beginning of this chapter, are more
 fundamental units that a developer can write. But I don't think that's correct because they're not
-reusable, you can't call a single expression that you wrote multiple times. You have to write it
-again.
+reusable, you can't call a single expression multiple times, you just have to write it again.
 
 Good! So the first step to write composable software is to understand pure functions composition.
 
@@ -147,19 +136,26 @@ Intuitively, two functions are composable if the input of the second function ca
 of the first one. By giving an example, if we have two functions:
 
 ```scala
-val f: Int => String = ???
-val g: String => Boolean = ???
+val f: Int => String = _.toString
+val g: String => Boolean = _ == ""
+
+// Output:
+//   f: Int => String
+//   g: String => Boolean
 ```
 
-then, because the input of `g` coincides with the output of `f`, we can use them together in another
-function by composing them:
+then, because the input of `g` coincides with the output of `f`, we can define a new function that
+passes the result of the first function to the second function by composing them:
 
 ```scala
-val h: Int => Boolean = f(g(a))
+val h: Int => Boolean = x => g(f(x))      // Int => String => Boolean
+
+// Output:
+//   h: Int => Boolean
 ```
 
 Scala, being a functional language and having functions as first class citizens, allows developers
-to use an additional notation to express functions called point-free notation. This is away of
+to use an additional notation to express functions called **point-free** notation. This is away of
 expressing functions that doesn't use variables and it works especially well in function composition
 because it removes some redundant information like if we define an argument used only once.
 
@@ -174,35 +170,15 @@ List(1, 2, 3).foreach(println(_))
 
 // Point-free notation
 List(1, 2, 3).foreach(println)
+
+// Point-free notation with less symbols
+List(1, 2, 3) foreach println
 ```
 
-and it works because println is a function with one argument `Any => Unit`. The point-free notation
-is particularly nice when used for function composition. Let's see it in action, let's create few
-function that manipulate some data.
+Note that `println` is a function of one argument `Any => Unit`. The point-free notation is
+particularly nice when used for function composition.
 
-```scala
-case class User(firstName: String, lastName: String)
-
-def alphabeth(size: Int): String                = List.tabulate(size)(i => ('a' + i).toChar).mkString
-def split(string: String): (String, String)     = string.splitAt(string.length / 2)
-def userFromTuple(data: (String, String)): User = User(data._1, data._2)
-```
-
-So, the hypothetical problem we want to solve is to build a user using the functions we have and we
-would like to create a function that does that by composing the three functions above:
-
-```scala
-// Composing just two of the functions
-def createUser(fullName: String): User = {
-  val s = split(fullName)
-  userFromTuple(s)
-}
-
-// Composing all the functions and all in one line
-def createRandomuser(i: Int): User = userFromTuple(split(alphabeth(i)))
-```
-
-Scala gives use two composition operator: `compose` and `andThen` that can be used to perform
+Scala gives use two nice composition operator: `compose` and `andThen` that can be used to perform
 function composition in point-free style, which means applying one function after the other without
 indicating the variable being used and creating a new function as a result:
 
@@ -211,8 +187,17 @@ val f: Double => Int = { _.toString.length }
 val g: Int => String = { x => "a" * x }
 val h: String => Boolean = { _.isEmpty }
 
-val k1 = g andThen h // <==> h(g(x)) <==> { x => ("a" * x).isEmpty }
-val k2 = g compose f // <==> g(f(x)) <==> { x => "a" * (x.toString.length) }
+// Output
+//   f: Double => Int
+//   g: Int => String
+//   h: String => Boolean
+
+val k1 = g andThen h  //  <==>  val k1 = h(g(x))  <==>  val k1 = { x => ("a" * x).isEmpty }
+val k2 = g compose f  //  <==>  val k2 = g(f(x))  <==>  val k2 = { x => "a" * (x.toString.length) }
+
+// Output
+//   k1: Int => Boolean
+//   k2: Double => String
 
 k1(0)
 k1(1)
@@ -224,29 +209,55 @@ k2(1.2345)
 //   String = "aaaaaa"
 ```
 
+Let's see how the point-free notation can make our function composition clearer in a more
+articulated example:
+
+```scala
+case class User(firstName: String, lastName: String)
+
+val alphabeth: Int => String              = List.tabulate(_)(i => ('a' + i).toChar).mkString
+val split: String => (String, String)     = value => value.splitAt(value.length / 2)
+val fromTuple: ((String, String)) => User = data => User(data._1, data._2)
+```
+
+In this exercise the problem we want to solve is to build a `User` composing the functions we have
+and for this purpose we want to create two functions, one that creates a user given a username and
+the other that creates a user with a random name:
+
+```scala
+// Composing just two of the functions
+def createUser(fullName: String): User = {
+  val s = split(fullName)
+  fromTuple(s)
+}
+
+// Composing all the functions and all in one line
+def createRandomUser(i: Int): User = fromTuple(split(alphabeth(i)))
+```
+
 going back to our previous example we can now compose in a much cleaner and understandable way:
 
 ```scala
-val comp1: Int => User = (userFromTuple _) compose (split _) compose (alphabeth _)
-val comp2: Int => User = (alphabeth _) andThen (split _) andThen (userFromTuple _)
+// Several examples of "compose" and "andThen"
+val createRandomUser1: Int => User = fromTuple compose split compose alphabeth
+val createUser1: String => User = split andThen fromTuple
+val createRandomUser2: Int => User = createUser1 compose alphabeth
+val createRandomUser3: Int => User = alphabeth andThen split andThen fromTuple
 
-comp1(6)
-comp2(2)
+createRandomUser1(6)
+createRandomUser2(2)
 
 // Output
 //   User = User("abc", "def")
 //   User = User("a", "d")
 ```
 
-Be aware that the `_` is because we defined these functions as methods, nothing more, and Scala
-requires what is called eta-expansion by adding the `_`.
-
 ## Exercises 5.2
 
 ### Exercise 5.2.1
 
-Given the following code create a function that given a name and an age determines if a user is
-adult. Why are we returning a tuple and what's that Boolean for?
+Starting with the following code create a function that given a name and an age determines if a user
+is adult. Why are we returning a tuple and what's that `Boolean` for?
 
 ```scala
 case class User(name: String, age: Int)
@@ -263,29 +274,35 @@ def createAndCheck(name: String, age: Int): (Boolean, User) = ???
 
 ## Stepping up composition
 
-Now the real big point to understand is that we want this capability, ease of composition, as much
-as we can, we don't always work with simple functions with one argument and one output but
-potentially more or with more complex types. Or perhaps we are not working with functions but with
+Now the real big point to understand is that we want to have composable pieces of code and we want
+this composition to be easy and painless but we don't always work with simple functions like the
+ones we've seen so far, very simple, with one argument and one output but potentially we'll have
+more arguments or with more complex types. Or perhaps we are not working with functions but with
 lists and we want to somewhat compose all the elements of the list together or we want to perform
 aggregation or we are dealing with deferred results.
 
 It would be great if there were ways to have composition in the bigger.
 
-This is one of the key realizations to do when becoming a functional programmer. You want
-composition, you look for composition, you build for composition and you leverage libraries for
-composition.
+This is one of the key realizations when becoming a functional programmer. You want composition, you
+look for composition, you build for composition and you leverage libraries for composition.
 
-**The central point of this tutorial will be on how to build composable software and how to reuse
-it**
+**Most of the contents we'll see will revolve around how to make composable code**, from higher
+order functions, to functor and monads. We just started the journey and there's still lot more to
+cover and understand!
+
+There are several great minds out there that believes that [true software scalability lies in
+modularity][2] and that FP is the perfect tool to enable modular software so much that [OOP happened
+by accident][3] and what developers really need is not object but modules. The two videos I linked
+are very opinionated but I can promise you that if you dig deep into FP you'll see by yourself how
+much I think OOP is overrated, despite offering some great solution and tools. And also why Scala is
+such a great tool, because amongst other reasons it can mix both worlds.
 
 ## References
 
 * [Composing Software: An Introduction][1]
-* [Functions vs methods in Scala][2]
-* [Why Isn't Functional Programming the Norm? – Richard Feldman][10]
-* [Simplicity in Composition—Adelbert Chang][11]
+* [Functional Scala - The Many Faces of Modularity by Eric Torreborre][2]
+* [Why Isn't Functional Programming the Norm? – Richard Feldman][3]
 
 [1]: https://medium.com/javascript-scene/composing-software-an-introduction-27b72500d6ea
-[2]: https://stackoverflow.com/questions/4839537/functions-vs-methods-in-scala
-[10]: https://www.youtube.com/watch?v=QyJZzq0v7Z4
-[11]: https://www.youtube.com/watch?v=XV0o-hy1WUM
+[2]: https://www.youtube.com/watch?v=SfW9w-FogeE
+[3]: https://www.youtube.com/watch?v=QyJZzq0v7Z4

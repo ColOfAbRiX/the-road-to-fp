@@ -29,9 +29,11 @@ By all means, this is a language-level implementation of the well known [Singlet
 
 ## Modules
 
-Another use case for objects is to use them as containers to modularize the application. You just
-forget everything about OOP and FP and you just create an object when you want to organize your code
-and place things in a separate place from others. It's a bit like packages:
+Another use case for objects is to use them as containers to modularize the application. In this
+scenario you stop thinking of `object` as related to OOP and FP and you create an object when you
+want to organize your code and place things in a separate place from others. You can also next
+`object` one inside the other and give a hierarchical structure to your code. It's a bit like
+packages but with different features:
 
 ```scala
 object UserModule {
@@ -40,18 +42,25 @@ object UserModule {
 }
 
 object PetModule {
+  object PetOperations {
+    def cleanPet(pet: String): String =  s"$pet, cleaned"
+    // ... more methods, variables, classes and so on here ...
+  }
   def createPet(name: String, age: Int): String =  s"$name, age: $age"
   // ... more methods, variables, classes and so on here ...
 }
 
+// Importing from an object
 import UserModule._
-
 createUser("Matt", "Smith")
-PetModule.createPet("fido", 5)
+
+// Accessing the object's members
+val pet = PetModule.createPet("fido", 5)
+val cleanedPet = PetModule.PetOperations.cleanPet(pet)
 
 // Output:
-//   String = "Matt Smith"
-//   String = "fido, age: 5"
+//   pet: String = "fido, age: 5"
+//   cleanedPet: String = "fido, age: 5, cleaned"
 ```
 
 ## Companion Objects

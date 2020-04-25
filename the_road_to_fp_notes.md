@@ -263,6 +263,8 @@ references, comments, examples and exercises.
 * Building a configuration system with free applicatives
   * <https://www.youtube.com/watch?v=H28QqxO7Ihc>
 * References
+  * <https://degoes.net/articles/modern-fp>
+  * <https://underscore.io/blog/posts/2017/03/29/free-inject.html>
   * <https://stackoverflow.com/a/13388966/1215156>
   * <http://eed3si9n.com/herding-cats/stackless-scala-with-free-monads.html>
   * <http://functionaltalks.org/2013/06/17/runar-oli-bjarnason-dead-simple-dependency-injection/>

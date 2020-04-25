@@ -95,8 +95,8 @@ while (user != "") {
 
 #### 5.2.1
 
-Given the following code create a function that given a name and an age determines if a user is
-adult. Why are we returning a tuple and what's that Boolean for?
+Starting with the following code create a function that given a name and an age determines if a user
+is adult. Why are we returning a tuple and what's that `Boolean` for?
 
 ```scala
 case class User(name: String, age: Int)

@@ -311,9 +311,9 @@ expressions when talking about referential transparency. I summarized this sente
 In functional programming we like that every statement has a value when evaluated because we can use
 the definition of referential transparency and reason better about our code.
 
-Scala adopts this line of reasoning and everything is an expressions so that constructs that you
-would normally consider as statements are in fact expressions. Ifs and pattern matching are examples
-of this even when it doesn't seem so.
+Scala adopts this line of reasoning and everything is an expressions in what is called
+expression-oriented programming, so that constructs that you would normally consider as statements
+are in fact expressions. Ifs and pattern matching are examples of this even when it doesn't seem so.
 
 Here we have a simple `if` expression that prints a different text depending on the value of a
 condition:

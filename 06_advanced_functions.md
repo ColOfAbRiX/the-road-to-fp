@@ -1,15 +1,120 @@
 # Advanced functions concepts
 
-Estimated reading time: 10 minutes
+Estimated reading time: 13 minutes
 
 After having introduced pure functions in the previous chapter, there are many more things to know
 about them and how Scala works with functions.
+
+## On Scala functions
+
+A side note about Scala functions. Even it they're very similar, Scala treats functions and methods
+in different ways.
+
+Rob Norris wrote a great article that explains in details that in Scala [Methods are not
+Functions][1] and here I only want to summarize what is useful for this material. I also find [this
+Stackoverflow question][2] very good at explaining what they are and their differences.
+
+In Scala, function value are instances of objects while methods are native entities that can be
+called on the JVM. This distinction is caused by design choices that Scala made to work on the JVM
+and methods and function value have different properties and work a bit differently from each other.
+
+Yes, functions in Scala are objects and more precisely they are instances of a set of of objects
+named after the number of arguments of the function.
+
+* Functions with no arguments are instances of the object `Function0[+R]`
+* Functions with one argument are instances of the object `Function1[-T1, +R]`
+* Functions with two arguments are instances of the object `Function2[-T1, -T2, +R]`
+* And so on up to `Function22`
+
+Each time you define a function value, even an anonymous function, the Scala compiler will create an
+instance of these objects and it will implement the method `apply` with the body of the function you
+specified
+
+Here we can see how this is true:
+
+```scala
+// These to are equivalent
+val f: (String, Int) => Boolean = (s, i) => (s.length * i) < 10
+val g: Function2[String, Int, Boolean] = (s, i) => (s.length * i) < 10
+val h: Function2[String, Int, Boolean] = new Function2[String, Int, Boolean] {
+  def apply(s: String, i: Int): Boolean = (s.length * i) < 10
+}
+
+// Output
+//   f: (String, Int) => Boolean
+//   g: (String, Int) => Boolean
+//   h: (String, Int) => Boolean
+
+g("ABC", 3)
+h.apply("ABC", 3)
+
+// Output
+//   Boolean = true
+//   Boolean = true
+```
+
+What's useful to understand for us now is that if you want to use a method as a function you need to
+somewhat convert it to an instance of `Function*`. This process is done automatically by the
+compiler when it is able to infer what function type is needed, in what is called eta-expansion, or
+manually by appending the eta-expansion postfix operator `_` after the method itself.
+
+It's very simple and here you can see how it's used:
+
+```scala
+// This is a function
+val f: Int => Int = { _ * 2 }
+
+// This is a method
+def g(x: Int): Int = { x * 2 }
+
+// Automatic conversion via eta-expansion. Here we explicitly
+// define the result type so that the compiler can infer that
+// it needs to apply eta-expansion
+val h: Int => Int = g
+
+// Manual convertion using the eta-expansion operator
+val k = g _
+
+// Output
+//   f: Int => Int
+//   defined function g
+//   h: Int => Int
+//   k: Int => Int
+```
+
+Here is another example that we can study:
+
+```scala
+// Just a value
+val aValue: Int = 3
+
+// A method
+def aMethod(x: Int): Int = { x * 2 }
+
+// A function
+val aFunction: Int => Int = { _ * 2 }
+
+// Convertion to function using automatic eta-expansion
+val automaticEtaExpansion: Int => Int = aMethod
+
+// Convertion to function using manual eta-expansion
+val manualEtaExpansion = aMethod _
+```
+
+Eta expansion (manual or automatic) works by wrapping the call of the method inside a `Function*`
+object. In the example above, the function `manualEtaExpansion` is translated into something like:
+
+```scala
+val manualEtaExpansion: Function1[Int, Int] = new Function1[Int, Int] {
+  def apply(i: Int): Int = aMethod(i)
+}
+```
 
 ## Parametricity and pure function signatures
 
 For now I won't get into details on what parametricity is and I will assume the reader is familiar
 with the Scala type parameters and more details can be read in [this excellent article in two
-parts][a3] that also talk about bounds, variance and subtyping.
+parts][3] that also talk about bounds, variance and subtyping.
 
 If you think about it, functions with no inputs or functions that return `Unit` are always impure
 functions because if they return `Unit` without any side effect then they won't be useful and
@@ -22,8 +127,8 @@ general way.
 
 Function signatures are a very powerful and general tool that can be used to prove general
 properties about the function you're analysing. This concept is much more general and it was
-introduced by Philip Wadler in his paper [Theorems for free][a4] and Tony Morris has [an excellent
-and comprehensive set of slides][a2] on why parametricity is an important very useful and how it can
+introduced by Philip Wadler in his paper [Theorems for free][4] and Tony Morris has [an excellent
+and comprehensive set of slides][5] on why parametricity is an important very useful and how it can
 be used. Amongst other things he argues that polymorphic functions can prove things about what a
 function can or cannot do.
 
@@ -117,8 +222,6 @@ def i[A, B](as: List[A], f: A => B): List[B]
 How many implementations did you find? Why is that?
 
 ## Type inhabitants
-
-
 
 ## Scala encoding of functions
 
@@ -311,21 +414,20 @@ Is this function a bijection? If yes write also its inverse.
 
 ## References
 
-* [What is a Closure?][1]
-* [Parametricity - Types are documentation][a2]
-* [Scala type system: Parametrized types and variance, Part 1][a3]
-* [P.Wadler - Theorems for free][a4]
-* [Why is Function[-A1,…,+B] not about allowing any supertypes as parameters?][5]
+* [Methods are not functions][1]
+* [Functions vs methods in Scala][2]
+* [Scala type system: Parametrized types and variance, Part 1][3]
+* [P.Wadler - Theorems for free][4]
+* [Parametricity - Types are documentation][5]
+* [Why is Function[-A1,…,+B] not about allowing any supertypes as parameters?][unused5]
+* [Counting type inhabitants][unused6]
+* [What is a Closure?][unused1]
 
-[1]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
-[a2]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf
-[a3]: https://blog.codecentric.de/en/2015/03/scala-type-system-parameterized-types-variances-part-1/
-[a4]: https://people.mpi-sws.org/~dreyer/tor/papers/wadler.pdf
-[5]: https://stackoverflow.com/questions/10603982/why-is-function-a1-b-not-about-allowing-any-supertypes-as-parameters
-
-[a3]
-[a4]
-[a2]
-
-https://alexknvl.com/posts/counting-type-inhabitants.html
-https://medium.com/@sinisalouc/on-method-invocations-or-what-exactly-is-eta-expansion-1019b37e010c
+[1]: https://tpolecat.github.io/2014/06/09/methods-functions.html
+[2]: https://stackoverflow.com/questions/4839537/functions-vs-methods-in-scala
+[3]: https://blog.codecentric.de/en/2015/03/scala-type-system-parameterized-types-variances-part-1/
+[4]: https://people.mpi-sws.org/~dreyer/tor/papers/wadler.pdf
+[5]: http://data.tmorris.net/talks/parametricity/4985cb8e6d8d9a24e32d98204526c8e3b9319e33/parametricity.pdf
+[unused5]: https://stackoverflow.com/questions/10603982/why-is-function-a1-b-not-about-allowing-any-supertypes-as-parameters
+[unused6]: https://alexknvl.com/posts/counting-type-inhabitants.html
+[unused1]: https://www.learningjournal.guru/article/scala/functional-programming/closures/
