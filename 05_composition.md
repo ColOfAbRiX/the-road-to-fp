@@ -154,6 +154,10 @@ val h: Int => Boolean = x => g(f(x))      // Int => String => Boolean
 //   h: Int => Boolean
 ```
 
+To build familiarity with function composition you should focus of types because that's what will
+tell you what is possible. Have a look at their arguments types and return type to understand
+how they fit together.
+
 Scala, being a functional language and having functions as first class citizens, allows developers
 to use an additional notation to express functions called **point-free** notation. This is away of
 expressing functions that doesn't use variables and it works especially well in function composition
@@ -192,8 +196,11 @@ val h: String => Boolean = { _.isEmpty }
 //   g: Int => String
 //   h: String => Boolean
 
-val k1 = g andThen h  //  <==>  val k1 = h(g(x))  <==>  val k1 = { x => ("a" * x).isEmpty }
-val k2 = g compose f  //  <==>  val k2 = g(f(x))  <==>  val k2 = { x => "a" * (x.toString.length) }
+val k1 = g andThen h  // <==>  val k1 = h(g(x))
+                      // <==>  val k1 = { x => ("a" * x).isEmpty }
+
+val k2 = g compose f  // <==>  val k2 = g(f(x))
+                      // <==>  val k2 = { x => "a" * (x.toString.length) }
 
 // Output
 //   k1: Int => Boolean
@@ -215,8 +222,10 @@ articulated example:
 ```scala
 case class User(firstName: String, lastName: String)
 
-val alphabeth: Int => String              = List.tabulate(_)(i => ('a' + i).toChar).mkString
-val split: String => (String, String)     = value => value.splitAt(value.length / 2)
+val alphabeth: Int => String = List.tabulate(_)(i => ('a' + i).toChar).mkString
+
+val split: String => (String, String) = value => value.splitAt(value.length / 2)
+
 val fromTuple: ((String, String)) => User = data => User(data._1, data._2)
 ```
 
@@ -276,33 +285,43 @@ def createAndCheck(name: String, age: Int): (Boolean, User) = ???
 
 Now the real big point to understand is that we want to have composable pieces of code and we want
 this composition to be easy and painless but we don't always work with simple functions like the
-ones we've seen so far, very simple, with one argument and one output but potentially we'll have
-more arguments or with more complex types. Or perhaps we are not working with functions but with
-lists and we want to somewhat compose all the elements of the list together or we want to perform
-aggregation or we are dealing with deferred results.
+ones we've seen so far, with one argument and one output but potentially we'll have more arguments
+or with more complex types. Or perhaps we are not working with functions but with lists and we want
+to somewhat compose all the elements of the list together or we want to perform aggregation or we
+are dealing with deferred results.
 
-It would be great if there were ways to have composition in the bigger.
+It would be great if there were ways to have composition in the bigger. Of course we're not talking
+about composition of distributed systems or dependencies management, I'm talking more about
+interoperation between modules of code like libraries.
 
 This is one of the key realizations when becoming a functional programmer. You want composition, you
-look for composition, you build for composition and you leverage libraries for composition.
+look for composition, you build for composition and you leverage libraries for composition. **Most
+of the contents we'll see will revolve around how to make composable code**, from higher order
+functions, to functor and monads. We just started the journey and there's still lot more to cover
+and understand!
 
-**Most of the contents we'll see will revolve around how to make composable code**, from higher
-order functions, to functor and monads. We just started the journey and there's still lot more to
-cover and understand!
+There are several great minds out there that teach that [software scalability lies in modularity][2]
+and that modularity is very, very hard. FP just one tool that helps us but it's a great tool for
+enabling modular software so much that someone argued that [OOP happened by accident][3] in the
+search for modularity. The two videos I linked are quite opinionated but I can promise you that if
+you dig deep into FP you'll see by yourself how much OOP is overrated and many of the mainstream
+programming languages right now are including more and more features from FP language like Scala. I
+believe one of the strong points of Scala that makes it such a great tool is because it offers
+features of both worlds and developer can pick the solution that fits best for their scenario.
 
-There are several great minds out there that believes that [true software scalability lies in
-modularity][2] and that FP is the perfect tool to enable modular software so much that [OOP happened
-by accident][3] and what developers really need is not object but modules. The two videos I linked
-are very opinionated but I can promise you that if you dig deep into FP you'll see by yourself how
-much I think OOP is overrated, despite offering some great solution and tools. And also why Scala is
-such a great tool, because amongst other reasons it can mix both worlds.
+An interesting comparison between OOP and FP is made evident by how languages that have their
+foundations in these two paradigms try to solve the expression problem. The article [The Expression
+Problem and its solutions][4] give a good glimpse at the two perspectives, although it uses C++ and
+Clojure it's still an interesting read.
 
 ## References
 
 * [Composing Software: An Introduction][1]
 * [Functional Scala - The Many Faces of Modularity by Eric Torreborre][2]
 * [Why Isn't Functional Programming the Norm? – Richard Feldman][3]
+* [The Expression Problem and its solutions][4]
 
 [1]: https://medium.com/javascript-scene/composing-software-an-introduction-27b72500d6ea
 [2]: https://www.youtube.com/watch?v=SfW9w-FogeE
 [3]: https://www.youtube.com/watch?v=QyJZzq0v7Z4
+[4]: https://eli.thegreenplace.net/2016/the-expression-problem-and-its-solutions/

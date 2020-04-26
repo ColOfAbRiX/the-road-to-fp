@@ -27,7 +27,7 @@ Chapter 4: [Pure functions and referential transparency](04_pure_functions.md) -
 
 Chapter 5: [Composition](05_composition.md) - Exercises: [solutions](exercises/chapter_5.md)
 
-Chapter 6: [Advanced function concepts](05_advanced_functions) - Exercises: [solutions](exercises/chapter_6.md) - In progress
+Chapter 6: [Advanced function concepts](06_advanced_functions.md) - Exercises: [solutions](exercises/chapter_6.md) - In progress
 
 Chapter 7: [Recursion](07_recursion.md) - Empty
 

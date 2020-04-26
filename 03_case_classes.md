@@ -7,14 +7,11 @@ answer][1], that I report here:
 
 > Case classes can be seen as plain and immutable data-holding objects that should exclusively
 > depend on their constructor arguments.
->
-> In combination with inheritance, case classes are used to mimic algebraic datatypes (we will see
-> Algebraic Data Types soon).
 
-The importance of case classes is that they are a tool to _simplify and clean_ the way we think
-and work with data in FP. Contrary to OOP where we have objects that update their own internal
-state, in FP we usually have data structures and a bunch of functions that can be structured
-and organized throughout the code, and that perform operations and transformations on this data.
+The importance of case classes is that they are a tool to _simplify and clean_ the way we think and
+work with data in FP. Contrary to OOP where we have objects that update their own internal state, in
+FP we usually have data structures and a bunch of functions that can be structured and organized
+throughout the code, and that perform operations and transformations on this data.
 
 With this definition in mind, case classes allow us to create these data structures with a clean
 syntax and to avoid code that is not strictly necessary to the FP way of working.

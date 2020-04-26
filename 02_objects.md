@@ -7,9 +7,10 @@ page with a well written [full article here][1].
 
 ## Singleton objects
 
-Scala classes cannot have static variables or methods. Instead a Scala class can have what is called
-a _singleton object_ which is a special instance of a class that the compiler guarantees to be
-unique and that makes available in scope without an explicit instantiation.
+Scala classes cannot have static variables or methods like other languages, like Java, do. Instead a
+Scala class can have what is called a _singleton object_ which is a special instance of a class that
+the compiler guarantees to be unique and that makes available in scope without an explicit
+instantiation.
 
 A singleton object is declared using the `object` keyword:
 
@@ -33,7 +34,9 @@ Another use case for objects is to use them as containers to modularize the appl
 scenario you stop thinking of `object` as related to OOP and FP and you create an object when you
 want to organize your code and place things in a separate place from others. You can also next
 `object` one inside the other and give a hierarchical structure to your code. It's a bit like
-packages but with different features:
+packages but it gives the developer different features that packages don't. I won't go through these
+differences as they're not that important but the point is that you can use `object` to organise
+your code. Here is an example of how you can use the keyword:
 
 ```scala
 object UserModule {
@@ -68,7 +71,12 @@ val cleanedPet = PetModule.PetOperations.cleanPet(pet)
 When a singleton object is named the same as a class and it is defined inside the same source file,
 it is called a companion object.
 
-A companion object and its class can access each other’s private members (fields and methods).
+A companion object and its class can access each other’s private members (fields and methods) and
+this becomes useful whenever you want them to interact. For example you can create a class with a
+private constructor but because the companion object can access the private constructor you could
+mediate the creation of an instance. Viceversa you could set private constants in the companion
+object that only the class will be able to use. These are only two examples of the features of
+companion objects.
 
 ```scala
 object Container { // Container is used to make the example work on REPL
@@ -146,9 +154,9 @@ Person.unapply(matt)
 //   (String, Int) = ("Matt Smith", 30)
 ```
 
-If we want to use extractors into pattern matching the unapply method must return a types that
-has a `isEmpty()` and a `get()` method as [explained here][3]. For example we can make `unapply()`
-return an `Option`:
+If we want to use extractors into pattern matching the `unapply` method must return a type that has
+a `isEmpty` and a `get` method as [explained here][3]. For example we can make `unapply()` return an
+`Option` because `Option` has the two methods `isEmpty` and `get`:
 
 ```scala
 class Person(val name: String, val age: Int)

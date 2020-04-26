@@ -225,9 +225,6 @@ How many implementations did you find? Why is that?
 
 ## Scala encoding of functions
 
-Functions as objects
-Methods are different than functions
-Eta expansion/lifting. Tupled functions
 Scala PartialFunction and concatenation. Similarities with the chain of responsibility pattern
 
 ## Currying
