@@ -79,9 +79,9 @@ We'll see immutable data structures in the future.
 
 ## Case objects
 
-All around the material there is a little thing that is not well mentioned and that are case
-objects. Case objects are the same thing as case classes but for objects and this means that there
-is only one instace of the case object in your scope.
+In the material available online there is a little construct that is not well mentioned and that is
+case objects. Case objects are the same thing as case classes but for objects and this means that
+there is only one instance of the case object in your scope.
 
 ```scala
 case object Singleton
@@ -111,8 +111,9 @@ in the previous exercise.
 Pattern matching is a really powerful tool, so much that you will ask yourself how did you do when
 you were not using it (spoiler: with a ton of bad looking `if` statements and other tricks)!
 
-In its essence it matches a variable with a given pattern and executes some code for that case. This
-definition is simple and yet it has many implication. For instance, we can match a variable against:
+In its essence it matches an expression with a given pattern and executes some code for the matched
+case. This definition is simple and yet it has many implication. For instance, we can match a
+variable against:
 
 * a generic catch all pattern;
 * a literal value like `true` or `"this is a string"`;

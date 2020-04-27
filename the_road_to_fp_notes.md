@@ -262,6 +262,8 @@ references, comments, examples and exercises.
 * Representing algorithms with structured data
 * Building a configuration system with free applicatives
   * <https://www.youtube.com/watch?v=H28QqxO7Ihc>
+* Composing free monads
+  * https://underscore.io/blog/posts/2017/03/29/free-inject.html
 * References
   * <https://degoes.net/articles/modern-fp>
   * <https://underscore.io/blog/posts/2017/03/29/free-inject.html>

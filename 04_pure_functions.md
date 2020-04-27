@@ -182,16 +182,76 @@ numbers with the value `false`.
 Using your result of the exercise of animals in the case classes chapter, create a pure function
 with signature `Animal => String` that given an animal it returns the type of animal.
 
+## Working with expressions
+
+Any program is composed of statements and expressions where statements are operations, or actions,
+that can be performed and expressions are something that produce a value. We already mentioned
+expressions when talking about referential transparency. I summarized this sentence from the article
+[Statements and Expressions in Scala][4].
+
+In functional programming we like that every statement has a value when evaluated because we can use
+the definition of referential transparency and reason better about our code.
+
+Scala adopts this line of reasoning and everything is an expressions in what is called
+expression-oriented programming, so that constructs that you would normally consider as statements
+are in fact expressions. Ifs and pattern matching are examples of this even when it doesn't seem so.
+
+Here we have a simple `if` expression that prints a different text depending on the value of a
+condition:
+
+```scala
+if (true) println("true") else println("false")
+
+// Output:
+//   true
+```
+
+We can prove that this code has in fact a well defined value:
+
+```scala
+val result = if (true) println("true") else println("false")
+println(result)
+
+// Output:
+//   true
+//   ()
+```
+
+and this value is `Unit` (the double `()`) because the value that the evaluations of the `if`
+statement produces is the value returned by the `println` function and that is `Unit`.
+
+When working inside functions is good practice to never use the `return` keyword because it can
+introduce parts of the code that are not evaluated or that return values not compatible with the
+return type. In this example we see how a missing `else` statement makes the code failing at
+compilation:
+
+```scala
+def badStatement(cond: Boolean): String = {
+  if (cond) return "A"
+}
+
+// Output
+//   type mismatch;
+//    found   : Unit
+//    required: String
+//     if (cond)
+//     ^
+//   Compilation Failed
+```
+
+In Scala the value of an expression is always the value of the last expression evaluated, this is
+why you don't have to use the `return` keyword inside a function.
+
 ## Referential transparency
 
 Referential transparency is a concept that is very tightly coupled to pure functions even if it's
 strictly not the same.
 
-Referential transparency is a property of some code that allows to replace an expression with the
-result of evaluating that expression everywhere in the program without changing the result of the
-program. Said the other way around, if you can replace a value with a reference to it (an
-expression) then that expression is referentially transparent. I'll describe what an expression is
-later on in the chapter.
+Referential transparency is a property of code that allows to replace an expression with the result
+of evaluating that expression everywhere in the program without changing the result of the program.
+Said the other way around, if you can replace a value with a reference to it (an expression) then
+that expression is referentially transparent. I'll describe what an expression is later on in the
+chapter.
 
 Being able to reason with the resulting value of a function is part of what makes FP simpler because
 it takes away the details of how that value is obtained.
@@ -298,68 +358,8 @@ very good reason like deep performance optimization you shouldn't do it because 
 easier and easier to fall back to imperative style with all its drawbacks.
 
 At this point you know all the things about referential transparency useful for programming but you
-can find more details in the [Wikipedia page][4] and a more practical description in the
-[HaskellWiki][5].
-
-## Working with expressions
-
-Any program is composed of statements and expressions where statements are operations, or actions,
-that can be performed and expressions are something that produce a value. We already mentioned
-expressions when talking about referential transparency. I summarized this sentence from the article
-[Statements and Expressions in Scala][6].
-
-In functional programming we like that every statement has a value when evaluated because we can use
-the definition of referential transparency and reason better about our code.
-
-Scala adopts this line of reasoning and everything is an expressions in what is called
-expression-oriented programming, so that constructs that you would normally consider as statements
-are in fact expressions. Ifs and pattern matching are examples of this even when it doesn't seem so.
-
-Here we have a simple `if` expression that prints a different text depending on the value of a
-condition:
-
-```scala
-if (true) println("true") else println("false")
-
-// Output:
-//   true
-```
-
-We can prove that this code has in fact a well defined value:
-
-```scala
-val result = if (true) println("true") else println("false")
-println(result)
-
-// Output:
-//   true
-//   ()
-```
-
-and this value is `Unit` (the double `()`) because the value that the evaluations of the `if`
-statement produces is the value returned by the `println` function and that is `Unit`.
-
-When working inside functions is good practice to never use the `return` keyword because it can
-introduce parts of the code that are not evaluated or that return values not compatible with the
-return type. In this example we see how a missing `else` statement makes the code failing at
-compilation:
-
-```scala
-def badStatement(cond: Boolean): String = {
-  if (cond) return "A"
-}
-
-// Output
-//   type mismatch;
-//    found   : Unit
-//    required: String
-//     if (cond)
-//     ^
-//   Compilation Failed
-```
-
-In Scala the value of an expression is always the value of the last expression evaluated, this is
-why you don't have to use the `return` keyword inside a function.
+can find more details in the [Wikipedia page][5] and a more practical description in the
+[HaskellWiki][6].
 
 ## Exercises 4.2
 
@@ -469,9 +469,9 @@ world.
 * [Functional Programming, Simplified][1]
 * [The Benefits of Pure Functions][2]
 * [Types and Functions][3]
-* [Referential transparency - Wikipedia][4]
-* [Referential transparency - HaskellWiki][5]
-* [Statements and Expressions in Scala][6]
+* [Statements and Expressions in Scala][4]
+* [Referential transparency - Wikipedia][5]
+* [Referential transparency - HaskellWiki][6]
 * [Escape from the ivory tower: the Haskell journey][7]
 * [Functional programming in Scala][8] Chapter 1
 * [Why do immutable objects enable functional programming?][9]
@@ -480,9 +480,9 @@ world.
 [1]: https://alvinalexander.com/scala/functional-programming-simplified-book/
 [2]: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
 [3]: https://bartoszmilewski.com/2014/11/24/types-and-functions/
-[4]: https://www.wikiwand.com/en/Referential_transparency
-[5]: https://wiki.haskell.org/Referential_transparency
-[6]: https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/
+[4]: https://www.learningjournal.guru/article/scala/functional-programming/statements-and-expressions-in-scala/
+[5]: https://www.wikiwand.com/en/Referential_transparency
+[6]: https://wiki.haskell.org/Referential_transparency
 [7]: https://www.youtube.com/watch?v=re96UgMk6GQ
 [8]: https://www.manning.com/books/functional-programming-in-scala
 [9]: https://stackoverflow.com/a/12208744/1215156

@@ -265,21 +265,47 @@ createRandomUser2(2)
 
 ### Exercise 5.2.1
 
-Starting with the following code create a function that given a name and an age determines if a user
-is adult. Why are we returning a tuple and what's that `Boolean` for?
+In this exercise we want to create new users if the data that we are provided is valid. For this
+purpose we have two validation functions that check if name and age are correct.
+
+Create a function `createUser` that accepts a `name: String` and an `age: Int` and creates a `User`
+after having validated the inputs by using (composing) the existing functions. Why the two
+validation functions are returning a tuple and what's that `Boolean` for?
 
 ```scala
 case class User(name: String, age: Int)
 
-def createUser(name: String, age: Int): (Boolean, User) = {
-  if (age < 0 || name == "") (false, null)
-  else (true, User(name, age))
-}
+def validateName(name: String): (Boolean, String) =
+  if (name != null && name.nonEmpty) (true, name) else (false, null)
 
-def isAdult(user: User): Boolean = user.age > 18
+def validateAge(age: Int): (Boolean, Int) =
+  if (age > 0) (true, age) else (false, 0)
 
-def createAndCheck(name: String, age: Int): (Boolean, User) = ???
+def createUser(name: String, age: Int)...
 ```
+
+### Exercise 5.2.2
+
+In a similar fashion to the above exercise we now want to play with composition of numerical
+functions. Mathematical operations are not always defined on all the real numbers so we take care of
+their domain by checking the input value.
+
+```scala
+def sqrt(value: Double): (Boolean, Double) =
+  if (value >=0 ) (true, Math.sqrt(value)) else (false, 0)
+
+def ln(value: Double): (Boolean, Double) =
+  if (value >=0 ) (true, Math.log(value)) else (false, 0)
+
+def div(num: Double, den: Double): (Boolean, Double) =
+  if (den != 0) (true, num / den) else (false, 0)
+```
+
+Given a number `x`, create the following calculation functions:
+
+* `f1(x: Double): (Boolean, Double)` such that the output is `sqrt(2.0 * x)`
+* `f2(x: Double): (Boolean, Double)` such that the output is `div(sqrt(x), x - 3.0)`
+* `f3(x: Double): (Boolean, Double)` such that the output is `div(sqrt(2.0 * x), ln(x - 1.0) - 1.0)`
 
 ## Stepping up composition
 

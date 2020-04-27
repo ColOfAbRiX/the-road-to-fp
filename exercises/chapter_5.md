@@ -101,20 +101,86 @@ is adult. Why are we returning a tuple and what's that `Boolean` for?
 ```scala
 case class User(name: String, age: Int)
 
+def validateName(name: String): (Boolean, String) =
+  if (name != null && name.nonEmpty) (true, name) else (false, null)
+
+def validateAge(age: Int): (Boolean, Int) =
+  if (age > 0) (true, age) else (false, 0)
+
 def createUser(name: String, age: Int): (Boolean, User) = {
-  if (age < 0 || name == "") (false, null)
-  else (true, User(name, age))
+  val (nameValid, validName) = validateName(name)
+  val (ageValid, validAge) = validateAge(age)
+  (nameValid && ageValid, User(validName, validAge))
 }
 
-def isAdult(user: User): Boolean = user.age > 18
+createUser("Matt Smith", 34)
+createUser("", -1)
 
-def createAndCheck(name: String, age: Int): (Boolean, User) = ???
-  val (isValid, user) = createUser(name, age)
-  if (isValid) (true, isAdult(user))
-  else (false, null)
-}
+// Output:
+//   (Boolean, User) = (true, User("Matt Smith", 34))
+//   (Boolean, User) = (false, User(null, 0))
 ```
 
 We use a tuple to indicate if the functions were able to compute a meaningful output. If the boolean
 component of the tuple is `true` then the second component is a valid result, in case it's `false`
 the second component has no meaning.
+
+#### 5.2.2
+
+In a similar fashion to the above exercise we now want to play with composition of numerical
+functions. Mathematical operations are not always defined on all the real numbers so we take care of
+their domain by checking the input value.
+
+```scala
+def sqrt(value: Double): (Boolean, Double) =
+  if (value >=0 ) (true, Math.sqrt(value)) else (false, 0)
+
+def ln(value: Double): (Boolean, Double) =
+  if (value >=0 ) (true, Math.log(value)) else (false, 0)
+
+def div(num: Double, den: Double): (Boolean, Double) =
+  if (den != 0) (true, num / den) else (false, 0)
+```
+
+Given a number x, create the following calculation functions:
+
+* `f1(x: Double): (Boolean, Double)` such that the output is `sqrt(2.0 * x)`
+* `f2(x: Double): (Boolean, Double)` such that the output is `div(sqrt(x), x - 3.0)`
+* `f3(x: Double): (Boolean, Double)` such that the output is `div(sqrt(2.0 * x), ln(x - 1.0) - 1.0)`
+
+```scala
+def f1(x: Double): (Boolean, Double) = sqrt(2.0 * x)
+
+def f2(x: Double): (Boolean, Double) = sqrt(x) match {
+  case (true, sqrtResult) => div(sqrtResult, x - 3.0)
+  case (false, _)         => (false, 0)
+}
+
+def f3(x: Double): (Boolean, Double) = {
+  val (sqrtValid, sqrtResult) = sqrt(2.0 * x)
+  val (lnValid, lnResult) = ln(x - 1.0)
+
+  (sqrtValid, lnValid) match {
+    case (true, true) => div(sqrtResult, lnResult - 1)
+    case (_, _)       => (false, 0)
+  }
+}
+
+f1(2.0)
+f1(-4.0)
+// Output:
+//   (Boolean, Double) = (true, 2.0)
+//   (Boolean, Double) = (false, 0.0)
+
+f2(5.0)
+f2(2.0)
+// Output:
+//   (Boolean, Double) = (true, 1.118033988749895)
+//   (Boolean, Double) = (true, -1.4142135623730951)
+
+f3(Math.exp(1.0) + 1.0)
+f3(10.0)
+// Output:
+//   (Boolean, Double) = (false, 0.0)
+//   (Boolean, Double) = (true, 3.7354194356333017)
+```

@@ -2,8 +2,10 @@
 
 Estimated reading time: 13 minutes
 
-After having introduced pure functions in the previous chapter, there are many more things to know
-about them and how Scala works with functions.
+After having introduced pure functions and composition in the previous chapters, there are many more
+things to know about functions, how can we play with them and what Scala allows us to do and it's
+important you become accustomed to these features because they'll play a role in the rest of the
+lessons.
 
 ## On Scala functions
 
@@ -225,9 +227,14 @@ How many implementations did you find? Why is that?
 
 ## Scala encoding of functions
 
-Scala PartialFunction and concatenation. Similarities with the chain of responsibility pattern
+Scala PartialFunction, similarities with the chain of responsibility pattern
 
 ## Currying
+
+What is currying
+How to curry and uncurry a function
+Real world examples like setting the values of a function and then use the function around
+Use it as a block
 
 ## Closures
 

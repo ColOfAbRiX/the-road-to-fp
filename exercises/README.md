@@ -13,3 +13,5 @@
 * [Chapter 4 solutions](chapter_4.md)
 
 * [Chapter 5 solutions](chapter_5.md)
+
+* [Chapter 6 solutions](chapter_6.md)
