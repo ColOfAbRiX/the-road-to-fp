@@ -4,6 +4,8 @@
 
 ## Recursion is the equivalent of induction reasoning
 
+https://yourbasic.org/algorithms/induction-recursive-functions/
+
 ## Examples: list length, take nth element, flatten list, map, flatMap
 
 ## Tail recursion. But it doesn't solve all problems

@@ -27,11 +27,11 @@ Chapter 4: [Pure functions and referential transparency](04_pure_functions.md) -
 
 Chapter 5: [Composition](05_composition.md) - Exercises: [solutions](exercises/chapter_5.md)
 
-Chapter 6: [Advanced function concepts](06_advanced_functions.md) - Exercises: [solutions](exercises/chapter_6.md) - In progress
+Chapter 6: [Scala language feature: Lazyness](06_lazyness.md) - Empty
 
-Chapter 7: [Recursion](07_recursion.md) - Empty
+Chapter 7: [Advanced function concepts](07_advanced_functions.md) - Exercises: [solutions](exercises/chapter_7.md) - In progress
 
-Chapter 8: [Scala language feature: Lazyness](08_lazyness.md) - Empty
+Chapter 8: [Recursion](08_recursion.md) - Empty
 
 Chapter 9: [Purely functional data structures](09_data_structures.md) - Empty
 

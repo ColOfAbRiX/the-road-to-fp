@@ -131,12 +131,52 @@ Loader("Matt", "Smith").name
 //   String = "Matt Smith"
 ```
 
+## Object type
+
+It's worth nothing that a singletone object is itself a value. When you refer to the `MyComponent`
+as we do above you're actually referencing the singletone instance created by the compiler. The type
+of the singletone is accessed using the `.type` syntax, like `MyComponent.type`. This has
+implications because it means you can store and pass around the singletone instance:
+
+```scala
+val aBigDecimal: BigDecimal = BigDecimal(123.45)
+val theBigDecimal: BigDecimal.type = BigDecimal
+val fromStringBigDecimal: BigDecimal = theBigDecimal.apply("123.45")
+
+// Output:
+//   aBigDecimal: BigDecimal = 123.45
+//   theBigDecimal: BigDecimal.type = scala.math.BigDecimal$@772485dd
+//   fromStringBigDecimal: BigDecimal = 123.45
+```
+
+This can also be source of confusion because there are several similar syntaxes. Let's have a look
+at the following example with comments:
+
+```scala
+// A class
+class TestClass
+
+// An object
+object TestObject {
+  def apply(): TestClass = new TestClass()
+}
+
+// A new instance of TestClass
+val a: TestClass = new TestClass()
+
+// The singletone instance of the object TestClass
+val b: TestClass.type = TestClass
+
+// A new instance of TestClass obtained by calling the .apply() method on the object TestClass
+val c: TestClass = TestClass()
+```
+
 ## Pattern matching
 
 There is another special method that can be defined in a object called `unapply()` and it is known
 as extractor. This method is used to "deconstruct" objects into its components, or "extract" the
 components, that are returned by the method and it's used by pattern matching to perform its duty.
-We'll explain morea about pattern matching in the next chapter. In the following example we can see
+We'll explain more about pattern matching in the next chapter. In the following example we can see
 how both `apply()` and `unapply()` are used to construct and deconstruct a sample object:
 
 ```scala

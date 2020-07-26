@@ -185,9 +185,8 @@ with signature `Animal => String` that given an animal it returns the type of an
 ## Working with expressions
 
 Any program is composed of statements and expressions where statements are operations, or actions,
-that can be performed and expressions are something that produce a value. We already mentioned
-expressions when talking about referential transparency. I summarized this sentence from the article
-[Statements and Expressions in Scala][4].
+that can be performed and expressions are something that produce a value. I summarized this sentence
+from the article [Statements and Expressions in Scala][4].
 
 In functional programming we like that every statement has a value when evaluated because we can use
 the definition of referential transparency and reason better about our code.

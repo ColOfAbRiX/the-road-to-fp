@@ -184,3 +184,18 @@ f3(10.0)
 //   (Boolean, Double) = (false, 0.0)
 //   (Boolean, Double) = (true, 3.7354194356333017)
 ```
+
+### Exercises 5.3
+
+#### 5.3.1
+
+Looking at exercise 5.2.1, can the function `createUser` call the validation functions in parallel?
+What about the functions three solution functions (f1, f2 and f3) of exercise 5.2.2, can they call
+the mathematical functions in parallel? What's the difference?
+
+The `createUser` function can indeed execute the validation function in parallel because there's no
+dependency between the two validation steps. The functions of exercise 5.2.2, on the other hand,
+cannot because several calls need to wait for the previous function to have produced a result.
+
+This is the difference between the two exercises. In 5.2.1 we have a composition of independent
+computations while in 5.2.2 we have composition of sequential computations.

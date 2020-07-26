@@ -125,6 +125,7 @@ references, comments, examples and exercises.
 * Simple example with List+map as functor
 * Covariant and contravariant functors
   * <https://ocharles.org.uk/blog/guest-posts/2013-12-21-24-days-of-hackage-contravariant.html>
+  * <https://kubuszok.com/2018/the-f-words-functors-and-friends/#functor>
 * Exceptions and null are evil. Option+map as functor
   * <https://sidburn.github.io/blog/2016/03/20/null-is-evil>
 * References:
@@ -167,6 +168,7 @@ references, comments, examples and exercises.
 
 * What are applicatives
   * <http://learnyouahaskell.com/functors-applicative-functors-and-monoids#applicative-functors>
+  * <https://kubuszok.com/2018/the-f-words-functors-and-friends/#functor>
 * Apply as lifting funtions and pipelining
   * <https://fsharpforfunandprofit.com/posts/elevated-world/#apply>
 * Validating errors in a pipeline
@@ -263,14 +265,15 @@ references, comments, examples and exercises.
 * Building a configuration system with free applicatives
   * <https://www.youtube.com/watch?v=H28QqxO7Ihc>
 * Composing free monads
-  * https://underscore.io/blog/posts/2017/03/29/free-inject.html
+  * <https://underscore.io/blog/posts/2017/03/29/free-inject.html>
+  * <https://perevillega.com/understanding-free-monads>
 * References
   * <https://degoes.net/articles/modern-fp>
-  * <https://underscore.io/blog/posts/2017/03/29/free-inject.html>
   * <https://stackoverflow.com/a/13388966/1215156>
   * <http://eed3si9n.com/herding-cats/stackless-scala-with-free-monads.html>
   * <http://functionaltalks.org/2013/06/17/runar-oli-bjarnason-dead-simple-dependency-injection/>
   * <https://skillsmatter.com/skillscasts/3244-stackless-scala-free-monads>
+  * <https://www.youtube.com/watch?v=U0lK0hnbc4U>
 
 ## Comonads
 
@@ -283,9 +286,12 @@ references, comments, examples and exercises.
 * Conway's game of life using Store
   * <https://eli-jordan.github.io/2018/02/16/life-is-a-comonad/>
   * <https://chrispenner.ca/posts/conways-game-of-life>
+* Cofree Comonads
+  * <https://stackoverflow.com/questions/38816993/what-are-some-motivating-examples-for-cofree-comonad-in-haskell>
 * References:
   * <http://blog.higher-order.com/blog/2015/06/23/a-scala-comonad-tutorial/>
   * <https://bartoszmilewski.com/2017/01/02/comonads/>
+  * <https://stackoverflow.com/questions/16551734/can-a-monad-be-a-comonad>
 
 ## Introduction to Category Theory
 
@@ -335,6 +341,13 @@ references, comments, examples and exercises.
 * Free monoids and free monads
   * <http://blog.higher-order.com/blog/2013/08/20/free-monads-and-free-monoids/>
   * <https://bartoszmilewski.com/2015/07/21/free-monoids/>
+* Free monads and Yoneda
+  * <https://underscore.io/blog/posts/2015/04/14/free-monads-are-simple.html>
+  * <https://underscore.io/blog/posts/2017/03/29/free-inject.html>
+  * <http://blog.higher-order.com/blog/2013/11/01/free-and-yoneda/>
+  * <https://medium.com/@olxc/yoneda-and-coyoneda-trick-f5a0321aeba4>
+  * <https://bartoszmilewski.com/2013/05/15/understanding-yoneda/>
+  * <https://kubuszok.com/2018/the-f-words-functors-and-friends/#functor>
 * Lenses and Comonad Coalgebras
   * <https://r6research.livejournal.com/23705.html>
 
@@ -381,3 +394,12 @@ references, comments, examples and exercises.
   * <https://apocalisp.wordpress.com/2010/06/08/type-level-programming-in-scala/>
   * <https://www.youtube.com/watch?v=_-J4YRI1rAw7>
   * <https://www.youtube.com/watch?v=GKIfu1WtSz4>
+
+## Additional, still not placed
+
+### Tagless final
+
+### Extension methods
+
+* What they are and how they work
+* You can add methods conditionally by imposing constraints on the type

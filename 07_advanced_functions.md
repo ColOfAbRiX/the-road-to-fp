@@ -12,7 +12,7 @@ lessons.
 A side note about Scala functions. Even it they're very similar, Scala treats functions and methods
 in different ways.
 
-Rob Norris wrote a great article that explains in details that in Scala [Methods are not
+Rob Norris wrote a great and simple article that explains in details that in Scala [Methods are not
 Functions][1] and here I only want to summarize what is useful for this material. I also find [this
 Stackoverflow question][2] very good at explaining what they are and their differences.
 
@@ -32,10 +32,9 @@ Each time you define a function value, even an anonymous function, the Scala com
 instance of these objects and it will implement the method `apply` with the body of the function you
 specified
 
-Here we can see how this is true:
+Here we can see how this is true. The following three function literals are all equivalent:
 
 ```scala
-// These to are equivalent
 val f: (String, Int) => Boolean = (s, i) => (s.length * i) < 10
 val g: Function2[String, Int, Boolean] = (s, i) => (s.length * i) < 10
 val h: Function2[String, Int, Boolean] = new Function2[String, Int, Boolean] {
@@ -56,9 +55,11 @@ h.apply("ABC", 3)
 ```
 
 What's useful to understand for us now is that if you want to use a method as a function you need to
-somewhat convert it to an instance of `Function*`. This process is done automatically by the
-compiler when it is able to infer what function type is needed, in what is called eta-expansion, or
-manually by appending the eta-expansion postfix operator `_` after the method itself.
+somewhat convert it to an instance of _FunctionN_ (by _FunctionN_ I mean one of the `Function0`,
+`Function1`, `Function2` and so on objects. _FunctionN_ is not a Scala object). This process is done
+automatically by the compiler when it is able to infer what function type is needed, in what is
+called eta-expansion, or manually by appending the eta-expansion postfix operator `_` after the
+method itself.
 
 It's very simple and here you can see how it's used:
 
@@ -103,7 +104,7 @@ val automaticEtaExpansion: Int => Int = aMethod
 val manualEtaExpansion = aMethod _
 ```
 
-Eta expansion (manual or automatic) works by wrapping the call of the method inside a `Function*`
+Eta expansion (manual or automatic) works by wrapping the call of the method inside a _FunctionN_
 object. In the example above, the function `manualEtaExpansion` is translated into something like:
 
 ```scala
@@ -235,6 +236,10 @@ What is currying
 How to curry and uncurry a function
 Real world examples like setting the values of a function and then use the function around
 Use it as a block
+
+## Tupling
+
+Just a commodity
 
 ## Closures
 

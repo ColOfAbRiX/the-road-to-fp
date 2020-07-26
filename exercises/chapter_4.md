@@ -38,81 +38,6 @@ def animalToString(animal: Animal): String = animal match {
 
 #### 4.2.1
 
-Given the following code that contains a component that deal with users and another one that deal
-with calculating bills:
-
-```scala
-object UserComponent {
-  private val users = List("Olivia", "Ruby", "Emily", "Grace", "Jack", "Oliver", "Thomas", "Harry")
-
-  var status = "enabled"
-
-  def getUser(i: Int): String = {
-    if (i >= users.length && status == "enabled") {
-      status = "illegal"
-      ""
-    } else if (status == "disabled") {
-      throw new IllegalArgumentException()
-    } else {
-      status = "disabled"
-      users(i)
-    }
-  }
-}
-
-object BillComponent {
-  def getBillForUser(user: String): Double = {
-    UserComponent.status = "updating"
-    user.length
-  }
-}
-```
-
-solution
-
-```scala
-var i = 0
-var condition = true
-while (condition) {
-  UserComponent.status = "enabled"
-  val user = UserComponent.getUser(i)
-  if (user == "") condition = false
-  else {
-    val bill = BillComponent.getBillForUser(user)
-    println(bill)
-    i += 1
-  }
-}
-```
-
-### Exercise 4.3
-
-#### 4.3.1
-
-Given the following code create a function that given a name and an age determines if a user is
-adult.
-
-```scala
-case class User(name: String, age: Int)
-
-def createUser(name: String, age: Int): (Boolean, User) = {
-  if (age < 0 || name == "") (false, null)
-  else (true, User(name, age))
-}
-
-def isAdult(user: User): Boolean = user.age > 18
-
-def createAndCheck(name: String, age: Int): Boolean = {
-  val (isValid, user) = createUser(name, age)
-  if (isValid) isAdult(user)
-  else false
-}
-```
-
-### Exercises 4.4
-
-#### 4.4.1
-
 We want to work with a counter and write two functions to increment/decrement its value of a given
 amount. First solve this exercise writing a function in imperative style and then try to solve the
 same problem but using only pure functions. What's the problem you're encountering?
@@ -147,7 +72,7 @@ counter
 //   Int = 5
 ```
 
-#### 4.4.2
+#### 4.2.2
 
 Write a pure function that discovers the maximum integer in a list of **positive integers**
 `List[Int] => Int` and returns `-1` if the list is empty or if there are negative numbers or any
@@ -247,9 +172,9 @@ max3(List(0, -3, 12, 7))
 //   Int = 12
 ```
 
-### Exercises 4.5
+### Exercise 4.3
 
-#### 4.5.1
+#### 4.3.1
 
 Write a pure function `List[A] => Int` that counts the number of elements in the given list. Be
 mindful to not use mutable variables. Is it possible at all?

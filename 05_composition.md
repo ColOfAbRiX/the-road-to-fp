@@ -17,7 +17,10 @@ variables for simplicity.
 
 ```scala
 object UserComponent {
-  private val users = List("Olivia", "Ruby", "Emily", "Grace", "Jack", "Oliver", "Thomas", "Harry")
+  private val users = List(
+    "Olivia", "Ruby", "Emily", "Grace",
+    "Jack", "Oliver", "Thomas", "Harry"
+  )
 
   var status = "enabled"
 
@@ -49,7 +52,10 @@ two components behave differently. You are allowed to use mutable variables for 
 
 ```scala
 object UserComponent {
-  private val users = List("Olivia", "Ruby", "Emily", "Grace", "Jack", "Oliver", "Thomas", "Harry")
+  private val users = List(
+    "Olivia", "Ruby", "Emily", "Grace",
+    "Jack", "Oliver", "Thomas", "Harry"
+  )
 
   def getUser(i: Int): String = {
     if (i >= users.length) ""
@@ -229,7 +235,7 @@ val split: String => (String, String) = value => value.splitAt(value.length / 2)
 val fromTuple: ((String, String)) => User = data => User(data._1, data._2)
 ```
 
-In this exercise the problem we want to solve is to build a `User` composing the functions we have
+In this example the problem we want to solve is to build a `User` composing the functions we have
 and for this purpose we want to create two functions, one that creates a user given a username and
 the other that creates a user with a random name:
 
@@ -249,7 +255,7 @@ going back to our previous example we can now compose in a much cleaner and unde
 ```scala
 // Several examples of "compose" and "andThen"
 val createRandomUser1: Int => User = fromTuple compose split compose alphabeth
-val createUser1: String => User = split andThen fromTuple
+val createUser1: String => User    = split andThen fromTuple
 val createRandomUser2: Int => User = createUser1 compose alphabeth
 val createRandomUser3: Int => User = alphabeth andThen split andThen fromTuple
 
@@ -309,15 +315,19 @@ Given a number `x`, create the following calculation functions:
 
 ## Stepping up composition
 
-Now the real big point to understand is that we want to have composable pieces of code and we want
-this composition to be easy and painless but we don't always work with simple functions like the
-ones we've seen so far, with one argument and one output but potentially we'll have more arguments
-or with more complex types. Or perhaps we are not working with functions but with lists and we want
-to somewhat compose all the elements of the list together or we want to perform aggregation or we
-are dealing with deferred results.
+You might have noticed in the last exercises that you couldn't use the composition functions
+`andThen` and `compose` that we've seen and that's because you don't have return values that match
+the input values of the next function.
 
-It would be great if there were ways to have composition in the bigger. Of course we're not talking
-about composition of distributed systems or dependencies management, I'm talking more about
+The real big point to understand is that we want to have composable pieces of code and we want this
+composition to be easy and painless but we don't always work with simple functions like the ones
+we've seen so far, with one argument and one output but potentially we'll have more arguments or
+with more complex types. Or perhaps we are not working with functions but with lists and we want to
+somewhat compose all the elements of the list together or we want to perform aggregation or we are
+dealing with deferred results.
+
+It would be great if there were ways to have composition "in the bigger". Of course we're not
+talking about composition of distributed systems or dependencies management, I'm talking more about
 interoperation between modules of code like libraries.
 
 This is one of the key realizations when becoming a functional programmer. You want composition, you
@@ -339,6 +349,14 @@ An interesting comparison between OOP and FP is made evident by how languages th
 foundations in these two paradigms try to solve the expression problem. The article [The Expression
 Problem and its solutions][4] give a good glimpse at the two perspectives, although it uses C++ and
 Clojure it's still an interesting read.
+
+## Exercises 5.3
+
+### 5.3.1
+
+Looking at exercise 5.2.1, can the function `createUser` call the validation functions in parallel?
+What about the functions three solution functions (f1, f2 and f3) of exercise 5.2.2, can they call
+the mathematical functions in parallel? What's the difference?
 
 ## References
 

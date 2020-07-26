@@ -1,12 +1,35 @@
 # Scala language feature: Lazyness
 
+## Overview of definition keywords
+
 ## Lazy val
+
+```scala
+lazy val a: Int = {
+    println("set!")
+    3
+}
+```
 
 ## By-name parameters
 
-## Streams as infinite lists
+```scala
+def test(value: => Int): Int = {
+    if (value > 0) 0 else value * 2
+}
+test {
+    println("test")
+    scala.util.Random.nextInt
+}
+```
+
+<https://stackoverflow.com/questions/4543228/whats-the-difference-between-and-unit>
 
 ## Lazyness is like functions as values
+
+## Streams as infinite lists
+
+## Simple example of DSL
 
 ## References
 
