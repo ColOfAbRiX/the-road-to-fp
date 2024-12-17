@@ -133,8 +133,10 @@ references, comments, examples and exercises.
   * <http://learnyouahaskell.com/functors-applicative-functors-and-monoids>
   * <https://fsharpforfunandprofit.com/posts/elevated-world/>
 
-## Scala language feature: Typeclasses (or classes of types)
+## Scala language feature: Typeclasses
 
+* The expression problem
+  * <https://www.wikiwand.com/en/articles/Expression_problem>
 * Type constructors
 * Forms of polymorphism: type polymorphism, inclusion polymorphism ad-hoc polymorphism
   * <https://slides.com/petrabierleutgeb/polymorphism-in-scala-scaladays19>
@@ -275,6 +277,15 @@ references, comments, examples and exercises.
   * <https://skillsmatter.com/skillscasts/3244-stackless-scala-free-monads>
   * <https://www.youtube.com/watch?v=U0lK0hnbc4U>
 
+## Tagless final
+
+* An alternative to free monads to abstract over dependencies and implementation s
+* <https://rockthejvm.com/articles/tagless-final-in-scala>
+* <https://nrinaudo.github.io/articles/tagless_final.html>
+* <https://www.reddit.com/r/scala/comments/s6ih9p/can_you_give_me_a_brief_understanding_on_tagless/>
+* Drawbacks and problems
+  * <https://degoes.net/articles/tagless-horror>
+
 ## Comonads
 
 * Non-Empty-List comonad
@@ -292,6 +303,13 @@ references, comments, examples and exercises.
   * <http://blog.higher-order.com/blog/2015/06/23/a-scala-comonad-tutorial/>
   * <https://bartoszmilewski.com/2017/01/02/comonads/>
   * <https://stackoverflow.com/questions/16551734/can-a-monad-be-a-comonad>
+
+## Recursion Schemes
+
+* Practical introduction
+  * <https://www.youtube.com/watch?v=ahX2l4GcOwI&t=1136s>
+  * <https://nrinaudo.github.io/recursion-schemes-from-the-ground-up/#1>
+  * <https://free.cofree.io/2017/11/13/recursion/>
 
 ## Introduction to Category Theory
 
@@ -394,12 +412,3 @@ references, comments, examples and exercises.
   * <https://apocalisp.wordpress.com/2010/06/08/type-level-programming-in-scala/>
   * <https://www.youtube.com/watch?v=_-J4YRI1rAw7>
   * <https://www.youtube.com/watch?v=GKIfu1WtSz4>
-
-## Additional, still not placed
-
-### Tagless final
-
-### Extension methods
-
-* What they are and how they work
-* You can add methods conditionally by imposing constraints on the type
